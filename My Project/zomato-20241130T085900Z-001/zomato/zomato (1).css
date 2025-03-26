@@ -1,0 +1,454 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+*{
+    
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background: black;
+    width: 100%;
+    
+
+}
+#cantainer
+{
+    height: 1280px;
+    width: 90%;
+    background: red;
+    margin-left: 5%;
+    margin-right: 5%;
+    
+
+}
+#header
+{
+    background: red;
+    height: 500px;
+    width: 100%;
+    background-image: url(./background.jpg);
+    background-size:190%;     
+}
+
+#navLeft ul
+{
+    list-style: none;
+    float: right;
+    margin-right: 10%;
+}
+#navLeft li
+{
+    display: inline-block;
+    font-size: 20px;
+    margin: 20px;
+
+}
+#navLeft a
+{
+    text-decoration: none;
+    color: white;
+    
+}
+#headline h1 img{
+    width: 280px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+
+}
+#headline h1
+{
+    font-family:"Archivo Black", sans-serif;
+    margin: 2% 60% 0% 40%;
+    float: left;
+    color: white;
+    font-size: 5rem;
+}
+#headline h4
+{ 
+     font-size: 2.5rem;
+     float: left;
+     margin-left: 28%;
+    color: whitesmoke;
+}
+#searchbar
+{
+    border: 5px solid white;
+    float: right;
+    background: white;
+    padding: 4px 5px 6px 4px;
+    margin: 30px 25% 15% 65% ;
+    width: 780px;
+    height: 50px;
+    display: flex;
+    border: none;
+    align-items: center;
+    border-radius: 8px;
+}
+#selctor
+{
+    margin: 10px;
+    padding: 5px;
+    font-size: 1rem;
+    border: none;
+    width: 110px;
+    /* color: #6666;          */
+
+}
+#drop
+{
+    width: 30px;
+    position:relative;
+    float: left;
+    background: transparent;
+    border: none;
+   backdrop-filter: 10px;
+    padding-top:10px;
+    text-decoration: #5555;
+}
+#query
+{
+   width: 430px;
+   height: 30px;
+   padding-left: 10px;   
+   font-size: 1rem;
+   border: none;
+   
+}
+#contant
+{
+    /* padding: 10px; */
+    background-color: white;
+    height: 1500px;
+    width: 100%;
+    padding-left: 100px;
+
+}
+/* facility feature */
+.facility
+{
+    /* margin: 30px; */
+    gap: 10px;
+    width: 90%;
+    display: inline-block;
+    color: white;
+    
+}
+
+/* facility box 1 */
+.facilitylink1
+{
+    width: 250px;
+    height: 200px;
+    background: black;
+    float: left;
+    margin-left: 70px;
+    word-wrap: normal;
+    background: linear-gradient(#000000b0,#3b393973 ),url(./imagefolder/content1.avif);
+    border-radius: 20px;
+ 
+
+}
+
+.facilitylink1 B
+{
+
+  display: block;
+  text-align: center;
+  padding-top: 50%;
+   
+}
+.facilitylink1 #o
+{
+    display: block;
+    text-align: center;
+   
+}
+
+/* facility box 2 */
+
+.facilitylink2
+{
+    width: 250px;
+    height: 200px;
+    background: black;
+    float: left;
+    margin-left: 70px;
+    word-wrap: normal;
+    background: linear-gradient(#000000b0,#3b393973 ),url(./imagefolder/content2.avif);
+    text-align: center;
+    border-radius: 20px;
+}
+.facilitylink2 B
+{
+  display: block;
+  text-align: center;
+  padding-top: 50%;
+
+  
+}
+.facilitylink2 #o
+{
+    display: block;
+    text-align: center;
+   
+}
+/* facility box 3 */
+.facilitylink3
+{
+    width: 250px;
+    height: 200px;
+    background: black;
+    float: left;
+    margin-left: 70px;
+    word-wrap: normal;
+    background: linear-gradient(#000000b0,#3b393973 ),url(./imagefolder/content3.avif);
+     text-align: center;
+     border-radius: 20px;
+}
+.facilitylink3 B
+{
+  display: block;
+  text-align: center;
+  padding-top: 50%;
+
+  
+}
+.facilitylink3 #o
+{
+    display: block;
+    text-align: center;
+   
+}
+
+/* hover facility function  */
+.facilitylink1:hover,.facilitylink2:hover,.facilitylink3:hover
+{
+    box-shadow: 5px 5px 10px black ;
+    transform: scale(1.08);
+    transition: transform .4s;
+}
+
+/* collection section  */
+.collations{
+    height: 680px;
+    width: 85%;
+    justify-content: space-between;
+    margin-left: 5%;
+    margin-right: 5%;
+    position: relative;
+
+    
+}
+.collation-header
+{
+   font-size: 1.5rem;
+   padding-top: 50px;  
+  display: flex;
+  gap: 160px;
+}
+
+.viwemore-right a
+{
+    height: 60px;
+    width: 100px;
+    text-align: right;
+    text-decoration: none;
+    color: rgb(243, 124, 144);
+    font-size: 1rem;
+    margin-right: 90PX;
+    position: relative;
+    
+    
+}
+
+/* collation links */
+.collationlink
+{
+    padding-top: 90px;
+    display: inline-block;
+    color: white;
+    cursor: pointer;
+   
+    
+}
+/* collation box 1 */
+.collationlink1
+{
+    width: 230px;
+    height:320px;
+    background: black;
+    float: left;
+    /* margin-left:10px; */
+    word-wrap: normal;
+    background: linear-gradient(#000000b0,#3b393973 ),url(./imagefolder/content1.avif);
+    border-radius: 10px;
+    color: white;
+ 
+
+}
+
+.collationlink1 B
+{
+
+  display: block;
+  text-align: center;
+  padding-top: 100%;
+   
+}
+.collationlink1 #o
+{
+    display: block;
+    text-align: center;
+   
+}
+
+/* collation box 2 */
+
+.collationlink2
+{
+    width: 230px;
+    height:320px;
+    background: black;
+    float: left;
+    margin-left: 10px;
+    word-wrap: normal;
+    background: linear-gradient(#000000b0,#3b393973 ),url(./imagefolder/content2.avif);
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+}
+.collationlink2 B
+{
+  display: block;
+  text-align: center;
+  padding-top: 97%;
+
+  
+}
+.collationlink2 #o
+{
+    display: block;
+    text-align: center;
+   
+}
+/*collation box 3 */
+.collationlink3
+{
+    width: 230px;
+    height:320px;
+    background: black;
+    float: left;
+    margin-left: 10px;
+    word-wrap: normal;
+    background: linear-gradient(#000000b0,#3b393973 ),url(./imagefolder/content3.avif);
+     text-align: center;
+     border-radius: 10px;
+     color: white;
+}
+.collationlink3 B
+{
+  display: block;
+  text-align: center;
+  padding-top: 97%;
+ 
+}
+.collationlink3 #o
+{
+    display: block;
+    text-align: center;
+   
+}
+
+/* collation box 4 */
+.collationlink4
+{
+    width: 230px;
+    height:320px;
+    background: black;
+    float: left;
+    margin-left: 10px;
+    word-wrap: normal;
+    background: linear-gradient(#000000b0,#3b393973 ),url(./imagefolder/content3.avif);
+     text-align: center;
+     border-radius: 10px;
+     color: white;
+}
+.collationlink4 B
+{
+  display: block;
+  text-align: center;
+  padding-top: 97%;
+ 
+}
+.collationlink4 #o
+{
+    display: block;
+    text-align: center;
+   
+}   
+
+/* place contant  */
+.Places
+{
+    background-color: white;
+    width: 87%;
+    height: 500px;
+    margin-left: 3%;
+   border: 8px solid black;
+   /* font-family: "Montserrat", sans-serif; */
+   position: relative;
+}
+.places-header
+{
+    font-size: 2rem;
+    font-family: "Montserrat", sans-serif;;
+}
+.placenames
+{
+   display: flex;
+   padding-top: 50px;
+   font-family: "Montserrat", sans-serif;
+   position: relative;
+   gap: 20px;
+}
+.placenames a
+{
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: black;
+    font-weight:bold;
+}
+.placenames p{
+    color: rgba(35, 33, 33, 0.847);
+    font-size: 1rem !important;
+    padding-top: 10px;
+}
+.placename1
+{
+  border: 2px solid rgba(61, 50, 50, 0.325);
+  /* box-shadow: 2px 2px 2px rgba(39, 35, 35, 0.427); */
+   padding: 20px;
+   height: 80px;
+   width: 600px;
+}
+.placename2
+{
+  border: 2px solid rgba(61, 50, 50, 0.325);
+  /* box-shadow: 2px 2px 2px rgba(39, 35, 35, 0.427); */
+   padding: 20px;
+   height: 80px;
+   width: 600px;
+}
+.placename3
+{
+  border: 2px solid rgba(61, 50, 50, 0.325);
+  /* box-shadow: 2px 2px 2px rgba(39, 35, 35, 0.427); */
+   padding: 20px;
+   height: 80px;
+   width: 600px;
+}
+
+

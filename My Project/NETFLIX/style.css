@@ -1,0 +1,657 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Mukta:wght@800&family=Oswald:wght@200..700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Mukta:wght@800&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+*
+{
+    margin: auto;
+    padding: 0;
+
+}
+body
+{
+    margin: 0;
+    padding: 0;
+    background-color:black !important;
+    color: white;
+}
+.container
+{
+    /* background-color: yellow !important; */
+}
+/*  utility class */
+hr{
+    height: 10px !important;
+    background-color: rgba(189, 189, 186, 0.808);
+    /* margin-bottom: ; */
+}
+p
+{
+    font-family: "Poppins", sans-serif !important;
+} 
+
+.background-img 
+{
+    height: 700px;
+    width: 100%;
+    background: linear-gradient(#000000dc,#12121244), url(./img/NETFLIX_BG.jpg);
+    background-size: cover;
+}
+/*  navbar section */
+.navbar
+{
+    gap:500px;
+    display: flex;
+    width: 100% !important;
+    /* background-color: tomato; */
+
+}
+.navbar-brand img
+{
+  height: 100px;
+
+}
+.navbar-right
+{
+    display: flex;
+    gap: 30px;
+}
+.navbar-dropdown
+{
+    background-color: rgba(34, 34, 34, 0.507);
+    width: 120px;
+    margin-left: 40px !important;
+
+}
+.navbar-dropdown select
+{
+    height: 30px;
+    width: 120px;
+    text-align: center;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+    position: relative;
+    padding-left: 15px;
+   
+}
+.navbar-dropdown select:focus
+{
+ background-color: rgba(10, 10, 10, 0.727);
+ /* background: transparent; */
+}
+.icon-drop
+{
+    position: absolute;
+    align-items: center;
+    transform: translateY(6px);
+    color: white;
+    margin-left: 5px;
+}
+.danger-button
+{
+   width: 100px;
+   background-color: red;
+}
+.danger-button:hover
+{
+    background-color: rgb(236, 48, 48);
+}
+/*  header text */
+.center-items
+{
+    align-items: center;
+    /* background-color: yellow; */
+    height: 350px;
+    top: 30%;
+    transform: translateY(30%); 
+    font-family:"Poppins", sans-serif !important;
+    
+}
+.header-text
+{
+    height: 200px;
+    color: white;
+    text-align: center;
+}
+.header-text h1
+{
+   font-size: 3.3rem;
+   font-weight: 700;
+   letter-spacing: 2px;
+    word-spacing: 2px;
+    font-weight: 900;
+}
+.header-text p
+{
+    font-size: 1.5rem;
+    font-family: "Poppins", sans-serif;
+
+}
+.input-area
+{
+    color: white;
+    text-align: center;
+    height: 150px;
+    width: 900px;
+    font-family: "Poppins", sans-serif;
+
+
+}
+.input-area p
+{
+    font-size: 1.5rem;
+}
+.input-area label
+{
+    position: absolute;
+    color: white;
+    background-color: rgba(6, 6, 6, 0.937);
+    height: 50px;  
+     width: 31%;
+     text-align: start;
+     border-radius: 10px;
+     font-family: "Poppins", sans-serif;
+}
+.input-area label h4
+{
+    transform: translateY(15px);
+    font-size: 1rem;
+    padding-left: 10px;
+    color: #858585dc;
+}
+.input-bar
+{
+    display:flex;
+    /* background: black; */
+    width: 700px;
+}
+
+.login-input input
+{
+     height: 70px;
+     width: 500px;
+     border-radius: 5px;
+     font-size: 20px;
+     background: rgba(13, 13, 13, 0.73);
+     border: 2px solid rgb(62, 51, 51);
+     margin-top: 6px;
+     position: relative;
+     color: white;
+     outline: green;
+    padding-left: 13px;
+}
+.login-input label
+{
+    position: absolute;
+    right: 370px;
+    margin-top: 25px;
+    left:1%;
+    right: 480px;
+    color: rgb(171, 171, 166);
+    font-size: 20px;
+    pointer-events: none;
+    transition: 0.4s;
+    background: transparent;
+    height: 18px; 
+    width: 180px;
+   
+}
+.login-input input:focus
+{
+    border: 2px solid orange;
+
+}
+.login-input input:focus~label,
+.login-input label input:valid~label
+{
+    font-size: 15px; 
+    margin-top: 13px;
+    height: 27px;
+    width: 142px;
+    border-radius: 6px;
+    
+}
+.button-email
+{
+  width: 180px;
+  height: 70px;
+  margin-top: 6px;
+  background-color: rgb(211, 14, 14) !important;
+}
+.button-email:hover{
+    background-color: rgb(243, 41, 41) !important;
+}
+
+
+/*  tv section  */
+.tv-section
+{
+  height: 590px;
+  
+}
+.text
+{
+    text-align:start;
+    transform: translateY(50%);
+    top: 30%;
+    padding-top: 50px
+    
+}
+.text h2{
+    font-size: 4rem;
+    font-weight: 700;
+}
+.text p{
+   font-size: 1.7REM;
+}
+.uper-img
+{
+    position: relative;
+    
+}
+.video-bg
+{
+    margin-top: 50px;
+    margin-right: 10px !important;
+}
+.video-in
+{
+   position: absolute;
+   margin-top: 100px;
+   margin-left: 100px;
+}
+
+                         /*  ott section video adjust */
+.video-in2
+{
+   position: absolute;
+   margin-top: 30px;
+   margin-left: 105px;
+   width: 420px;
+}
+
+                          /*  mobile section */
+.mobile-section
+{
+  height: 590px;
+  
+}
+.mobile-text
+{
+    text-align:start;
+    transform: translateY(5%);
+    top: 10%;
+    padding-top: 50px
+    
+}
+.mobile-text h2{
+    font-size: 4rem;
+    font-weight: 700;
+}
+.mobile-text p{
+   font-size: 1.7REM;
+}
+.uper-img
+{
+    position: relative;
+
+}
+
+.gif-in
+{
+   position: absolute;
+   margin-top: 330px;
+   margin-left: 140px;
+   background-color: black;
+   z-index: 2;
+   height: 120px;
+   width: 355px;
+   /* text-align: end; */
+   border: 3px solid #242323;
+   border-radius:20px;
+   display: flex;
+   padding: 7px 7px;
+}
+.stranger-thing
+{
+    height: 100px;
+    margin-right: 90px;
+}
+.contant
+{
+    margin-top: 5px;
+    margin-right: 5px;
+    border-radius: 10px;
+}
+.stranger-thing-text h5{
+    margin-left: -80px;
+}
+.stranger-thing-text p{
+    margin-left: -80px;
+    color: rgb(66, 66, 243);
+}
+
+                                            /*  kid section  */
+.kid-section
+{
+  height: 590px;
+  
+}
+.kid-text
+{
+    text-align:start;
+    transform: translateY(5%);
+    top: 10%;
+    padding-top: 90px
+    
+    
+}
+.kid-text h2{
+    font-size: 3.8rem;
+    font-weight: 700;
+}
+.kid-text p{
+   font-size: 1.5REM;
+}
+
+
+                                        /*  FAQ section */
+.faq-section
+{
+    height: 1200px;
+    padding-top: 50px;
+}
+.faq-header
+{
+    text-align: center;
+}
+.faq-header h2
+{
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+/*  question section 1*/
+.Question-row
+{
+    height: 700px;
+    width: 100%;
+  
+}
+.first-question
+{
+   
+    height: 100px !important;
+    background-color:#302f2f;
+    display:flex;
+    margin-top: 10px;
+
+
+}
+
+/*  drpdown section */
+.Question1
+{
+    height: 100px;
+    transition: 0.2s;
+    font-size: 0rem;
+}
+.Question1:hover
+{
+    height: 220px;
+    font-size: 1.1rem;
+    background-color:#302f2f;
+}
+
+.faq-dropdown-p
+{
+    margin-left: 20px;
+}
+
+.first-question h4{
+    color: white;  
+   padding-top: 30PX;
+   font-size: 2rem;
+   margin-right: 150px;
+    /* text-wrap:wrap;   */
+   /* float: inline-start; */
+
+}
+
+.first-question span
+{
+    margin-left: 809px;
+    font-size: 2rem;
+}
+
+.first-question:hover,.second-question:hover,.third-question:hover,.four-question:hover,.fiv-question:hover,.six-question:hover
+{
+    background-color:#424242;
+}
+
+/*  second-question */
+.second-question
+{
+   
+    height: 100px !important;
+    background-color:#302f2f;
+    display:flex;
+    margin-top: 10px;
+
+}
+.second-question h4{
+    color: white;  
+   padding-top: 30PX;
+   font-size: 2rem;
+   margin-right: 50px;
+    /* text-wrap:wrap;   */
+   /* float: inline-start; */
+
+}
+
+.second-question span
+{
+    margin-left: 720px;
+    font-size: 2rem;
+}
+/*  third question */
+.third-question
+{
+   
+    height: 100px !important;
+    background-color:#302f2f;
+    display:flex;
+    margin-top: 10px;
+
+}
+.third-question h4{
+    color: white;  
+   padding-top: 30PX;
+   font-size: 2rem;
+   margin-right: 50px;
+    /* text-wrap:wrap;   */
+   /* float: inline-start; */
+
+}
+
+.third-question span
+{
+    margin-left: 855px;
+    font-size: 2rem;
+}
+
+/* four question*/
+.four-question
+{
+   
+    height: 100px !important;
+    background-color:#302f2f;
+    display:flex;
+    margin-top: 10px;
+
+}
+.four-question h4{
+    color: white;  
+   padding-top: 30PX;
+   font-size: 2rem;
+   margin-right: 50px;
+    /* text-wrap:wrap;   */
+   /* float: inline-start; */
+
+}
+
+.four-question span
+{
+    margin-left: 890px;
+    font-size: 2rem;
+}
+/* fiv question*/
+.fiv-question
+{
+   
+    height: 100px !important;
+    background-color:#302f2f;
+    display:flex;
+    margin-top: 10px;
+
+}
+.fiv-question h4{
+    color: white;  
+   padding-top: 30PX;
+   font-size: 2rem;
+   margin-right: 50px;
+    /* text-wrap:wrap;   */
+   /* float: inline-start; */
+
+}
+
+.fiv-question span
+{
+    margin-left: 720px;
+    font-size: 2rem;
+}
+/*  six question*/
+.six-question
+{
+   
+    height: 100px !important;
+    background-color:#302f2f;
+    display:flex;
+    margin-top: 10px;
+
+}
+.six-question h4{
+    color: white;  
+   padding-top: 30PX;
+   font-size: 2rem;
+   margin-right: 50px;
+    /* text-wrap:wrap;   */
+   /* float: inline-start; */
+
+}
+
+.six-question span
+{
+    margin-left: 790px;
+    font-size: 2rem;
+}
+/*  faq input area */
+.input-area-faq
+{
+    color: white;
+    text-align: center;
+    height: 300px;
+    width: 900px;
+    font-family: "Poppins", sans-serif;
+    margin-top: 100px;
+
+}
+.input-area-faq p
+{
+    font-size: 1.6rem;
+}
+
+/*  footer */
+
+/* footer list */
+.listpart
+{
+    gap: 50px !important;
+    height: 300px;
+
+}
+/* list1 */
+.footer-list1{
+    display: flex;  
+    gap: 50px;
+    margin: 0;
+
+}
+/*  */
+.list-head
+{
+    font-size: 1rem;
+}
+.lists ul
+{
+    list-style: none;
+
+}
+.lists  a
+{
+   text-decoration: none;
+   color: #777;
+   padding-top: 50px;
+   font-size: 1rem;
+
+}
+.lists ul li
+{
+    padding-top: 20px;
+}
+
+/*  footer nav bar dropdown */
+.navbar-dropdown-footer
+{
+    background-color: rgba(34, 34, 34, 0.507);
+    width: 120px;
+    margin-left: 0;
+
+}
+.navbar-dropdown-footer select
+{
+    height: 30px;
+    width: 120px;
+    text-align: center;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+    position: relative;
+    padding-left: 15px;
+   
+}
+.navbar-dropdown-footer select:focus
+{
+ background-color: rgba(10, 10, 10, 0.727);
+}
+.icon-drop-footer
+{
+    position: absolute;
+    align-items: center;
+    transform: translateY(6px);
+    color: white;
+    margin-left: 5px;
+}
+
+
+
+/*  media quary  */
+
+@media only screen and (max-width: 600px) {
+    body {
+      background-color: lightblue;
+    }
+  }

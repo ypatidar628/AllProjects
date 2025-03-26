@@ -1,0 +1,557 @@
+*
+{
+        padding: 0;
+        margin: 0;
+
+}
+.container-xxl
+{
+    /* background-color: salmon !important; */
+
+}
+body
+{
+    color: black !important;
+    margin: 0 !important;
+}
+/*  navbar section */
+.brand-logo
+{
+    width: 290px;
+    text-align: end;
+}
+
+.mynavbar
+{
+    display: flex !important;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 100px;
+}
+.user-section
+{
+    display: flex;
+    margin-top: 28px;
+}
+
+.contry-icon
+{
+    display: flex !important;
+    margin-left: 20px;
+}
+
+.inputarea
+{
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 350px;
+
+}
+
+.inputarea i
+{
+    color: black;
+    position: absolute;
+    z-index: 1;
+    margin-left: 5px;
+    font-size: 14px;
+}
+.inputarea input
+{
+    border-radius: 25PX !important;
+    padding-left: 25px ;
+    position: relative;
+    outline: none;
+    border: 1px solid rgb(27, 25, 25);
+    height: 30px;
+    width: 230px;
+    font-size: 0.8REM;
+
+}
+.favrate-icon i
+{
+    font-size: 20px;
+    position: absolute;
+    top:30px;
+    margin-left: 20px;
+
+}
+.cart i
+{
+    font-size: 20px;
+    position: absolute;
+    top: 30px;
+    margin-left: 60px;
+}
+
+/*  carosal head */
+.demo
+{
+
+    height: 500px;
+}
+.demo2
+{
+    height: 500px;
+    padding-top: 20px;
+}
+.slide-nav
+{
+    /* background-color: indianred; */
+    height: 300px;
+}
+
+.slide-nav ul
+{
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+    height: 50px;
+    width: 100%;
+    text-align: center !important;
+    padding-left:30px;
+    
+}
+.nav-key
+{
+
+    height: 40px;
+    color: rgb(31, 30, 30);
+    width: 120px;
+    overflow: hidden;
+
+}
+
+
+ /* dropdown */
+.dropdown:hover{
+    overflow: visible;
+
+}
+.dropdown-1
+{
+    height: 250px;
+    width: 200px;
+    padding-top: 5px;
+    margin-top: 10px;
+    list-style: none;
+    font-size: 1rem;
+    font-weight:100 ;
+  
+ 
+
+}
+
+.dropdown-1 li
+{
+    margin-top: 10px;
+    width: 140px;
+    text-align: start;
+  
+}
+.dropdown-div
+{
+    display: flex;
+    width:1000px;
+
+   margin-left: -120px;
+   background-color: white;
+   
+}
+.dropdown-div2
+{
+    display: flex;
+    width:1000px;
+   margin-left: -240px;
+   background-color: white;
+   
+}
+.dropdown-div3
+{
+    display: flex;
+    width:900px;
+   margin-left: -360px;
+   background-color: white;
+   
+}
+.dropdown-div4
+{
+    display: flex;
+    width:900px;
+   margin-left: -750px;
+   padding-top: 20px;
+   padding-left: 300px;
+   z-index: 99;
+   background-color: white;
+   
+}
+.dropdown-div img ,.dropdown-div2 img , .dropdown-div3 img
+{
+ height: 200px;
+ margin-top: 30px;
+
+}
+
+
+.nav-key:hover{
+
+    transform: scale(1.09);
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+    overflow: visible;
+    z-index: 100;
+    
+}
+
+.SALE
+{
+    color: indianred !important;
+
+}
+
+/*  product  caroal section */
+.my-carousel
+{
+    width: 100%;
+}
+.button-carousel button
+{
+    height: 40px;
+    width: 50px;
+    margin-left: -50px;
+    margin-right: -50px;
+    margin-top: 200px;
+    color: black;
+
+
+}
+.button-carousel button span
+{  
+    margin: auto;
+    transition: 3s !important;
+    font-size: 1.8rem;
+    color: rgb(60, 58, 58);
+}
+.button-carousel button span:hover
+{
+    color: rgb(16, 12, 12);
+}
+
+.col-md-3
+{
+    /* background-color: aqua; */
+    height: 400px;
+}
+.caption
+{
+    align-items: start;
+    margin-left: 5px; 
+}
+.first
+{
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+.caption h4{
+    font-size: 1rem;
+}
+.caption span
+{
+    font-size:0.7rem;
+}
+
+/*  hover img  */
+.img1
+{
+    background-image: url(./img/1pro.jpg);
+    background-size: cover;
+    height: 260px;  
+
+}
+.img1:hover
+{
+    background-image: url(./img/1pro1.jpg);
+    background-size: cover;
+    
+}
+.img2
+{
+    background-image: url(./img/2pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.img2:hover
+{
+    background-image: url(./img/2pro1.jpg);
+    background-size: cover;
+}
+/*  3 */
+.img3
+{
+    background-image: url(./img/3pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.img3:hover
+{
+    background-image: url(./img/3pro1.jpg);
+    background-size: cover;
+}
+/*  4 */
+.img4
+{
+    background-image: url(./img/4pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.img4:hover
+{
+    background-image: url(./img/4pro1.jpg);
+    background-size: cover;
+}
+
+/* 5 */
+.img5
+{
+    background-image: url(./img/5pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.img5:hover
+{
+    background-image: url(./img/5pro1.jpg);
+    background-size: cover;
+}
+
+/*  6 */
+.img6
+{
+    background-image: url(./img/6pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.img6:hover
+{
+    background-image: url(./img/6pro1.jpg);
+    background-size: cover;
+}
+
+/*  7 */
+.img7
+{
+    background-image: url(./img/7pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.img7:hover
+{
+    background-image: url(./img/7pro1.jpg);
+    background-size: cover;
+}
+
+/*  8  */
+.img8
+{
+    background-image: url(./img/8pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.img8:hover
+{
+    background-image: url(./img/8pro1.jpg);
+    background-size: cover;
+}
+
+/*  9  */
+.img9
+{
+    background-image: url(./img/9pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.img9:hover
+{
+    background-image: url(./img/9pro1.jpg);
+    background-size: cover;
+}
+/*  10 */
+.img10
+{
+    background-image: url(./img/10pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.img10:hover
+{
+    background-image: url(./img/10pro1.jpg);
+    background-size: cover;
+}
+
+/* 11 */
+.img11
+{
+    background-image: url(./img/11pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.img11:hover
+{
+    background-image: url(./img/11pro1.jpg);
+    background-size: cover;
+}
+
+/* 12 */
+.img12
+{
+    background-image: url(./img/12pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.img12:hover
+{
+    background-image: url(./img/12pro1.jpg);
+    background-size: cover;
+}
+
+
+/*  Tranding img */
+
+
+/*  hover img  */
+.Timg1
+{
+    background-image: url(./img/13pro.jpg);
+    background-size: cover;
+    height: 260px;  
+
+}
+.Timg1:hover
+{
+    background-image: url(./img/13pro1.jpg);
+    background-size: cover;
+    
+}
+/* 2 */
+.Timg2
+{
+    background-image: url(./img/14pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.Timg2:hover
+{
+    background-image: url(./img/14pro1.jpg);
+    background-size: cover;
+}
+/*  3 */
+.Timg3
+{
+    background-image: url(./img/3pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.Timg3:hover
+{
+    background-image: url(./img/3pro1.jpg);
+    background-size: cover;
+}
+/*  4 */
+.Timg4
+{
+    background-image: url(./img/4pro.jpg);
+    background-size: cover;
+    height: 260px;  
+}
+.Timg4:hover
+{
+    background-image: url(./img/4pro1.jpg);
+    background-size: cover;
+}
+
+/*  cloth section 1 */
+.cloth-section
+{
+    height: 900px;
+    
+}
+.row 
+{
+    margin-top: 40px !important;
+}
+.cloth1
+{
+    background: url(./img/1cloth.jpg);
+    height: 300px;
+    width: 300px;
+    background-size: cover;
+
+}
+.cloth1:hover{
+    background: url(./img/1cloth1.jpg);
+    background-size: cover;
+
+}
+
+/* 2 */
+.cloth2
+{
+    background: url(./img/2cloth.jpg);
+    height: 300px;
+    width: 300px;
+    background-size: cover;
+
+}
+.cloth2:hover{
+    background: url(./img/2cloth1.jpg);
+    background-size: cover;
+
+}
+/* 3 */
+.cloth3
+{
+    background: url(./img/3cloth.jpg);
+    height: 300px;
+    width: 300px;
+    background-size: cover;
+
+}
+.cloth3:hover{
+    background: url(./img/3cloth1.jpg);
+    background-size: cover;
+
+}
+/* 4 */
+.cloth4
+{
+    background: url(./img/4cloth.jpg);
+    height: 300px;
+    width: 300px;
+    background-size: cover;
+
+}
+.cloth4:hover{
+    background: url(./img/4cloth1.jpg);
+    background-size: cover;
+
+}
+/* 5 */
+.cloth5
+{
+    background: url(./img/FLIGHT_MVP_T-SHIRT-5.png);
+    height: 640px;
+    width: 450px;
+    margin-top: 40px;
+    background-size: cover;
+
+}
+/* .cloth5:hover{
+    background: url(./img/5cloth1.jpg);
+    background-size: cover;
+
+} */
