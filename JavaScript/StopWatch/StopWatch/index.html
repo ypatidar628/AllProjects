@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#bbd6fd]">
+    <h1
+      class="text-5xl font-semibold text-center mt-4 font-serif text-[#1b3041]"
+    >
+      StopWatch
+    </h1>
+    <div
+      class="place-self-center text-3xl gap-2 bg-[#e2eeff] rounded-2xl text-[#4382ec] w-fit p-3 mt-10 font-semibold flex"
+    >
+      <h1 id="hour" class="w-10 h-10 text-center">00</h1>
+      <h1>:</h1>
+      <h1 id="minute" class="w-10 h-10 text-center">00</h1>
+      <h1>:</h1>
+      <h1 id="second" class="w-10 h-10 text-center">00</h1>
+      <h1>:</h1>
+      <h1 id="miliSecond" class="w-10 h-10 text-center">00</h1>
+    </div>
+    <div
+      class="self-center justify-center text-3xl gap-12 mt-10 font-semibold flex"
+    >
+      <button
+        onclick="start()"
+        class="py-2 px-10 bg-green-600 rounded-lg text-center text-base"
+      >
+        Start
+      </button>
+      <button
+        onclick="reset()"
+        class="py-2 px-10 text-base bg-red-600 rounded-lg text-center"
+      >
+        Reset
+      </button>
+      <button
+        onclick="stop()"
+        class="py-2 px-10 text-base bg-yellow-400 rounded-lg text-center"
+      >
+        Stop
+      </button>
+    </div>
+    <div
+      class="bg-[#e2eeff] w-96 min-h-1 text-black mt-5 rounded-xl place-self-center"
+    >
+      <table>
+        <thead class="">
+          <tr
+            class="text-center rounded border-b-2 gap-4 flex w-96 text-[#1b3041] bg-[#e2eeff] p-1 justify-evenly"
+          >
+            <th>Hour</th>
+            <th>Minute</th>
+            <th>Second</th>
+            <th>Milisecond</th>
+          </tr>
+        </thead>
+        <tbody id="output"></tbody>
+      </table>
+    </div>
+
+    <script>
+      var second = document.getElementById("second");
+      var minute = document.getElementById("minute");
+      var hours = document.getElementById("hour");
+      var miliSecond = document.getElementById("miliSecond");
+      var output = document.getElementById("output");
+
+      let milisec = 0;
+      let sec = 0;
+      let hour = 0;
+      let min = 0;
+      let timer;
+      let arr = [];
+      let secondCount = 60;
+
+      const start = () => {
+        timer = setInterval(() => {
+          milisec++;
+          if (milisec == 60) {
+            milisec = 0;
+            sec++;
+          }
+          if (sec == 60) {
+            sec = 0;
+            min++;
+          }
+          if (min == 60) {
+            min = 0;
+            hour++;
+          }
+          miliSecond.innerHTML = milisec.toString().padStart(2, "0");
+          second.innerHTML = sec.toString().padStart(2, "0");
+          minute.innerHTML = min.toString().padStart(2, "0");
+          hours.innerHTML = hour.toString().padStart(2, "0");
+        }, 1000 / 60);
+      };
+
+      const reset = () => {
+        clearInterval(timer);
+        milisec = 0;
+        sec = 0;
+        min = 0;
+        hour = 0;
+        miliSecond.innerHTML = milisec.toString().padStart(2, "0");
+        second.innerHTML = sec.toString().padStart(2, "0");
+        minute.innerHTML = min.toString().padStart(2, "0");
+        hours.innerHTML = hour.toString().padStart(2, "0");
+        output.innerHTML = "";
+        arr = [];
+      };
+
+      const stop = () => {
+        clearInterval(timer);
+
+        var obj = { hour: hour, minute: min, second: sec, miliSecond: milisec };
+        arr.push(obj);
+        // console.log(arr);
+
+        var res = arr
+          .map((ele) => {
+            return `<tr class="text-center border-b-2 gap-4 flex w-96 bg-grey-200 p-1 justify-evenly">
+                    <td>${ele.hour.toString().padStart(2, "0")}<td/>
+                    <td>${ele.minute.toString().padStart(2, "0")}<td/>
+                    <td>${ele.second.toString().padStart(2, "0")}<td/>
+                    <td>${ele.miliSecond
+                      .toString()
+                      .padStart(2, "0")}<td/></tr>`;
+          })
+          .join("");
+        output.innerHTML = res;
+      };
+    </script>
+  </body>
+</html>

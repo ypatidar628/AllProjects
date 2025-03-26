@@ -1,0 +1,325 @@
+// FIRST TABKLE 
+CREATE TABLE emp ( empno INT PRIMARY KEY,
+                  ename VARCHAR (10),
+                  job VARCHAR (9),
+                  hiredate DATE ,
+                  mgr INT NULL,
+                  sal NUMERIC (7,2),
+                  comm NUMERIC (7,2) null ,
+                  DEPTNO INT 
+              
+)
+//first table data
+
+INSERT INTO emp VALUES 
+
+( 7369,'SMITH','CLERK','1980-12-17',7902,800.00,NULL,20)    //ALL COLOUS DATE IS SAME TO THIS ROW .
+( 7499,'ALLEN','SALESMAN',' 1981-02-20',7698,1600,300,30),
+( 7499,'ALLEN','SALESMAN','1981-02-22',7698,1600,300,30),
+( 7521,'WARD','SALESMAN','1981-04-02',7698,1250,500,30),
+( 7566,'JONES','MANAGER','1981-09-28',7839,2975,NULL,20),
+(7654,'MARTIN','SALESMAN','1981-09-28',7698,1250,1400,30),
+(7698,'BLAKE','MANAGER','1981-05-01',7839,2850,NULL,30),
+(7782,'CLARK','MANAGER','1981-06-09',7839,2450.00,NULL,10)
+(7788,'SCOTT','ANALYST','1987-04-19',7566,3000,NULL,20),
+(7839,'KING','PRESIDENT','1981-08-17',NULL,5000,NULL,10),
+(7844,'TURNER','SALESMAN','1981-09-08',7698,1500,0,30),
+(7876,'ADAMS','CLERK','1987-05-23',7788,1100,NULL,20),
+(7900,'JAMES','CLERK','1981-12-03',7698,950,NULL,30),
+(7902,'FORD','ANALYST','1981-12-03',7366,3000,NULL,20),
+(7934,'MILLER','CLERK','1982-01-23',7782,1300,NULL,10)
+
+ 
+  
+ // SECOND TABLE 
+CREATE TABLE DPT ( 
+        deptno INT  PRIMARY KYE ,
+        dname VARCHAR (14),
+        loc VARCHAR (13)
+)
+//second tabke data
+
+// INSERT TABLE VALUES 
+
+INSERT INTO dpt VALUES (10,'ACCOUNTING','NEW YORK')
+INSERT INTO dpt VALUES ( 20 ,'RESEARCH', 'DALLAS');
+INSERT INTO dpt VALUES ( 30 ,'SALES '' CHICAGO');
+INSERT INTO dpt VALUES ( 40 ,'OPRATIONS','BOSTON');
+
+// CHECK INSERT DATA 
+
+        SELECT*FROM DPT
+
+// fetch colom vise information 
+     
+      SELECT empno,job,sal,comm,enamefrom emp
+ 
+//select job coloum 
+
+      select job from emp
+
+// repited word or only unique name value 
+
+   select distinct(job) from emp
+
+// 2000 ABOBE SALARY EMP SEARCH 
+
+// COOMDITIONAL RECORD WE WILL WRITE WE WILL USE 'Where',
+// two condition use 'AND' word.
+SELECT * FROM EMP Where sal>=2000 and sal<=4000
+
+// fetch data emp job = 'manager'
+
+     SELECT *FROM emp Where job ='manager' and sal<=2000
+
+// i need record fron no commistion givien 
+
+     SELECT * FROM emp Where comm is NULL
+
+
+// I NEED RECORD FROM COMMISITION IS NOT NULL
+
+    SELECT *FROM emp Where comm IS not NULL 
+
+// I NEED A RECORD FROM EMP WHOS SALARY IS 800,1600,3000,5000
+
+SELECT*FROM emp Where sal in ( 800,1600,3000,5000)
+
+
+// single colom check multipul values 
+
+using  IN ( 800,1600,3000,5000)
+USING 'IN' KYEWORD 
+
+
+// which emp job is manager clerk analyst.
+
+SELECT * FROM emp Where job in ('manager','clerk','analyst')
+
+// which emp job is not manager clerk analyst.
+
+SELECT * FROM emp Where  NOT job in ('manager','clerk','analyst')
+
+// fetch a emp whos department no 28
+
+SELECT *FROM emp Where deptno=20
+
+// FETCH A RECORD JOB IS CLERK AND CUMM IS NULL
+
+SELECT *FROM emp Where job='CLERK' AND COMM='NULL'
+
+?
+
+// FIND A EMP NAME FIRST LATTER IS CAPITAL 'S' 
+  using like check latter's only compaire patter 
+    SELECT *FROM emp Where job like 'S%'   
+ 
+   SELECT *FROM emp Where job not like 'S%'   
+   '%' is reprasent is any charactor or ANY LENGTH 
+
+// fetch a emp[ job last charactor capital 'D'
+
+SELECT *FROM emp Where  job like '%D'
+
+// fetch a salary which second digite '5'
+   '-' FIRST DIGIT SKIP USE UNDERSCORE
+SELECT *from emp SAL like '_5%'
+
+
+// fetch a data emp sal is 3 digits 
+
+SELECT * FROM emp Where sal like '___.%'
+
+
+// fetch a data name two time capital 'A'
+
+SELECT * FROM emp Where ename LIKE '%LL%'
+
+// FETCH A RECOED WHERE CAPITAL 'A' IN ANY PLACE 
+  
+SELECT * FROM emp Where ename like '%A%A%'
+
+
+// RECORD FETCH ASSENDING ORDER 
+
+SELECT * FROM emp ORDER BY deptno
+
+// name by arange in name vise 
+
+SELECT * FROM emp ORDER BY deptno,ename 
+
+
+// max salary emp in records
+
+
+SELECT MAX (sal),min(sal),avg(sal) FROM emp
+
+
+//
+
+
+// RECORDE FETCH BY DISANDING ORDER 
+
+
+SELECT * FROM emp ORDER BY sal DESC
+
+
+
+// FIND MAX SALARY IN MIN AND AVG
+
+SELECT max(sal) "MAXIMUM SALARY",min(sal)"MINIMUM SALARY",avg(sal)"AVRAGE SALARY" FROM emp;
+
+// find a employe who have max salary and min salary
+
+
+//disply of all emp one day salary 
+
+SELECT ENAME, (SAL/12) AS 'Monthly Salary' ,
+SAL AS 'Annual Salary' FROM EMP;
+
+//disply of all emp annual salary
+
+SELECT ENAME, (SAL*12) AS 'ANNUAL SALARY' ,
+SAL AS ' SAL' FROM EMP;
+
+
+---------------NESTED QUARYS----------------
+// FETCH A DATA TO EMPLY HEIRE ON  1981
+ 
+ SELECT*FROM EMP WHERE HIREDATE BETWEEN '1981-01-01' AND '1981-12-31' 
+
+// FIND ARECORD EMP IS JOINNING JUNE 	
+ SELECT*FROM EMP WHERE HIREDATE BETWEEN '1981-01-01' AND '1981-06-30'
+
+//FIND MAX SAL FROM EMMP 
+
+ SELECT MAX(SAL) FROM EMP 
+
+// MAX SAL WITH RECORD 
+
+//SELECT*FROM EMP WHERE SAL = ( SELECT max(SAL) FROM EMP )
+SELECT*FROM EMP WHERE SAL = ( SELECT min(SAL) FROM EMP )
+
+
+// avrage salay is grater then all employe
+
+SELECT*FROM EMP WHERE SAL >= ( SELECT avg(SAL) FROM EMP ) 
+ 
+
+// all employe max and min salaray no match 
+  <> not equal to singnn 
+
+ //group by SELECT max(sal),min(sal),count(sal) from emp
+
+SELECT max(sal),min(sal),count(sal) from emp
+
+// ASCADING ORDER MIN MAX AVRAGE GROUP 
+
+ SELECT DEPTNO , max(sal),min(sal),count(sal) from emp GROUP BY DEPTNO 
+
+
+// FIND HEIGHT'S PAID EMPLOYEE DETAILS NNIN THAIR DEPARTMENT 
+
+  SELECT *FROM EMP WHERE SAL IN 
+  (SELECT max(SAL) FROM EMP GROUP BY DEPTNO) 
+ 
+
+//SELECT DEPTNO,ENAME,JOB,SAL FROM EMP WHERE SAL IN 
+  (SELECT max(SAL) FROM EMP GROUP BY DEPTNO) ORDER BY DEPTNO
+
+
+// find min salary lowest paid salary employee details 
+SELECT DEPTNO,ENAME,JOB,SAL FROM EMP WHERE SAL IN 
+  (SELECT max(SAL) FROM EMP GROUP BY DEPTNO) ORDER BY DEPTNO
+
+
+// GROUP JOB HIGEST PAID SALARY 
+
+SELECT DEPTNO,ENAME,JOB,SAL FROM EMP WHERE SAL IN 
+  (SELECT max(SAL) FROM EMP GROUP BY JOB) ORDER BY DEPTNO
+
+// FIND THE COMLETE DETAILS ALONG WITH IS DEPT NAME OR LOCATION '
+
+//TWO TABLE FATCH 
+  MATCH DEPARTMENT NO AND FIND SMIT LOCATION 
+CARDINATE PRODUCT
+
+SELECT*FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO 
+
+// FIND EMMPLOY NAME JOB DNAME
+SELECT EMONO,ENAME,JOB,DNAME,LOC FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.ENAME='SMITH'
+
+//HOW TO CHANGE BOR UPODATE EXISTING RECORED // EMP SMITH SALARY CHANGE
+ 50% INCRESE
+
+UPDATE EMP 
+SET SAL=SAL+(0.5*SAL)
+WHERE ENAME='SMITH'
+
+
+// UPDATE SALARY ALL EMPLOYEE 10% INCREASE WHO ARE NOT GETINIG COMMISTION
+
+UDATE EMP
+SET SAL=SAL+(0.1*SAL)
+WHERE EMP 
+
+1] LIST ALL EMPLOYES IN THE ORDER THE WERE HIHRE DATE 
+      SELECT * FROM EMP ORDER BY HIREDATE;
+
+
+2] CALCULATE THE ALL SALARY OF ALL THE MANAGER
+
+     SELECT SUM(SAL) FROM EMP WHERE JOB='MANAGER'
+
+3] LIST THE EMPLOYEE NIUMBER, NAME AND HIREDATE OF ALL EMPLOYES WHO WERE HIREED 1982
+
+     SELECT EMPNO,ENAME,HIREDATE FROM EMP WHERE HIREDATE BETWEEN '1982-01-01' AND '1982-12-31';
+
+4] COUNT THE NUMBER OF DIFFRANCE JOBS IN THE EMP TABLE WITHOUT LISTING THEM 
+    
+    SELECT job, count(job) FROM EMP GROUP BY JOB;
+
+
+5] FIND THE AVRAGE OF COMM, COUNTING ONLY THOSE EMPLOYEE WHO RECEVEDD AA COMMISTION 
+
+     SELECT avg(comm),count(comm) from emp group by comm;
+
+6] find witch  city the opragtion department is located 
+
+      SELECT LOC FROM DEPT WHERE DNAME='OPRATION';
+
+7] WHAT IS SALARY PAID TO THE LOWEST PAID EMPLOYEE
+
+   SELECT ENAME,JOB ,
+   min(SAL) FROM EMP;
+
+8] FIND THE TOTAL ANNUAL SALARY 
+
+   SELECT SUM(SAL*12) FROM EMP WHERE ENAME='WARD';
+
+9] LIST ALL EMPLOYES WITH NO MANAGER
+
+     SELECT * FROM EMP WHERE JOB <>'MANAGER';
+
+
+10] HOW MANAY CHARACTOR IN DEPARTMENT LONGENST NAME 
+
+    SELECT max(DNAME),count(dname) FROM dept;
+
+
+
+11] disply all the details of all mgrs
+
+   select * from emp where job='manager';
+⁬
+
+12] display empnpo, ename job hiredate exp of all mgrsa 
+
+  select EMPNO,ENAME,JOB,HIREDATE FROM emp;
+
+
+
+13] disply all the details of the emps whoes comm is more them sal 
+
+     SELECT * FROM EMP WHERE SAL < COMM;
+

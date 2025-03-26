@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black">
+    <h1 class="text-5xl font-semibold text-center mt-4  font-serif text-[#1b3041] ">Currency Converter</h1>
+    <div class="place-self-center place-items-center px-4 py-6 bg-gray-200 rounded-2xl text-[#4382ec] w-fit mt-10 font-semibold">
+        <div class="">
+            <label for="amount" >Enter Amount</label><br>
+            <input type="text" class="w-96 h-10 rounded-lg pl-2" placeholder="Enter the amount " id="amount">
+        </div>
+
+        <div class="align-center mt-3 ">
+            <label for="ForCurrency">From Currency</label><br>
+            <select name="" id="ForCurrency" class="w-96 h-10 px-2 py-2 rounded-md">
+                <option value="INR">INR</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="AUD">AUD</option>
+                <option value="GBP">GBP</option>
+            </select>
+        </div>
+        <div class="align-center mt-3">
+            <label for="ToCurrency">To Currency</label><br>
+            <select name="" id="ToCurrency"  class="w-96 h-10 px-2 py-2 rounded-md">
+                <option value="USD">USD</option>
+                <option value="INR">INR</option>
+                <option value="EUR">EUR</option>
+                <option value="AUD">AUD</option>
+                <option value="GBP">GBP</option>
+            </select>
+        </div>
+        <button class="px-6 py-2 bg-green-500 w-96 rounded-md mt-4 text-white" onclick="convertAmount(event)" type="button">Convert</button>
+    </div>
+    <div class="place-self-center place-items-center px-4 py-6 bg-gray-200 rounded-2xl text-[#4382ec] w-fit mt-10 font-semibold">
+        <h1 class="text-2xl font-semibold">Converted Amount</h1>
+        <h1 class="text-2xl font-semibold" id="result">1000</h1>
+    </div>
+    <script>
+        var result = document.getElementById('result')
+        var  amount = document.getElementById('amount')
+        var ForCurrency = document.getElementById('ForCurrency')
+        var ToCurrency = document.getElementById('ToCurrency')
+
+    var exchangeRates = { USD: {
+        EUR: 0.92,
+        GBP: 0.82,
+        INR: 85.22,
+        AUD: 1.5,
+      },
+      EUR: {
+        USD: 1.09,
+        GBP: 0.89,
+        INR: 89.7,
+        AUD: 1.63,
+      },
+      GBP: {
+        USD: 1.22,
+        EUR: 1.12,
+        INR: 101.5,
+        AUD: 1.83,
+      },
+      INR: {
+        USD: 0.012,
+        EUR: 0.011,
+        GBP: 0.0098,
+        AUD: 0.018,
+      },
+      AUD: {
+        USD: 0.67,
+        EUR: 0.61,
+        GBP: 0.55,
+        INR: 55.3,
+      }
+    };
+
+// document.addEventListener('click',function converCurrency(){
+//     console.log('hyerre');
+
+// var amount = document.getElementById('amount')
+// var ForCurrency = document.getElementById('ForCurrency')
+// var ToCurrency = document.getElementById('ToCurrency')
+
+// var amount1  = amount.value
+// var ForCurrencys = ForCurrency.value
+// var ToCurrencys = ToCurrency.value
+// var results=0
+
+// switch (ForCurrencys) {
+//     case 'USD':switch (ToCurrencys) {
+//             case 'EUR' = results = amount1* exchangeRates.USD.EUR:
+//                 console.log(re);
+                
+//             break;
+//             case 'GBP' = results = amount1* exchangeRates.USD.GBP:
+//             break
+//             case 'INR' = results = amount1* exchangeRates.USD.INR:
+//             break
+//             case 'AUD' = results = amount1* exchangeRates.USD.AUD:
+//             break
+//     }
+//     break;
+//     case 'INR':switch (ToCurrencys) {
+//         case 'USD' = results = amount1* exchangeRates.INR.USD:
+//             break;
+//             case 'EUR' = results = amount1* exchangeRates.INR.EUR:
+//             break
+//             case 'GBP' = results = amount1* exchangeRates.INR.GBP:
+//             break
+//             case 'AUD' = results = amount1* exchangeRates.USD.AUD:
+//             break
+//     }        
+//     default:
+//         break;
+// }
+// // USD: 0.012,
+// // EUR: 0.011,
+// // GBP: 0.0098,
+// // AUD: 0.018,
+
+// // let results = amount1 * exchangeRates[ForCurrencys][ToCurrencys]
+//     result.innerHTML = results
+
+// })
+   
+const convertAmount = (event) =>
+{
+        event.preventDefault()
+        console.log('hyerre');
+
+        var amount = document.getElementById('amount')
+        var ForCurrency = document.getElementById('ForCurrency')
+        var ToCurrency = document.getElementById('ToCurrency')
+        var amount1  = amount.value
+        var ForCurrencys = ForCurrency.value
+        var ToCurrencys = ToCurrency.value
+        var results=0
+        switch (ForCurrencys) {
+         case 'USD':switch (ToCurrencys) {
+                    case 'EUR' : results = amount1* exchangeRates.USD.EUR  +'€'
+                    break;
+                    case 'GBP' : results = amount1* exchangeRates.USD.GBP + '£'
+                    break
+                    case 'INR' : results = amount1* exchangeRates.USD.INR + '₹'
+                    break
+                    case 'AUD' : results = amount1* exchangeRates.USD.AUD + 'AU$'
+                    break
+            }
+            break;
+        case 'INR':switch (ToCurrencys) {
+                    case 'USD' : results = amount1* exchangeRates.INR.USD + '$'
+                    break;
+                    case 'EUR' : results = amount1* exchangeRates.INR.EUR + '€'
+                    break
+                    case 'GBP' : results = amount1* exchangeRates.INR.GBP + '£'
+                    break
+                    case 'AUD' : results = amount1* exchangeRates.USD.AUD + 'AU$'
+                    break
+            }        
+            break
+        case 'AUD':switch (ToCurrencys) {
+                    case 'USD' : results = amount1* exchangeRates.AUD.USD + '$'
+                    break;
+                    case 'EUR' : results = amount1* exchangeRates.AUD.EUR + '€'
+                    break
+                    case 'GBP' : results = amount1* exchangeRates.AUD.GBP + '£'
+                    break
+                    case 'INR' : results = amount1* exchangeRates.AUD.INR +  '₹'
+                    break
+            }
+            break
+        case 'EUR':switch (ToCurrencys) {
+                    case 'USD' : results = amount1* exchangeRates.EUR.USD + '$'
+                    break;
+                    case 'GBP' : results = amount1* exchangeRates.EUR.GBP + '£'
+                    break
+                    case 'INR' : results = amount1* exchangeRates.EUR.INR + '₹'
+                    break
+                    case 'AUD' : results = amount1* exchangeRates.EUR.AUD + 'AU$'
+                    break
+            }
+            break
+        case 'GBP':switch (ToCurrencys) {
+                    case 'USD' : results = amount1* exchangeRates.GBP.USD + '$'
+                    break;
+                    case 'EUR' : results = amount1* exchangeRates.GBP.EUR + '€'
+                    break
+                    case 'INR' : results = amount1* exchangeRates.GBP.INR + '₹'
+                    break
+                    case 'AUD' : results = amount1* exchangeRates.GBP.AUD + 'AU$'
+                    break
+            }
+            break
+            default:alert('Please select the currency')
+            break;
+        }
+
+        // let results = amount1 * exchangeRates[ForCurrencys][ToCurrencys]
+        result.innerHTML = results
+
+      }
+    </script>
+</body>
+</html>

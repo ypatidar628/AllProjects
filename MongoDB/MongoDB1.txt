@@ -1,0 +1,163 @@
+1] Why we store data?
+Mongo DB is unstructured data base and we can make custom structure base.
+Mongo have data in collection , And run in key value pair like object.
+mongo is schema less data base.
+
+DataBase Introduction
+Database : It is application level permanent storage capable to store data at application level
+This storage will be accessible , manipulated as per requirement .
+It is to deploye dynamicity at
+Application level
+
+SQL based database
+NoSql based database
+SQL : is stand for structure query language , it is set of command used to access & manipulate database related implementation .
+Multiple database follows same approach for working mySql,
+SqlLite3,…..
+
+Check mongo Command  mongosh
+•	Use dbname; create database
+•	Show dbs;show database
+•	Db.createCollection(‘collection_name’){this is string type parameterized method or function}create collection
+•	Show dbs; show database
+•	Show collections;show collection
+•	db.student.find(){with return without aurgument} show collection data
+•	
+•	db.student.find().prettyshow collection data in pretty way 
+
+Insert data into 
+1.	Insert({obj…}) It used before version6.0 
+db.employee.insert({id:101,name:"Sakshak",age:22,role:"employee",sal:12345}),
+
+2.	InsertOne(obj{…})
+db.employee.insertOne({id:102,name:"Saksham",age:22,role:"stdent",fees:1234,phy:54,chem:78,math:88}),
+
+3.	InsertMany(array of object[{…},{…},{…}])
+db.user.insertMany([{'id':101,name:'Saksham',age:22,role:'employee', sal:7000},
+{'id':104,name:'Yogendra',age:23,role:'student',fees:5000,Phy:35,chem:59,math:60},{'id':105,name:'Bhanu',age:24,role:'student',fees:6000,Phy:45,chem:69,math:65}
+,{'id':106,name:'Satyam',age:25,role:'employee', sal:8000},
+{'id':107,name:'Atishay',age:25,role:'student',fees:8000,Phy:75,chem:49,math:75}]);
+
+Show data query
+db.users.find();
+db.users.find({id:101});
+db.users.find({},{role:1});
+db.users.find({},{role:1,name:1,_id:0});
+db.users.find({role:'student'},{name:1,_id:0});
+
+syntax
+db.users.find({where conditions claws},{* field name you want to see or print})
+
+Create sub document
+
+db.user.insertMany([
+  {
+    id: 108,
+    name: 'Sarthak',
+    age: 22,
+    role: 'employee',
+    sal: 70000,
+    address: { street: 101, area: 'pardesipura', city: 'indore' }
+  },
+  {
+    id: 109,
+    name: 'Abhishek',
+    age: 21,
+    role: 'employee',
+    sal: 70700,
+    address: { street: 102, area: 'Kalani', city: 'indore' }
+  },
+  {
+    id: 109,
+    name: 'Mani',
+    age: 21,
+    role: 'employee',
+    sal: 72000,
+    address: { street: 103, area: 'Bypass', city: 'indore' }
+  },
+  {
+    id: 110,
+    name: 'Ram',
+    age: 20,
+    role: 'employee',
+    sal: 40000,
+    address: { street: 104, area: 'civil-lines', city: 'Bhopal' }
+  },
+  {
+    id: 111,
+    name: 'Lakhan',
+    age: 20,
+    role: 'employee',
+    sal: 60000,
+    address: { street: 105, area: 'mahakal-temple', city: 'ujjain' }
+  }
+]);
+
+Query
+db.users.find();
+db.users.find({},{address:1});
+db.users.find({},{address.city:1})
+db.users.find({},{address.city:1,name:1})
+db.users.find({address.city:’indore’},{name:1,address.city:1,_id:0})
+
+Operator
+Logical Operator
+1.AND(,)->
+db.users.find({id:101,name:'Sakshak'})
+db.users.find({$and:[{id:102},{name:"Saksham"}]})
+
+
+2.OR->
+db.users.find({$or:[{id:1012},{name:"Saksham"}]})
+
+3.Relaional->
+ db.users.find({'phy':{$gt:50}})
+ db.users.find({'phy':{$gte:40}})
+ db.users.find({'phy':{$lt:70}})
+ db.users.find({'phy':{$lte:70}})
+ db.users.find({'phy':{$ne:70}})
+ db.users.find({'phy':{$eq:54}})
+
+db.users.find({$and:[{"math":{$gt:50}},{"math":{$lt:70}}]})
+db.users.find({$or:[{"math":{$gt:50}},{"math":{$lt:70}}]})
+
+OrderBY==>
+
+Accending order..
+
+db.users.find().sort({'Phy':1})
+
+Decending Order..
+
+db.users.find().sort({'Phy':-1})
+
+db.users.find({"role":"student"},{"name":1,"Phy":1,"_id":0}).sort({"Phy":1})
+
+Limit==>
+ db.users.find({"role":"student"},{"name":1,"Phy":1,"_id":0}).sort({"Phy":1}).limit(2);
+
+
+Update Query==>>
+db.users.updateOne({"id":107},{$set:{"Phy":50}})
+db.users.updateMany({$or:[{'id':107},{'id':105}]},{$set:{'phy':70}})  ", to add multiple data change"
+
+
+delete Query==>
+ db.users.deleteOne({id:111})
+ db.users.deleteMany({$or:[{id:111},{id:102}]})
+
+======================================================================================================================
+use batch_4;
+
+db.emp.insertMany([ { uid: 1001, name: "Alice Johnson", smon: "January", sal: 5000 }, { uid: 1001, name: "Bob Smith", smon: "February", sal: 5200 }, { uid: 1002, name: "Charlie Brown", smon: "March", sal: 5400 }, { uid: 1002, name: "Diana Prince", smon: "April", sal: 5600 }, { uid: 1002, name: "Ethan Hunt", smon: "May", sal: 5800 }, { uid: 1003, name: "Fiona Gallagher", smon: "June", sal: 6000 }, { uid:1003, name: "George Miller", smon: "July", sal: 6200 }, { uid: 1003, name: "Hannah Montana", smon: "August", sal: 6400 }, { uid:1003, name: "Ian Wright", smon: "September", sal: 6600 }, { uid: 1004, name: "Julia Roberts", smon: "October", sal: 6800 }, { uid: 1004, name: "Kevin Hart", smon: "November", sal: 7000 }, { uid: 1004, name: "Laura Linney", smon: "December", sal: 7200 }, { uid: 1005, name: "Michael Scott", smon: "January", sal: 7400 }, { uid: 1006, name: "Nancy Drew", smon: "February", sal: 7600 }, { uid: 1007, name: "Oscar Wilde", smon: "March", sal: 7800 }] );
+
+
+db.emp.aggregate({$group: {_id: "$name" , total_Quantity:{ $sum : "$quantity"}}});
+db.emp.aggregate({$group: {_id: "$uid" , total_salary:{ $sum : "$sal"}}});
+db.emp.aggregate({$group: {_id: "$uid" , total_salary:{ $avg : "$sal"}}});
+db.emp.aggregate({$group: {_id: "$uid" , total_salary:{ $max : "$sal"}}});
+db.emp.aggregate({$group: {_id: "$uid" , total_salary:{ $min : "$sal"}}});
+ db.emp.aggregate({$group: {_id: "$uid" , total_salary:{ $first : "$sal"}}});
+ db.emp.aggregate({$match:{"uid":1001}},{$group:{_id: "$uid" , total_salary:{$sum:"$sal"}}})
+db.emp.aggregate([{ $group:{ _id: 0, total_sal:{$sum: "$sal" }}}]);
+
