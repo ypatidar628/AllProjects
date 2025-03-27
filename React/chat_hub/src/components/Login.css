@@ -1,0 +1,123 @@
+
+.log-container
+{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    padding-top: 5px;
+    overflow: hidden;
+}
+.login-container {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 20px;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+               0 15px 20px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    /* max-width: 500px; */
+}
+
+.login-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #1e3c72;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #1e3c72;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e1e5ee;
+    border-radius: 10px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: #f8faff;
+    transition: all 0.3s ease;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #1e3c72;
+    background-color: #ffffff;
+    box-shadow: 0 0 15px rgba(30, 60, 114, 0.1);
+}
+
+.error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: none;
+    padding-left: 0.5rem;
+}
+
+.button {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(30, 60, 114, 0.4);
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+.admin-icon {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.admin-icon i {
+    font-size: 3rem;
+    color: #1e3c72;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group .input {
+    padding-left: 3rem;
+}
+
+.input-group i {
+    position: absolute;
+    left: 1rem;
+    top: 80%;
+    transform: translateY(-50%);
+    color: #1e3c72;
+    opacity: 0.7;
+}
