@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import WebService from "../service/WebService";
 import WebAPI from "../service/WebAPI";
-import "../../components/user/MyProfile.css";
 
 function MyProfile() {
   const userData = useSelector((state) => state.userData.value);
