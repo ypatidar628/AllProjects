@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import WebService from '../service/WebService';
-import WebAPI from '../service/WebAPI';
+import WebAIP from '../service/WebAIP';
+import Webservice from '../service/Webservice'
+
 
 const Page1 = () => {
     const [data, setData] = useState([]);
@@ -10,7 +11,7 @@ const Page1 = () => {
     }, []);
 
     const loadAllData = async () => {
-        const response = await WebService.getAPICall(WebAPI.page1);
+        const response = await Webservice.GetAPICall(WebAIP.ProductAPI);
         console.log("All data is ", JSON.stringify(response));
         setData(response.data);
     };

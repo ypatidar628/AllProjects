@@ -1,0 +1,19 @@
+<p>signal works!</p>
+<!--We can use parenthisis () for getting signal values from .ts file.-->
+<!--<button (click)="updateValue('dec')">Decrement</button>-->
+<!--<h1>{{ count() }}</h1>-->
+<!--<button (click)="updateValue('inc')">Increment</button>-->
+<!--WAY 2-->
+
+<button (click)="count.set(count()-1)">Decrement</button>
+<h1>{{ count() }}</h1>
+<button (click)="count.set(count()+1)">Increment</button>
+<!--<h1>{{name()}}</h1>-->
+<!--<h1>{{x}}</h1>-->
+
+<!--Update from html file using set keyword.-->
+<!--<button (click)="count.set(100)">Increas Signal (count)</button>-->
+<!--<button (click)="name.set('Yogendra')">Change Signal (name)</button>-->
+<!--<button (click)="x=100">Increas Property(x)</button>-->
+
+<!--<button (click)="updateValue()">Update Value </button>-->

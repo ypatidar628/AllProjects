@@ -1,0 +1,52 @@
+<style>
+  div{
+    display: flex;
+    gap: 10px;
+  }
+  div button{
+    padding: 4px;
+    font-size: 20px;
+    background-color: transparent;
+    padding-right: 3px;
+    text-align: center;
+    border: 2px solid black;
+    transition: 0.2s ease-in-out;
+  }
+  div button:hover{
+    transform: scale(1.1);
+  }
+</style>
+<h1>switch-case works!</h1>
+
+<div>
+<button (click)="handelColor('green')">Green</button>
+<button (click)="handelColor('red')">Red</button>
+<button (click)="handelColor('yellow')">Yellow</button>
+<button (click)="handelColor('orangered')">Orangered</button>
+<button (click)="handelColor('purple')">Purple</button>
+<button (click)="handelColor('gold')">Gold</button>
+<input type="text" placeholder="Enter Color" (input)="handelColorByInput($event)">
+</div>
+
+@switch (color){
+  @case ('green'){
+    <h1 style="background-color: green; padding: 10px; width: fit-content; text-align: center;">Green Color</h1>
+  }
+  @case ('red'){
+    <h1 style="background-color: red; padding: 10px; width: fit-content; text-align: center;">Green Color</h1>
+  }
+  @case ('yellow'){
+    <h1 style="background-color: yellow; padding: 10px; width: fit-content; text-align: center;">Green Color</h1>
+  }
+  @case ('orangered'){
+    <h1 style="background-color: orangered; padding: 10px; width: fit-content; text-align: center;">Green Color</h1>
+  }
+  @case ('purple'){
+    <h1 style="background-color: purple; padding: 10px; width: fit-content; text-align: center;">Green Color</h1>
+  }
+  @default {
+    <h1 style="background-color: black; padding: 10px; color: white; width: fit-content; text-align: center;">No Color Match</h1>
+  }
+}
+<hr>
+<hr>

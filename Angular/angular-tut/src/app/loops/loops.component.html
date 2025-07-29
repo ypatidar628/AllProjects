@@ -1,0 +1,44 @@
+<style>
+
+  table , tr ,th,td{
+    border: 1px solid black;
+    padding: 10px;
+  }
+  table{
+    padding: 0;
+  }
+  button{
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+</style>
+<h1>loops works!</h1>
+<!--<h2>{{users[0]}}</h2>-->
+<!--<h2>{{users[1]}}</h2>-->
+<!--<h2>{{users[2]}}</h2>-->
+@for (user of users; track user) {
+  <h2>{{ user }}</h2>
+}
+
+<hr>
+@for (student of students; track student.name; let userId =$index) {
+  <div>
+   <table style="margin-bottom: 10px">
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Age</th>
+      <th>Action</th>
+    </tr>
+     <tr>
+       <td>{{userId+1}}</td>
+       <td>{{student.name}}</td>
+       <td>{{student.email}}</td>
+       <td>{{student.age}}</td>
+       <td> <button style="background:lightgreen  ; padding: 6px; border: none" (click)="getName(student.name)">Get Name</button></td>
+     </tr>
+   </table>
+
+  </div>
+}

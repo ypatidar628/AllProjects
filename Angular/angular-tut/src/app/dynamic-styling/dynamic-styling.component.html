@@ -1,0 +1,7 @@
+<p [style.background-color]="color">dynamic-styling works!</p>
+<p [style.font-size.pt]="fontSize">dynamic-styling works!</p>
+<!--px = pixel , pt = peerctntage-->
+
+<h1 [style.font-size]="zoom ? bigSize : smallSize" >Yogendra</h1>
+  <h1 [style.font-size]="zoom ? '100px' : '50px'" >Yogendra</h1>
+<button (click)="toggleZoom()">Controle Zoom</button>

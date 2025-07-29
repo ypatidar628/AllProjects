@@ -1,0 +1,48 @@
+<!--<p>if-else-flow works!</p>-->
+<!--<button (click)="hide()" style="padding: 10px; background-color: red;">Hide Div</button><br><br>-->
+<!--<button (click)="show()" style="padding: 10px; background-color: green;">Show Div</button><br><br>-->
+<!--<button (click)="toggel()" style="padding: 10px; background-color: green;">Toggel Div</button><br><br>-->
+
+<!--@if(display){-->
+<!--<div style="height: 200px; width: 200px; background-color:darkslategray"></div>-->
+<!--}-->
+<!--<br>-->
+
+<!--&lt;!&ndash;<button (click)="toggelTwo()" style="padding: 10px; background-color: green;">{{toggelDiv?'Show Slate-Blue Div ':'Show Sea-Green Div' }}</button>&ndash;&gt;-->
+<!--@if(toggelDiv) {-->
+<!--  <button (click)="toggelTwo()" style="padding: 10px; background-color: slateblue;">Show Slate-Blue Div </button>-->
+<!--} @else {-->
+<!--  <button (click)="toggelTwo()" style="padding: 10px; background-color: seagreen;">Show Sea-Green Div </button>-->
+<!--}-->
+<!--<br><br>-->
+<!--<br>-->
+
+
+<!--@if(toggelDiv){-->
+<!--  <div style="height: 200px; width: 200px; background-color:seagreen"></div>-->
+<!--} @else {-->
+<!--  <div style="height: 200px; width: 200px; background-color:slateblue"></div>-->
+<!--}-->
+<!--<br>-->
+
+<h1>Else if condition</h1>
+<br>
+<div>
+  <button (click)="handelColor(1)" style="color:slateblue; padding: 4px; font-size: 20px">Slate-Blue</button>
+  <button (click)="handelColor(2)" style="margin: 10px; color:saddlebrown; padding: 4px; font-size: 20px">Saddle-Brown
+  </button>
+  <button (click)="handelColor(3)" style="margin: 10px; color:lightcoral; padding: 4px; font-size: 20px">Light-Coral
+  </button>
+  <button (click)="handelColor(4)" style="margin: 10px; color:black; padding: 4px; font-size: 20px">Other</button>
+
+  <input type="text" placeholder="Enter color" (input)="handelColorByInput($event)">
+</div>
+@if (color == 1 || color=="slateblue") {
+  <div style="background-color:slateblue; width: 460px; height: 100px"></div>
+} @else if (color == 2) {
+  <div style="background-color:saddlebrown; width: 460px; height: 100px"></div>
+} @else if (color == 3) {
+  <div style="background-color:lightcoral; width: 460px; height: 100px"></div>
+} @else {
+  <div style="background-color:black; width: 460px; height: 100px"></div>
+}

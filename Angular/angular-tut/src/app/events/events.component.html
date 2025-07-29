@@ -1,0 +1,14 @@
+<h2>Events Conponent  Start</h2>
+<button class="btn" name="login" (click)="handelEvent($event)">Click Event</button>
+<br><br><br>
+
+<div (mouseenter)="handelEvent($event)" style="background-color:green; width: 100px; height: 100px "></div>
+<div (mouseleave)="handelEvent($event)" style="background-color:blue; width: 100px; height: 100px "></div>
+<br><br>
+<input
+  (focus)="handelEvent($event)"
+  (blur)="handelEvent($event)"
+  (input)="handelEvent($event)"
+       type="text" placeholder="enter name" name="user">
+<br><br><br><br><br><br>
+<h2>Events Component End</h2>

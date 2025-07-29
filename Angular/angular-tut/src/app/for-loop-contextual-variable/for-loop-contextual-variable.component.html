@@ -1,0 +1,17 @@
+<p>for-loop-contextual-variable works!</p>
+@for (users of userNames; track users; let i = $index ; let f = $first ; let c = $count) {
+<!--  @if (f || $last) {-->
+<!--    <h3 style="background-color: purple">This is our <i>{{i+1}}</i> user and name is <i>{{users}}</i></h3>-->
+<!--  } @else {-->
+<!--    <h4>This is our <i>{{i+1}}</i> user and name is <i>{{users}}</i></h4>-->
+<!--  }-->
+<!--  <h2>All users are {{c}}</h2> count all data in no. -->
+  @if ($odd) {
+  <h4 style="background-color: lightgreen">This is our <i>{{i+1}}</i> user and name is <i>{{users}}</i></h4>
+  }
+  @if($even) {
+  <h4 style="background-color: seagreen">This is our <i>{{i+1}}</i> user and name is <i>{{users}}</i></h4>
+}
+} @empty {
+  <h1  style="color: red">No Record Found</h1>
+}
