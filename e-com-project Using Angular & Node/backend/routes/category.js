@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Category = require('../db/category');  
+const Category = require('../db/category');
+const { addCategory, updateCategory, deleteCategory, viewAllCategory } = require('../handlers/category-handler');
 
 
 router.post('/', async (req, res, next) => {
@@ -9,35 +10,65 @@ router.post('/', async (req, res, next) => {
         if (!name) {
             return res.status(400).json({ message: 'Name is required' });
         }
+        let ifDuplicate = await Category.findOne({ name: name });
+        if (ifDuplicate) {
+            return res.status(400).json({ message: 'Category already exists' });
+        }
+        let result = await addCategory(name);
+        console.log(result);
+        res.status(201).json(200, { status: 200, message: "Category added successfully", result });
 
-        const category = await Category.create({ name });
 
-        res.status(201).json(category.toObject());
-        console.log(category);
-        
+    } catch (err) {
+        next(err);
+    }
+});
+router.get('/view', async (req, res, next) => {
+    try {
+        let result = await viewAllCategory();
+        if (!result) {
+            return res.status(404).json({ message: 'No categories found' });
+        }
+        res.status(200).json({ status: 200, message: "All Categories", result });
+    } catch (err) {
+        next(err);
+    }
+});
+router.put('/update/:id', async (req, res, next) => {
+    try {
+        const { id, name } = req.body;
+
+        if (!id || !name) {
+            return res.status(400).json({ message: 'Both id and name are required' });
+        }
+
+        let result = await updateCategory(id, name);
+        if (!result) {
+            return res.status(404).json({ message: 'Category not found' });
+        }
+
+
+        res.status(200).json({ status: 200, message: "Category Update Successfully", result });
     } catch (err) {
         next(err);
     }
 });
 
-router.put('/', async (req, res, next) => {
-  try {
-    const { id, name } = req.body;
-
-    if (!id || !name) {
-      return res.status(400).json({ message: 'Both id and name are required' });
+router.delete('/delete/:id', async (req, res, next) => {
+    try {
+        const { id } = req.body;
+        if (!id) {
+            return res.status(400).json({ message: 'Id is required' });
+        }
+        let result = await deleteCategory(id);
+        if (!result) {
+            return res.status(404).json({ message: 'Category not found' });
+        }
+        res.status(200).json({ status: 200, message: 'Category deleted successfully', result });
     }
-
-    const category = await Category.findByIdAndUpdate(id,{ name: name },{ new:true, runValidators: true });
-
-    if (!category) {
-      return res.status(404).json({ message: 'Category not found' });
+    catch (err) {
+        next(err);
     }
-
-    res.status(200).json(category.toObject());
-  } catch (err) {
-    next(err);
-  }
-});
+})
 
 module.exports = router;

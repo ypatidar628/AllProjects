@@ -1,0 +1,78 @@
+<div class="p-4 md:p-8 max-w-7xl mx-auto">
+  <!-- Heading -->
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">📂 Manage Category </h2>
+
+  <!-- Search Bar -->
+  <div class="mb-6 max-w-md">
+    <mat-form-field appearance="outline" >
+      <mat-label class="mr-4">🔍 Search Category</mat-label>
+      <input
+        matInput
+        [(ngModel)]="searchText"
+        (keyup)="applyFilter()"
+        placeholder="Type category name..."
+      />
+      <button mat-icon-button matSuffix (click)="applyFilter()">
+        <mat-icon class="mt-2 mr-4">search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <!-- Table Container -->
+  <div class="overflow-x-auto shadow-md rounded-lg border border-gray-200 bg-white">
+    <table
+      mat-table
+      [dataSource]="paginatedData"
+      class="min-w-full divide-y divide-gray-200 text-sm md:text-base"
+    >
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-3 text-left bg-gray-100 font-semibold text-gray-700">
+          ID
+        </th>
+        <td mat-cell *matCellDef="let category" class="px-4 py-3 text-gray-800">
+          {{ category.id }}
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-3 text-left bg-gray-100 font-semibold text-gray-700">
+          Name
+        </th>
+        <td mat-cell *matCellDef="let category" class="px-4 py-3 font-medium text-gray-900">
+          {{ category.name }}
+        </td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-3 text-left bg-gray-100 font-semibold text-gray-700">
+          Description
+        </th>
+        <td mat-cell *matCellDef="let category" class="px-4 py-3 text-gray-700">
+          {{ category.description }}
+        </td>
+      </ng-container>
+
+      <!-- Header and Row Definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="hover:bg-gray-50 transition duration-200"
+      ></tr>
+    </table>
+  </div>
+
+  <!-- Paginator -->
+  <div class="mt-6">
+    <mat-paginator
+      [length]="filteredCategories.length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 20]"
+      (page)="pageChanged($event)"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>
