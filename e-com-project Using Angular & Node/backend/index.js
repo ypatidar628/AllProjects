@@ -6,9 +6,11 @@ const port = 3000;
 
 const categoryRoutes = require('./routes/category.js');
 const userRoutes = require('./routes/user.js')
+const cors = require('cors');
 
 // Middleware
 app.use(express.json());
+app.use(cors());
 
 // Test route
 app.get('/', (req, res) => {

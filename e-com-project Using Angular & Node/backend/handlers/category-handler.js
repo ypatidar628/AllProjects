@@ -21,6 +21,6 @@ async function deleteCategory(id) {
 }
 async function viewAllCategory(id) {
     const allCategory = await Category.find();   
-    return  allCategory ;
+    return  allCategory.map(category => category.toObject());
 }
 module.exports = { addCategory , updateCategory , deleteCategory , viewAllCategory};

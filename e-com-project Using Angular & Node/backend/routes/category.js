@@ -4,7 +4,7 @@ const Category = require('../db/category');
 const { addCategory, updateCategory, deleteCategory, viewAllCategory } = require('../handlers/category-handler');
 
 
-router.post('/', async (req, res, next) => {
+router.post('/add', async (req, res, next) => {
     try {
         const { name } = req.body;
         if (!name) {
@@ -16,7 +16,7 @@ router.post('/', async (req, res, next) => {
         }
         let result = await addCategory(name);
         console.log(result);
-        res.status(201).json(200, { status: 200, message: "Category added successfully", result });
+        res.status(201).json( { status: 200, message: "Category added successfully", result });
 
 
     } catch (err) {
@@ -25,13 +25,13 @@ router.post('/', async (req, res, next) => {
 });
 router.get('/view', async (req, res, next) => {
     try {
-        let result = await viewAllCategory();
-        if (!result) {
+        let allCategories = await viewAllCategory();
+        if (!allCategories || allCategories.length === 0) {
             return res.status(404).json({ message: 'No categories found' });
         }
-        res.status(200).json({ status: 200, message: "All Categories", result });
+        res.status(200).json({ status: 200, message: "All Categories", allCategories });
     } catch (err) {
-        next(err);
+        next(err);  
     }
 });
 router.put('/update/:id', async (req, res, next) => {
