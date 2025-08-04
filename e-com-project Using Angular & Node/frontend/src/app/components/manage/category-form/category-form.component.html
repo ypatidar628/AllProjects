@@ -1,6 +1,11 @@
 <div class="flex flex-col items-center px-4 md:px-10 mt-10">
   <!-- Heading -->
+  @if (isEdit) {
+    <h1 class="text-2xl sm:text-3xl font-medium mb-6 text-center">⬆️ Update Category</h1>
+  } @else {
+
   <h1 class="text-2xl sm:text-3xl font-medium mb-6 text-center">➕ Add Category</h1>
+  }
 
   <!-- Form Container -->
   <form class="w-full max-w-md bg-white p-6 rounded shadow-md">
@@ -17,8 +22,12 @@
         </button>
           } @else {
 
-      <button type="button" (click)="addCategory()"  class="bg-white shadow text-blue-500 px-6 py-4 rounded hover:bg-blue-100 transition w-full sm:w-auto mb-5">➕Add
-      </button>
+        @if (isEdit){
+          <button type="button" (click)="updateCategory()"  class="bg-white shadow text-blue-500 px-6 py-4 rounded hover:bg-blue-100 transition w-full sm:w-auto mb-5">⬆️Update </button>
+            }
+        @else {
+      <button type="button" (click)="addCategory()"  class="bg-white shadow text-blue-500 px-6 py-4 rounded hover:bg-blue-100 transition w-full sm:w-auto mb-5">➕Add️</button>
+        }
       }
     </div>
   </form>

@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Category = require('../db/category');
-const { addCategory, updateCategory, deleteCategory, viewAllCategory, getCategoryById } = require('../handlers/category-handler');
-
+const Brand = require('../db/brand');
+const { addBrand, deleteBrand, getBrandById, viewAllBrand } = require('../handlers/brand-handler');
 
 router.post('/add', async (req, res, next) => {
     try {
@@ -11,26 +10,27 @@ router.post('/add', async (req, res, next) => {
         if (!name) {
             return res.status(400).json({ message: 'Name is required' });
         }
-        let ifDuplicate = await Category.findOne({ name: name });
+        let ifDuplicate = await Brand.findOne({ name: name });
         if (ifDuplicate) {
-            return res.status(400).json({ message: 'Category already exists' });
+            return res.status(400).json({ message: 'Brand already exists' });
         }
-        let result = await addCategory(name);
+        let result = await addBrand(name);
         console.log(result);
-        res.status(201).json( { status: 200, message: "Category added successfully", result });
+        res.status(201).json( { status: 200, message: "Brand added successfully", result });
 
 
     } catch (err) {
         next(err);
     }
 });
+
 router.get('/view', async (req, res, next) => {
     try {
-        let allCategories = await viewAllCategory();
-        if (!allCategories || allCategories.length === 0) {
-            return res.status(404).json({ message: 'No categories found' });
+        let allBrand = await viewAllBrand();
+        if (!allBrand || allBrand.length === 0) {
+            return res.status(404).json({ message: 'No Brand found' });
         }
-        res.status(200).json({ status: 200, message: "All Categories", allCategories });
+        res.status(200).json({ status: 200, message: "All Brands", allBrand });
     } catch (err) {
         next(err);  
     }
@@ -38,11 +38,11 @@ router.get('/view', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
  let id = req.params["id"];
- let result = await getCategoryById(id);
+ let result = await getBrandById(id);
     if (!result) {
-        return res.status(404).json({ message: 'Category not found' });
+        return res.status(404).json({ message: 'Brand not found' });
     }
-    res.status(200).json({ status: 200, message: "Category found", result });
+    res.status(200).json({ status: 200, message: "Brand found", result });
 });
 
 router.put("/update/:id", async (req, res) => {
@@ -50,7 +50,8 @@ router.put("/update/:id", async (req, res) => {
   const { name } = req.body;
 
   try {
-    const updated = await Category.findByIdAndUpdate(id, { name }, { new: true });
+    const updated = await Brand.findByIdAndUpdate(id, { name }, { new: true });
+    res.status(200).json({ status: 200, message: "Brand updated successfully", updated });
     res.json(updated);
   } catch (error) {
     res.status(500).json({ message: "Update failed", error });
@@ -66,11 +67,11 @@ router.delete('/delete/:id', async (req, res, next) => {
         if (!id) {
             return res.status(400).json({ message: 'Id is required' });
         }
-        let result = await deleteCategory(id);
+        let result = await deleteBrand(id);
         if (!result) {
-            return res.status(404).json({ message: 'Category not found' });
+            return res.status(404).json({ message: 'Breans not found' });
         }
-        res.status(200).json({ status: 200, message: 'Category deleted successfully', result });
+        res.status(200).json({ status: 200, message: 'Brand deleted successfully', result });
     }
     catch (err) {
         next(err);

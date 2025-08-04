@@ -6,6 +6,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/home/home.component').then((m) => m.HomeComponent),
   },
+  //Category Routes
   {
     path: 'admin/categories',
     loadComponent: () =>
@@ -27,6 +28,30 @@ export const routes: Routes = [
         (m) => m.CategoryFormComponent
       ),
   },
+
+  //Brand Routes
+  {
+    path: 'admin/brands',
+    loadComponent: () =>
+      import('./components/manage/brands/brands.component').then(
+        (m) => m.BrandsComponent
+      ),
+  },
+  {
+    path: 'admin/brands/add',
+    loadComponent: () =>
+      import('./components/manage/brand-form/brand-form.component').then(
+        (m) => m.BrandFormComponent
+      ),
+  },
+  {
+    path: 'admin/brands/:id',
+    loadComponent: () =>
+      import('./components/manage/brand-form/brand-form.component').then(
+        (m) => m.BrandFormComponent
+      ),
+  },
+
   {
     path: '**',
     redirectTo: '',

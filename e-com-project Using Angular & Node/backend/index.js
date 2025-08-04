@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const app = express();
 const port = 3000;
 
-const categoryRoutes = require('./routes/category.js');
 const userRoutes = require('./routes/user.js')
 const cors = require('cors');
 
@@ -18,7 +17,12 @@ app.get('/', (req, res) => {
 });
 
 // Category routes
+const categoryRoutes = require('./routes/category.js');
 app.use('/category', categoryRoutes);
+
+//Brand Routes
+const brandRoutes = require('./routes/brand.js');
+app.use('/brand', brandRoutes);
 
 //User ROutes
 app.use('/user', userRoutes)

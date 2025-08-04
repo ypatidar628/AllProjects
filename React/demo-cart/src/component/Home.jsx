@@ -19,9 +19,7 @@ const Page1 = () => {
     return (
         <div className='mt-16 px-4'>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
-                {data
-                    .filter(story => story.Status?.length > 0)
-                    .map((story) => (
+                {data.filter(story => story.Status?.length > 0).map((story) => (
                         <div
                             key={story._id}
                             className="bg-white shadow-lg rounded-2xl p-4 hover:shadow-2xl transition"
