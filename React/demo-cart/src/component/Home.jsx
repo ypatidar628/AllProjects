@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Webservice from '../service/Webservice';
-import WebAPI from '../service/WebAIP';
+import Webservice from "../service/Webservice";
+import WebAPI from "../service/WebAIP";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/Slice";
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState(""); // priceLowHigh, priceHighLow, ratingHighLow, latest, oldest
+  const [mainImage, setMainImage] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,7 +19,6 @@ const Home = () => {
     try {
       const response = await Webservice.GetAPICall(WebAPI.ProductAPI);
       console.log("All data is", response.data?.products);
-
       setData(Array.isArray(response.data?.products) ? response.data.products : []);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -24,21 +26,71 @@ const Home = () => {
     }
   };
 
-const handleAddToCart = (product) => {
-  dispatch(addToCart(product));
-  console.log("Added to cart:", product);
-//   alert(`${product.title} added to cart!`);
-};
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+    console.log("Added to cart:", product);
+  };
+
+  // Filter and sort logic
+  const filteredData = data
+    .filter((product) =>
+      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      switch (sortOption) {
+        case "priceLowHigh":
+          return a.price - b.price;
+        case "priceHighLow":
+          return b.price - a.price;
+        case "ratingHighLow":
+          return b.rating - a.rating;
+        case "ratingLowHigh":
+          return a.rating - b.rating;
+        default:
+          return 0;
+      }
+    });
+
+
+  // console.log("Main img Data:", mainImage);
+  
 
   return (
     <div className="mt-16 px-4">
       <h1 className="text-3xl font-bold mb-6 text-center">Product List</h1>
 
-      {data.length === 0 ? (
-        <p className="text-center text-gray-500">No products available</p>
+      {/* Filters */}
+      <div className="flex flex-col sm:flex-row gap-4 mb-6 justify-center">
+        {/* Search */}
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border border-gray-300 px-4 py-2 rounded-lg w-full sm:w-64"
+        />
+
+        {/* Sort */}
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="border border-gray-300 px-4  py-2 rounded-lg w-full sm:w-48"
+        >
+          <option value="">Filter</option>
+          <option value="priceLowHigh">Price: Low to High</option>
+          <option value="priceHighLow">Price: High to Low</option>
+          <option value="ratingHighLow">Rating: High to Low</option>
+          <option value="ratingLowHigh">Rating: Low to High</option>
+          
+        </select>
+      </div>
+
+      {/* Product Cards */}
+      {filteredData.length === 0 ? (
+        <p className="text-center text-gray-500">No products found</p>
       ) : (
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {data.map((product) => (
+          {filteredData.map((product) => (
             <div
               key={product.id}
               className="bg-white rounded-lg shadow-lg hover:shadow-2xl transition p-4 flex flex-col"
@@ -46,14 +98,14 @@ const handleAddToCart = (product) => {
               {/* Thumbnail */}
               {product.thumbnail && (
                 <img
-                  src={product.thumbnail}
+                  src={mainImage.id == product.id ? mainImage.img : product.thumbnail}
                   alt={product.title}
-                  className="h-48 w-full object-cover rounded-md mb-4"
+                  className="h-48 w-40 object-cover self-center rounded-md mb-4"
                 />
               )}
 
               {/* Title */}
-              <h2 className="text-lg font-semibold text-gray-800 mb-1">
+              <h2 className="text-lg font-semibold text-gray-800 mb-1 mt-3">
                 {product.title}
               </h2>
 
@@ -79,9 +131,7 @@ const handleAddToCart = (product) => {
               </p>
 
               {/* Rating */}
-              <p className="text-sm text-yellow-600 mb-1">
-                ⭐ {product.rating}
-              </p>
+              <p className="text-sm text-yellow-600 mb-1">⭐ {product.rating}</p>
 
               {/* Stock */}
               <p
@@ -98,6 +148,7 @@ const handleAddToCart = (product) => {
                   {product.images.map((img, index) => (
                     <img
                       key={index}
+                      onClick={()=>setMainImage({'img': img , id : product.id})}
                       src={img}
                       alt="Product"
                       className="h-20 w-20 object-cover rounded-md border"
