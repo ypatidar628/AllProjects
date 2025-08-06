@@ -24,6 +24,10 @@ app.use('/category', categoryRoutes);
 const brandRoutes = require('./routes/brand.js');
 app.use('/brand', brandRoutes);
 
+// Product routes
+const productRoutes = require('./routes/product.js');
+app.use('/product', productRoutes)
+
 //User ROutes
 app.use('/user', userRoutes)
 // Database connection

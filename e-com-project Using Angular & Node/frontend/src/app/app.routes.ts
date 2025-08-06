@@ -52,6 +52,29 @@ export const routes: Routes = [
       ),
   },
 
+
+  //Product Routes
+  {
+    path: 'admin/product',
+    loadComponent: () =>
+      import('./components/manage/products/products.component').then(
+        (m) => m.ProductsComponent
+      ),
+  },
+  {
+    path: 'admin/product/add',
+    loadComponent: () =>
+      import('./components/manage/product-form/product-form.component').then(
+        (m) => m.ProductFormComponent
+      ),
+  },
+  {
+    path: 'admin/product/:id',
+    loadComponent: () =>
+      import('./components/manage/product-form/product-form.component').then(
+        (m) => m.ProductFormComponent
+      ),
+  },
   {
     path: '**',
     redirectTo: '',

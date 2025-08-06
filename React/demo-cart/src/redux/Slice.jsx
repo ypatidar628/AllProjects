@@ -1,47 +1,48 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const slice = createSlice({
-    name:'ProductData',
-    initialState:{
-        value:[]
-},
-reducers:{
-    addCartData: (state, action) => {
-        const productData = action.payload;
-        const pid = productData.id;
-    
-        // Check if the product already exists in the cart
-        const existingProduct = state.value.find((item) => item.productData.id === pid);
-            console.log(existingProduct);
-            
-        if (existingProduct) {
-            // If the product exists, increment the quantity
-            existingProduct.qty = existingProduct.qty + 1;
-        } else {
-            // If the product doesn't exist, add it with a qty of 1
-            state.value.push({ productData, qty: 1 });
-        }
+const cartSlice = createSlice({
+  name: "cart",
+  initialState: {
+    items: [],
+  },
+  reducers: {
+    addToCart: (state, action) => {
+      const existingItem = state.items.find((item) => item.id === action.payload.id);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        state.items.push({ ...action.payload, quantity: 1 });
+      }
     },
-
-    incrimentQty:(state,action)=>
-    {
-        var pid = action.payload
-        state.value = state.value.map((obj)=>obj.productData.id == pid ? {...obj,qty:obj.qty+1}: obj )
-
+    incrementQty: (state, action) => {
+      const item = state.items.find((i) => i.id === action.payload);
+      if (item) {
+        item.quantity += 1;
+      }
     },
-    dicrimentQty:(state,action)=>
-        {
-            var pid = action.payload
-            state.value = state.value.map((obj)=>obj.productData.id==pid ?{...obj,qty:obj.qty>0 ?obj.qty-1 : obj==0}:obj )
-        },
-        removeData:(state,action)=>
-        {
-            var pid = action.payload
-            state.value = state.value.filter((obj)=>obj.productData.id != pid )
+    decrementQty: (state, action) => {
+      const item = state.items.find((i) => i.id === action.payload);
+      if (item && item.quantity > 1) {
+        item.quantity -= 1;
+      } else if (item && item.quantity === 1) {
+        state.items = state.items.filter((i) => i.id !== action.payload);
+      }
+    },
+    removeData: (state, action) => {
+      state.items = state.items.filter((i) => i.id !== action.payload);
+    },
+    clearCart: (state) => {
+      state.items = [];
+    },
+  },
+});
 
-        }
-}
+export const {
+  addToCart,
+  incrementQty,
+  decrementQty,
+  removeData,
+  clearCart,
+} = cartSlice.actions;
 
-})
-export const {addCartData,incrimentQty,dicrimentQty,removeData} = slice.actions
-export default slice.reducer;
+export default cartSlice.reducer;

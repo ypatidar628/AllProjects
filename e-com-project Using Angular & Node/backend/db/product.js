@@ -4,8 +4,8 @@ const productSchema = new mongoose.Schema({
     name:String,
     shotDescription:String,
     description:String,
-    purchasePrice:Number,
-    sellingPrice:Number,
+    Price:Number,
+    discount:Number,
     image:Array(String),
     categoryId:{type : mongoose.Schema.Types.ObjectId, ref: 'categories'},
 });
