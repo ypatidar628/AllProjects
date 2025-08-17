@@ -27,7 +27,7 @@ router.post('/', async (req, res, next) => {
 
         res.status(201).json({ status: 201, message: "User added successfully", result });
 
-        console.log(user);
+        // console.log(user);
 
     }
     catch (err) {

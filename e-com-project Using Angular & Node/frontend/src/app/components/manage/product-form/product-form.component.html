@@ -1,1 +1,59 @@
-<p>product-form works!</p>
+<div class="flex flex-col items-center px-4 md:px-10 mt-10">
+  <h1>➕ Add New Product</h1>
+
+  <!-- Form Container -->
+  <form class="w-full max-w-md bg-white p-6 rounded shadow-md" [formGroup]="productForm">
+    <div class="sm:flex-row gap-4 items-start sm:items-end">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" placeholder="Enter product  name" formControlName="name"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Show Description</mat-label>
+        <input matInput type="text" placeholder="Enter product short description" formControlName="shotDescription" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Description</mat-label>
+        <textarea matInput type="text" placeholder="Enter product  description" formControlName="description" rows="2" ></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Price</mat-label>
+        <input matInput type="text" placeholder="Enter product price" formControlName="price" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Discount</mat-label>
+        <input matInput type="text" placeholder="Enter product  discount" formControlName="discount" />
+      </mat-form-field>
+
+
+      <div class=" w-full gap-4 items-start sm:items-end" formArrayName="images" >
+        <div class="flex justify-between">
+          <h4 class="mt-3">Images➡️</h4>
+        <button type="button" (click)="addImage()" class="bg-transparent  text-blue-500 px-2 py-4 rounded transition  shadow-md text-left duration-200 ease-in-out w-full sm:w-auto mb-5">➕Add Image
+        </button>
+          <button type="button" (click)="removeImage()" class="bg-transparent  text-blue-500 px-2 py-4 rounded transition shadow-md duration-200 ease-in-out w-full sm:w-auto mb-5">➖ Remove Image
+          </button>
+        </div>
+        @for (item of images.controls; track $index){
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Image {{$index+1}}</mat-label>
+          <input matInput type="text"  [formControlName]="$index"/>
+        </mat-form-field>
+        }
+      </div>
+
+
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
+
+    <button type="button" (click)="addProduct()" class="bg-transparent  text-blue-500 px-6 py-4 rounded transition duration-200 ease-in-out w-full sm:w-auto mb-5">➕Add
+    </button>
+
+    </div>
+  </form>
+</div>

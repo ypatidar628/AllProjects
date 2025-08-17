@@ -16,11 +16,11 @@ export class ProductService {
   getProductById(id:string){
     return this.http.get<Product>("http://localhost:3000/Product/"+id);
   }
-  addProduct(data: { name: string }) {
-    return this.http.post("http://localhost:3000/Product/add", data);
+  addProduct(data:Product) {
+    return this.http.post("http://localhost:3000/Product/add",data);
   }
   updateProduct(id: string, name: string) {
-    return this.http.put(`http://localhost:3000/Product/update/${id}`, { name });
+    return this.http.put(`http://localhost:3000/Product/update/${id}`,{ name });
   }
   deleteProduct(id: string) {
     return this.http.delete(`http://localhost:3000/Product/delete/${id}`);

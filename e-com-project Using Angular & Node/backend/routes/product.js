@@ -70,6 +70,9 @@ router.get('/view/:id', async (req, res, next) => {
 router.get('/viewAll', async (req, res, next) => {
     try {
         let allProducts = await Product.find();
+        if (!allProducts || allProducts.length === 0) {
+            return res.status(404).json({ message: 'No products found' });
+        }   
         res.status(200).json({ status: 200, message: "All products retrieved successfully", result: allProducts.map(product => product.toObject()) });
     }
     catch (err) {
