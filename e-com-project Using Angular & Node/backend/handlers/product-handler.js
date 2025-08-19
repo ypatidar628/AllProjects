@@ -1,28 +1,28 @@
 const Product = require("../db/product")
 
 async function addProduct(model){
-    const addsProduct = await Product.create(model);
-    return addsProduct.toObject();
+    const addedProduct = await Product.create(model);
+    return addedProduct.toObject();
 }
 
-async function updatePoduct(id, model){
+async function updateProduct(id, model){  
     const updatedProduct = await Product.findByIdAndUpdate(id, model, { new: true, runValidators: true });
-    return updatedProduct.toObject();       
+    return updatedProduct?.toObject();       
 } 
 
 async function deleteProduct(id) {
     const deletedProduct = await Product.findByIdAndDelete(id);
-    return deletedProduct.toObject();
+    return deletedProduct?.toObject();
 }   
 
 async function getProductById(id) {
     const product = await Product.findById(id);
-    return product.toObject();  
+    return product?.toObject();  
 }
 
 async function viewAllProduct() {
-    const allProduct = await Product.find();
-    return allProduct.map(product => product.toObject());
+    const allProducts = await Product.find();
+    return allProducts.map(product => product.toObject());
 }   
 
-module.exports = {addProduct , updatePoduct, deleteProduct, getProductById, viewAllProduct};
+module.exports = { addProduct , updateProduct, deleteProduct, getProductById, viewAllProduct };

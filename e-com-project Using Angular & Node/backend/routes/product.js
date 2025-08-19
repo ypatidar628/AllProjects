@@ -7,8 +7,8 @@ const { addProduct } = require('../handlers/product-handler');
 router.post('/add', async (req, res, next) => {
     try {
         console.log('Request body:', JSON.stringify(req.body));
-        const { name, shotDescription, description, Price, discount, image, categoryId } = req.body;
-        if (!name || !Price || !categoryId) {
+        const { name, shortDescription, description, price, discount, image, categoryId } = req.body;
+        if (!name || !price || !categoryId) {
             return res.status(400).json({ message: 'Name, Price and Category ID are required' });
         }
         let ifDuplicate = await Product.findOne({ name: name });
@@ -26,8 +26,8 @@ router.post('/add', async (req, res, next) => {
 router.put('/update/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { name, shotDescription, description, Price, discount, image, categoryId } = req.body;
-        if (!name || !Price || !categoryId) {
+        const { name, shortDescription, description, price, discount, image, categoryId } = req.body;
+        if (!name || !price || !categoryId) {
             return res.status(400).json({ message: 'Name, Price and Category ID are required' });
         }
         let updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
@@ -40,23 +40,37 @@ router.put('/update/:id', async (req, res, next) => {
     }
 });
 
-router.delete('/delete/:id', async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        let deletedProduct = await Product.findByIdAndDelete(id);
-        if (!deletedProduct) {
-            return res.status(404).json({ message: 'Product not found' });
-        }
-        res.status(200).json({ status: 200, message: "Product deleted successfully", result: deletedProduct.toObject() });
-    } catch (err) {
-        next(err);
-    }   
+router.delete('/delete/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedProduct = await Product.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found"
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Product deleted successfully"
+    });
+
+  } catch (err) {
+    console.error("Error deleting product:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while deleting product"
+    });
+  }
 });
 
 router.get('/view/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
         let product = await Product.findById(id);
+
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
@@ -67,17 +81,29 @@ router.get('/view/:id', async (req, res, next) => {
     }
 });
 
-router.get('/viewAll', async (req, res, next) => {
-    try {
-        let allProducts = await Product.find();
-        if (!allProducts || allProducts.length === 0) {
-            return res.status(404).json({ message: 'No products found' });
-        }   
-        res.status(200).json({ status: 200, message: "All products retrieved successfully", result: allProducts.map(product => product.toObject()) });
+router.get('/viewAll', async (req, res) => {
+  try {
+    const products = await Product.find();
+
+    if (!products || products.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No products found"
+      });
     }
-    catch (err) {
-        next(err);
-    }
+    return res.status(200).json({
+      success: true,
+      result: products
+    });
+
+  } catch (err) {
+    console.error("Error fetching products:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while fetching products"
+    });
+  }
 });
+
 
 module.exports = router;

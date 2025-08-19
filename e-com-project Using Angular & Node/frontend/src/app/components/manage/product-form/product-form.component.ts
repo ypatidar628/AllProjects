@@ -1,43 +1,69 @@
-import {Component, inject} from '@angular/core';
-import {FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
+import { Component, inject } from '@angular/core';
+import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { ProductService } from '../../../services/product.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-form',
-  imports: [ReactiveFormsModule, FormsModule , MatInputModule],
+  imports: [ReactiveFormsModule, FormsModule, MatInputModule],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.scss'
 })
 export class ProductFormComponent {
 
-formBuilder = inject(FormBuilder);
-productForm = this.formBuilder.group({
-  name: [null , [ Validators.required , Validators.minLength(5)]],
-  shotDescription: [null , [ Validators.required , Validators.minLength(10)]],
-  description: [null , [ Validators.required , Validators.minLength(50)]],
-  price: [null , [ Validators.required ]],
-  discount: [],
-  images: this.formBuilder.array([]),
-  categoryId: [null , [ Validators.required ]],
-})
-  value :any ='';
+  private productService = inject(ProductService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  private formBuilder = inject(FormBuilder);
+
+  productForm = this.formBuilder.group({
+    name: [null, [Validators.required, Validators.minLength(5)]],
+    description: [null, [Validators.required, Validators.minLength(50)]],
+    price: [null, [Validators.required]],
+    discount: [],
+    images: this.formBuilder.array([]),
+    categoryId: [null, [Validators.required]],
+  });
+
   ngOnInit() {
-  this.addImage();
+    this.addImage();
   }
 
-  addProduct(){
+  addProduct() {
+    if (!this.productForm.valid) {
+      this.productForm.markAllAsTouched();
+      console.warn("❌ Form invalid, please fill required fields.");
+      return;
+    }
 
-  this.value = this.productForm.value;
-    console.log(this.value)
-  // this.productForm.reset();
+    const value = this.productForm.getRawValue();
+    console.log("✅ Submitting product:", value);
+
+    this.productService.addProduct(value).subscribe({
+      next: (result: any) => {
+        console.log("✅ API Response:", result);
+        alert("Product added successfully!");
+        // this.router.navigate(['/products']); // navigate after success
+      },
+      error: (err) => {
+        console.error("❌ API Error:", err);
+        alert("Something went wrong, please try again!");
+      }
+    });
   }
 
-  addImage(){
-  this.images.push(this.formBuilder.control(null));
+  addImage() {
+    this.images.push(this.formBuilder.control(null));
   }
-  removeImage(){
-  this.images.removeAt(this.images.length - 1);
+
+  removeImage() {
+    if (this.images.length > 1) {
+      this.images.removeAt(this.images.length - 1);
+    }
   }
+
   get images(): FormArray {
     return this.productForm.get('images') as FormArray;
   }

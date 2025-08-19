@@ -24,18 +24,30 @@ router.post('/add', async (req, res, next) => {
     }
 });
 
-router.get('/view', async (req, res, next) => {
-    try {
-        let allBrand = await viewAllBrand();
-        if (!allBrand || allBrand.length === 0) {
-            return res.status(404).json({ message: 'No Brand found' });
-        }
-        res.status(200).json({ status: 200, message: "All Brands", allBrand });
-    } catch (err) {
-        next(err);  
+router.get("/view", async (req, res) => {
+  try {
+    const brands = await Brand.find();
+    if (!brands || brands.length === 0) {
+      return res.status(404).json({
+        status:404,
+        success: false,
+        message: "No brands found"
+      });
     }
+    else{
+    return res.status(200).json({
+      success: true,
+      allBrand: brands
+    });
+}
+  } catch (err) {
+    console.error("Error fetching brands:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while fetching brands"
+    });
+  }
 });
-
 router.get('/:id', async (req, res, next) => {
  let id = req.params["id"];
  let result = await getBrandById(id);
@@ -51,7 +63,7 @@ router.put("/update/:id", async (req, res) => {
 
   try {
     const updated = await Brand.findByIdAndUpdate(id, { name }, { new: true });
-    res.status(200).json({ status: 200, message: "Brand updated successfully", updated });
+    res.status(200).json({ status: 200,success:true, message: "Brand updated successfully", updated });
     res.json(updated);
   } catch (error) {
     res.status(500).json({ message: "Update failed", error });
@@ -59,23 +71,17 @@ router.put("/update/:id", async (req, res) => {
 });
 
 
-router.delete('/delete/:id', async (req, res, next) => {
-    try {
-       const id = req.params["id"];
-        console.log('id:', id);
-        
-        if (!id) {
-            return res.status(400).json({ message: 'Id is required' });
-        }
-        let result = await deleteBrand(id);
-        if (!result) {
-            return res.status(404).json({ message: 'Breans not found' });
-        }
-        res.status(200).json({ status: 200, message: 'Brand deleted successfully', result });
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const brand = await Brand.findByIdAndDelete(req.params.id);
+    if (!brand) {
+      return res.status(404).json({status:404, success: false, message: "Brand not found" });
     }
-    catch (err) {
-        next(err);
-    }
-})
+    return res.status(200).json({status:200, success: true, message: "Brand deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting brand:", err);
+    return res.status(500).json({ status:500 ,success: false, message: "Server error while deleting brand" });
+  }
+});
 
 module.exports = router;

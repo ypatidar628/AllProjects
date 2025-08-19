@@ -1,44 +1,62 @@
-import {Component, inject, ViewChild} from '@angular/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {RouterLink} from '@angular/router';
-import {Category} from '../../../types/category';
-import {BrandService} from '../../../services/brand.service';
-
+import { Component, inject, ViewChild } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+import { Category } from '../../../types/category';
+import { BrandService } from '../../../services/brand.service';
 
 @Component({
   selector: 'app-brands',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatButtonModule, RouterLink],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatButtonModule,
+    RouterLink
+  ],
   templateUrl: './brands.component.html',
   styleUrl: './brands.component.scss'
 })
 export class BrandsComponent {
   displayedColumns: string[] = ['id', 'name', 'action'];
-  dataSource: MatTableDataSource<Category>;
+  dataSource: MatTableDataSource<Category> = new MatTableDataSource([] as any);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  allData = []
   brandService = inject(BrandService);
 
-  constructor() {
-
-    this.dataSource = new MatTableDataSource([] as any);
-  }
   ngOnInit() {
-    this.brandService.getBrands().subscribe((result:any )=>{
-      console.log("Result is : " +JSON.stringify(result));
-      this.dataSource.data=result.allBrand;
-    })
+    this.loadBrands();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  // ✅ Centralized loader
+  loadBrands() {
+    this.brandService.getBrands().subscribe({
+      next: (result: any) => {
+        console.log("Brands fetched:", result);
+        this.dataSource.data = result.allBrand || [];
+        this.allData = result.allBrand;
+      },
+      error: (err) => {
+        console.log("Error loading brands:", err);
+        this.dataSource.data = []; // fallback
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -54,14 +72,13 @@ export class BrandsComponent {
     if (confirm("Are you sure you want to delete this brand?")) {
       this.brandService.deleteBrand(id).subscribe({
         next: () => {
-          // alert("Brand deleted successfully.");
-          // this.fetchData();
-          this.ngOnInit()
+          this.loadBrands(); // ✅ reload safely
         },
         error: (err) => {
           console.error("Error deleting brand:", err);
           alert("Something went wrong while deleting.");
         }
       });
-    }}
+    }
+  }
 }

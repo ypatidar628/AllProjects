@@ -16,6 +16,7 @@
   </mat-form-field>
 
   <!-- Table Container -->
+  @if (allData.length !=0){
   <div class="overflow-x-auto bg-white rounded shadow-md">
     <table mat-table [dataSource]="dataSource" matSort class="min-w-[600px] w-full" >
 
@@ -53,7 +54,9 @@
       </tr>
     </table>
   </div>
-
+  } @else {
+    <h1 class="text-red-600">No Brand's Found</h1>
+  }
   <!-- Paginator -->
   <mat-paginator
     [pageSizeOptions]="[5, 10, 25, 100]"

@@ -17,28 +17,42 @@ import {ProductService} from '../../../services/product.service';
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent {
-  displayedColumns: string[] = ['id', 'name', 'action'];
+  displayedColumns: string[] = ['id', 'name','description', 'action'];
   dataSource: MatTableDataSource<Category>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   productService = inject(ProductService);
 
+  allData = []
   constructor() {
 
     this.dataSource = new MatTableDataSource([] as any);
   }
-  ngOnInit() {
-    this.productService.getProducts().subscribe((result:any )=>{
-      console.log("Result is : " +JSON.stringify(result));
-      this.dataSource.data=result.result;
-    })
-  }
+
 
   ngAfterViewInit() {
+    this.loadProducts()
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+  loadProducts() {
+    this.productService.getProducts().subscribe({
+      next: (result: any) => {
+        console.log("Result is : " + JSON.stringify(result));
+        this.allData = result.result;
+        this.dataSource.data = result.result || [];
+
+
+      },
+      error: (err) => {
+        console.error("Error loading products:", err);
+        this.dataSource.data = []; // fallback to empty array
+      }
+    });
+  }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -55,7 +69,8 @@ export class ProductsComponent {
         next: () => {
           // alert("Product deleted successfully.");
           // this.fetchData();
-          this.ngOnInit()
+          // this.ngOnInit()
+          this.loadProducts()
         },
         error: (err) => {
           console.error("Error deleting product:", err);
