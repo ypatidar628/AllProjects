@@ -31,21 +31,21 @@ export const routes: Routes = [
 
   //Brand Routes
   {
-    path: 'admin/brands',
+    path: 'admin/brand',
     loadComponent: () =>
       import('./components/manage/brands/brands.component').then(
         (m) => m.BrandsComponent
       ),
   },
   {
-    path: 'admin/brands/add',
+    path: 'admin/brand/add',
     loadComponent: () =>
       import('./components/manage/brand-form/brand-form.component').then(
         (m) => m.BrandFormComponent
       ),
   },
   {
-    path: 'admin/brands/:id',
+    path: 'admin/brand/:id',
     loadComponent: () =>
       import('./components/manage/brand-form/brand-form.component').then(
         (m) => m.BrandFormComponent

@@ -37,7 +37,7 @@ export class BrandFormComponent {
     this.brandService.addBrand(data).subscribe({
       next: (result: any) => {
         console.log("result", result);
-        this.router.navigate(['admin/brands']);
+        this.router.navigate(['admin/brand']);
         this.name = ""; // Reset input
       },
       error: (err) => {
@@ -51,7 +51,7 @@ export class BrandFormComponent {
 
     this.brandService.updateBrand(this.id, this.name).subscribe({
       next: (result: any) => {
-        this.router.navigate(['admin/brands']);
+        this.router.navigate(['admin/brand']);
         console.log("Result:", result);
       },
       error: (err) => {

@@ -48,12 +48,14 @@ export class BrandsComponent {
   loadBrands() {
     this.brandService.getBrands().subscribe({
       next: (result: any) => {
+        if (result.allBrand){
+        this.allData = result.allBrand;
         console.log("Brands fetched:", result);
         this.dataSource.data = result.allBrand || [];
-        this.allData = result.allBrand;
+        }
       },
       error: (err) => {
-        console.log("Error loading brands:", err);
+        // console.log("Error loading brands:", err);
         this.dataSource.data = []; // fallback
       }
     });
@@ -72,7 +74,7 @@ export class BrandsComponent {
     if (confirm("Are you sure you want to delete this brand?")) {
       this.brandService.deleteBrand(id).subscribe({
         next: () => {
-          this.loadBrands(); // ✅ reload safely
+          this.loadBrands();
         },
         error: (err) => {
           console.error("Error deleting brand:", err);

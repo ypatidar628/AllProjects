@@ -27,7 +27,7 @@ router.post('/add', async (req, res, next) => {
 router.get('/view', async (req, res, next) => {
     try {
         let allCategories = await viewAllCategory();
-        if (!allCategories || allCategories.length === 0) {
+        if (!allCategories ) {
             return res.status(404).json({ message: 'No categories found' });
         }
         res.status(200).json({ status: 200, message: "All Categories", allCategories });

@@ -27,7 +27,7 @@ router.post('/add', async (req, res, next) => {
 router.get("/view", async (req, res) => {
   try {
     const brands = await Brand.find();
-    if (!brands || brands.length === 0) {
+    if (!brands ) {
       return res.status(404).json({
         status:404,
         success: false,

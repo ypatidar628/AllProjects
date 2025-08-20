@@ -35,17 +35,19 @@ export class ProductFormComponent {
     if (!this.productForm.valid) {
       this.productForm.markAllAsTouched();
       console.warn("❌ Form invalid, please fill required fields.");
+
       return;
     }
 
     const value = this.productForm.getRawValue();
-    console.log("✅ Submitting product:", value);
+    // console.log("✅ Submitting product:", value);
 
     this.productService.addProduct(value).subscribe({
       next: (result: any) => {
         console.log("✅ API Response:", result);
         alert("Product added successfully!");
-        // this.router.navigate(['/products']); // navigate after success
+      this.router.navigate(['/admin/product']); // navigate after success
+        this.productForm.reset()
       },
       error: (err) => {
         console.error("❌ API Error:", err);

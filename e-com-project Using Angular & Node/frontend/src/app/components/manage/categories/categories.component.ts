@@ -25,12 +25,15 @@ export class CategoriesComponent  {
   @ViewChild(MatSort) sort!: MatSort;
   categoryService = inject(CategoryService);
 
+  allData:any = []
+
   constructor() {
 
         this.dataSource = new MatTableDataSource([] as any);
   }
   ngOnInit() {
     this.categoryService.getCategories().subscribe((result:any )=>{
+      this.allData = result;
       console.log("Result is : " +JSON.stringify(result));
       this.dataSource.data=result.allCategories;
     })

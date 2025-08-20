@@ -85,7 +85,7 @@ router.get('/viewAll', async (req, res) => {
   try {
     const products = await Product.find();
 
-    if (!products || products.length === 0) {
+    if (!products) {
       return res.status(404).json({
         success: false,
         message: "No products found"
