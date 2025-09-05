@@ -50,6 +50,7 @@ export class ProductFormComponent {
         this.productForm.reset()
       },
       error: (err) => {
+        console.error("❌ API Error:", err.error.message);
         console.error("❌ API Error:", err);
         alert("Something went wrong, please try again!");
       }
