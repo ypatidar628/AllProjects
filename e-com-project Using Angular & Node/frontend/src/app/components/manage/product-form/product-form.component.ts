@@ -26,9 +26,18 @@ export class ProductFormComponent {
     images: this.formBuilder.array([]),
     categoryId: [null, [Validators.required]],
   });
+  isEdit = false;
+  id!: string;
 
   ngOnInit() {
     this.addImage();
+    this.id = this.route.snapshot.params['id'];
+    if (this.id) {
+      this.isEdit = true;
+      this.productService.getProductById(this.id).subscribe((result: any) => {
+        console.log(result.result);
+      })
+    }
   }
 
   addProduct() {
@@ -40,7 +49,7 @@ export class ProductFormComponent {
     }
 
     const value = this.productForm.getRawValue();
-    // console.log("✅ Submitting product:", value);
+    console.log("✅ Submitting product:", value);
 
     this.productService.addProduct(value).subscribe({
       next: (result: any) => {
@@ -69,5 +78,29 @@ export class ProductFormComponent {
 
   get images(): FormArray {
     return this.productForm.get('images') as FormArray;
+  }
+
+  updateProduct() {
+    if (!this.productForm.valid) {
+      this.productForm.markAllAsTouched();
+      console.warn("❌ Form invalid, please fill required fields.");
+
+      return;
+    }
+    const value = this.productForm.getRawValue();
+
+    this.productService.updateProduct(this.id , value).subscribe({
+      next: (result: any) => {
+        console.log("✅ API Response:", result);
+        alert("Product update successfully!");
+        this.router.navigate(['/admin/product']); // navigate after success
+        this.productForm.reset()
+      },
+      error: (err) => {
+        console.error("❌ API Error:", err.error.message);
+        console.error("❌ API Error:", err);
+        alert("Something went wrong, please try again!");
+      }
+    })
   }
 }

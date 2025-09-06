@@ -14,14 +14,14 @@ export class ProductService {
   }
 
   getProductById(id: string) {
-    return this.http.get<Product>(`${this.baseUrl}/${id}`);
+    return this.http.get<Product>(`${this.baseUrl}/view/${id}`);
   }
 
   addProduct(data : any) {
     return this.http.post<Product>(`${this.baseUrl}/add`, data);
   }
 
-  updateProduct(id: string, data: Partial<Product>) {
+  updateProduct(id: string, data:object) {
     return this.http.put<Product>(`${this.baseUrl}/update/${id}`, data);
   }
 

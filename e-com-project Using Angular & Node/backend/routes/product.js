@@ -64,13 +64,11 @@ router.put("/update/:id", async (req, res, next) => {
     if (!updatedProduct) {
       return res.status(404).json({ message: "Product not found" });
     }
-    res
-      .status(200)
-      .json({
-        status: 200,
-        message: "Product updated successfully",
-        result: updatedProduct.toObject(),
-      });
+    res.status(200).json({
+      status: 200,
+      message: "Product updated successfully",
+      result: updatedProduct.toObject(),
+    });
   } catch (err) {
     next(err);
   }
@@ -105,17 +103,16 @@ router.get("/view/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     let product = await Product.findById(id);
+    console.log(product);
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-    res
-      .status(200)
-      .json({
-        status: 200,
-        message: "Product retrieved successfully",
-        result: product.toObject(),
-      });
+    res.status(200).json({
+      status: 200,
+      message: "Product retrieved successfully",
+      result: product.toObject(),
+    });
   } catch (err) {
     next(err);
   }
