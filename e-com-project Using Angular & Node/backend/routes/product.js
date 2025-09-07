@@ -15,6 +15,7 @@ router.post("/add", async (req, res, next) => {
       discount,
       image,
       categoryId,
+      brandId,
     } = req.body;
     if (!name || !price || !categoryId) {
       return res

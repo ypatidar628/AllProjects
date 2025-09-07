@@ -4,6 +4,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {CategoryService} from '../../../services/category.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-category-form',

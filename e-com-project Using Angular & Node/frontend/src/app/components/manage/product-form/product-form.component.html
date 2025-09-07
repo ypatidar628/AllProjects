@@ -8,6 +8,31 @@
   <!-- Form Container -->
   <form class="w-full max-w-md bg-white p-6 rounded shadow-md" [formGroup]="productForm">
     <div class="sm:flex-row gap-4 items-start sm:items-end">
+
+<!--      //Category option-->
+      <mat-form-field class="w-full">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="categoryId" >
+          @for (item of categories; track item._id) {
+            <mat-option [value]="item._id">{{ item.name }}</mat-option>
+          }
+
+        </mat-select>
+      </mat-form-field>
+
+<!--      //Brand option-->
+      <mat-form-field class="w-full">
+        <mat-label>Brand</mat-label>
+        <mat-select formControlName="brandId" >
+          @for (item of brands ; track item._id) {
+
+          <mat-option [value]="item._id">{{ item.name }}</mat-option>
+          }
+
+        </mat-select>
+      </mat-form-field>
+
+
       <mat-form-field appearance="fill" class="w-full">
         <mat-label>Name</mat-label>
         <input matInput type="text" placeholder="Enter product  name" formControlName="name"/>
@@ -28,10 +53,10 @@
         <input matInput type="text" placeholder="Enter product  discount" formControlName="discount" />
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="w-full">
-        <mat-label>Category ID</mat-label>
-        <input matInput type="text" placeholder="Enter product  Category ID" formControlName="categoryId" />
-      </mat-form-field>
+<!--      <mat-form-field appearance="fill" class="w-full">-->
+<!--        <mat-label>Category ID</mat-label>-->
+<!--        <input matInput type="text" placeholder="Enter product  Category ID" formControlName="categoryId" />-->
+<!--      </mat-form-field>-->
 
 
       <div class=" w-full gap-4 items-start sm:items-end" formArrayName="images" >
@@ -56,11 +81,11 @@
     <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
 
       @if(isEdit){
-        <button type="button" (click)="updateProduct()" class="bg-transparent  text-blue-500 px-6 py-4 rounded transition duration-200 ease-in-out w-full sm:w-auto mb-5">➕Update
+        <button type="button" (click)="updateProduct()"  [disabled]="productForm.invalid" class="bg-transparent  text-blue-500 px-6 shadow-lg py-4 rounded transition duration-200 ease-in-out w-full sm:w-auto mb-5">➕Update
         </button>
       }
       @else{
-    <button type="button" (click)="addProduct()" class="bg-transparent  text-blue-500 px-6 py-4 rounded transition duration-200 ease-in-out w-full sm:w-auto mb-5">➕Add
+    <button type="button" (click)="addProduct()" [disabled]="productForm.invalid"  class="bg-transparent text-blue-500 px-6 py-4 shadow-lg rounded transition duration-200 ease-in-out w-full sm:w-auto mb-5">➕Add
     </button>
       }
 
