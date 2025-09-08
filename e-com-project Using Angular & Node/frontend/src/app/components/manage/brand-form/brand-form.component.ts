@@ -4,6 +4,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BrandService} from '../../../services/brand.service';
+import toastifier from 'toastifier'
+import 'toastifier/dist/toastifier.min.css';
 
 @Component({
   selector: 'app-brand-form',
@@ -37,11 +39,16 @@ export class BrandFormComponent {
     this.brandService.addBrand(data).subscribe({
       next: (result: any) => {
         console.log("result", result);
+        if (result.status === 200) {
+          toastifier("✅ Brand Added Successfully!" ,{ type: "success" , autoClose: 3000, position: "top-right"} );
+        }
         this.router.navigate(['admin/brand']);
         this.name = ""; // Reset input
       },
       error: (err) => {
         console.error("Error adding brand:", err);
+        toastifier("Something went wrong, please try again!", { type: "error" ,autoClose: 3000, position: "top-right"});
+
       }
     });
   }
@@ -51,12 +58,15 @@ export class BrandFormComponent {
 
     this.brandService.updateBrand(this.id, this.name).subscribe({
       next: (result: any) => {
+        if (result.status === 200) {
+          toastifier("✅ Brand Update Successfully!" ,{ type: "success" , autoClose: 3000, position: "top-right"} );
+        }
         this.router.navigate(['admin/brand']);
         console.log("Result:", result);
       },
       error: (err) => {
         console.error("Error updating brand:", err);
-        alert("Something went wrong while updating.");
+        toastifier("Something went wrong, please try again!", { type: "error" ,autoClose: 3000, position: "top-right"});
       }
     });
 

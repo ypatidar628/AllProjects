@@ -5,6 +5,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {CategoryService} from '../../../services/category.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatSelectModule} from '@angular/material/select';
+import toastifier from 'toastifier'
+import 'toastifier/dist/toastifier.min.css';
 
 @Component({
   selector: 'app-category-form',
@@ -37,12 +39,17 @@ export class CategoryFormComponent {
     const data = {name: this.name}; // ✅ Wrap string in object
     this.categoryService.addCategory(data).subscribe({
       next: (result: any) => {
+        if (result.status === 200) {
+          toastifier("✅ Category Added Successfully!" ,{ type: "success" , autoClose: 3000, position: "top-right"} );
+        }
         this.router.navigate(['admin/categories']);
         console.log("result", result);
         this.name = ""; // Reset input
       },
       error: (err) => {
         console.error("Error adding category:", err);
+        toastifier("Something went wrong, please try again!", { type: "error" ,autoClose: 3000, position: "top-right"});
+
       }
     });
   }
@@ -52,12 +59,15 @@ export class CategoryFormComponent {
 
     this.categoryService.updateCategory(this.id, this.name).subscribe({
       next: (result: any) => {
+        if (result.status === 200) {
+          toastifier("✅ Category Update Successfully!" ,{ type: "success" , autoClose: 3000, position: "top-right"} );
+        }
         this.router.navigate(['admin/categories']);
         console.log("Result:", result);
       },
       error: (err) => {
         console.error("Error updating category:", err);
-        alert("Something went wrong while updating.");
+        toastifier("Something went wrong, please try again!", { type: "error" ,autoClose: 3000, position: "top-right"});
       }
     });
 

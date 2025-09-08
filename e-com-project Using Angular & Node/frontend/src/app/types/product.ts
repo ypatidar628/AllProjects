@@ -1,7 +1,6 @@
 export interface Product {
   _id?: string;
   name: string;
-  shotDescription: string;
   description: string;
   price: number;
   discount?: number;

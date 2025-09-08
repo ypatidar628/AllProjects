@@ -1,4 +1,4 @@
-import {Component, inject, ViewChild} from '@angular/core';
+import {Component, inject, NgModule, ViewChild} from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInput, MatInputModule, MatLabel} from '@angular/material/input';
 import {MatSort, MatSortHeader, MatSortModule} from '@angular/material/sort';
@@ -9,10 +9,11 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {Category} from '../../../types/category';
 import {ProductService} from '../../../services/product.service';
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
   selector: 'app-products',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatButtonModule, RouterLink],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatButtonModule, RouterLink , MatCardModule ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
@@ -24,10 +25,13 @@ export class ProductsComponent {
   @ViewChild(MatSort) sort!: MatSort;
   productService = inject(ProductService);
 
-  allData = []
+  allData:any  =[];
   constructor() {
-
     this.dataSource = new MatTableDataSource([] as any);
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
   }
 
 
@@ -40,10 +44,11 @@ export class ProductsComponent {
   loadProducts() {
     this.productService.getProducts().subscribe({
       next: (result: any) => {
-        console.log("Result is : " + JSON.stringify(result));
         this.allData = result.result;
+        console.log("Result is : " + JSON.stringify(result));
         this.dataSource.data = result.result || [];
 
+      // console.log("prond"+JSON.stringify(this.allData));
 
       },
       error: (err) => {

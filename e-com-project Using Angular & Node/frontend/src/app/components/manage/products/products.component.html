@@ -79,6 +79,49 @@
         </tr>
       </table>
     </div>
+
+<!--    <div>-->
+<!--      <mat-card class="example-card" appearance="outlined">-->
+<!--        &lt;!&ndash; Card Header &ndash;&gt;-->
+<!--&lt;!&ndash;        @for (item of allData ; track this.allData._id ; ) {&ndash;&gt;-->
+<!--<div *ngFor="let item of allData ; trackBy: trackByIndex">-->
+<!--        <mat-card-header>-->
+<!--          <div mat-card-avatar class="example-header-image"></div>-->
+<!--          <mat-card-title>{{ item?.name }}</mat-card-title>-->
+<!--          <mat-card-subtitle>{{ item?._id }}</mat-card-subtitle>-->
+<!--        </mat-card-header>-->
+
+
+<!--&lt;!&ndash;        &lt;!&ndash; Card Image &ndash;&gt;&ndash;&gt;-->
+<!--        <img-->
+<!--          mat-card-image-->
+<!--          src="{{item.image}}"-->
+<!--          alt="Photo of {{item.name}}"-->
+<!--        />-->
+
+<!--&lt;!&ndash;        &lt;!&ndash; Card Content &ndash;&gt;&ndash;&gt;-->
+<!--        <mat-card-content>-->
+<!--          <p>-->
+<!--           {{item.description}}-->
+<!--          </p>-->
+<!--        </mat-card-content>-->
+
+<!--&lt;!&ndash;        &lt;!&ndash; Card Actions &ndash;&gt;&ndash;&gt;-->
+<!--        <mat-card-actions>-->
+<!--            <button mat-button class="bg-white shadow text-blue-500 px-6 py-2 rounded-3xl hover:bg-blue-100"-->
+<!--                    [routerLink]="'/admin/product/' + item._id">-->
+<!--              Edit-->
+<!--            </button>-->
+<!--            <button mat-button (click)="deleteProduct(item._id)"-->
+<!--                    class="bg-white shadow text-red-500 px-4 py-2 rounded-3xl hover:bg-blue-100">-->
+<!--              Delete-->
+<!--            </button>-->
+<!--        </mat-card-actions>-->
+<!--</div>-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--      </mat-card>-->
+<!--    </div>-->
+
   } @else {
     <h1 class="text-red-600">No Product's Found !</h1>
   }
