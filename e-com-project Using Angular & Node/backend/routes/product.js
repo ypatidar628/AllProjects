@@ -31,7 +31,33 @@ router.post("/add", async (req, res, next) => {
     if (ifDuplicateName) {
       return res.status(400).json({ message: "Product already exists" });
     }
-    let result = await addProduct(req.body);
+
+    //  const imageArray = Array.isArray(image) ? image : [image];
+    //  console.log("image"+imageArray);
+     
+const imageArray = [];
+
+if (image) {
+  if (Array.isArray(image)) {
+    imageArray.push(...image.filter((i) => i && i.trim() !== ""));
+  } else if (typeof image === "string" && image.trim() !== "") {
+    imageArray.push(image);
+  }
+}
+const result = await Product.create({
+  name,
+  shortDescription,
+  description,
+  price,
+  discount,
+  image: imageArray.length ? imageArray : [],  // ✅ only valid URLs stored
+  categoryId,
+  brandId
+});
+console.log("Raw image from frontend:",image);
+console.log("Processed imageArray:", imageArray);
+
+    // let result = await addProduct(req.body);
     console.log(result);
     res
       .status(201)
@@ -40,6 +66,7 @@ router.post("/add", async (req, res, next) => {
     next(err);
   }
 });
+
 
 router.put("/update/:id", async (req, res, next) => {
   try {

@@ -35,7 +35,7 @@ export class ProductFormComponent {
     description: [null, [Validators.required, Validators.minLength(10)]],
     price: [null, [Validators.required]],
     discount: [],
-    images: this.formBuilder.array([]),
+    image: this.formBuilder.array([]),
     categoryId: [null, [Validators.required]],
     brandId: [null, [Validators.required]],
   });
@@ -49,7 +49,15 @@ export class ProductFormComponent {
     if (this.id) {
       this.isEdit = true;
       this.productService.getProductById(this.id).subscribe((result: any) => {
-        console.log(result.result);
+        console.log("res is "+JSON.stringify(result));
+        this.productForm.patchValue({
+          name: result.result.name,
+          description: result.result.description,
+          price: result.result.price,
+          discount: result.result.discount,
+          categoryId: result.result.categoryId,
+          brandId: result.result.brandId,
+        });
       })
     }
     this.categoryService.getCategories().subscribe((result: any) => {
@@ -73,7 +81,7 @@ export class ProductFormComponent {
     // }
 
     const value = this.productForm.getRawValue();
-    // console.log("✅ Submitting product:", value);
+    console.log("✅ Submitting product:", value);
 
     this.productService.addProduct(value).subscribe({
       next: (result: any) => {
@@ -93,17 +101,17 @@ export class ProductFormComponent {
   }
 
   addImage() {
-    this.images.push(this.formBuilder.control(null));
+    this.image.push(this.formBuilder.control(null));
   }
 
   removeImage() {
-    if (this.images.length > 1) {
-      this.images.removeAt(this.images.length - 1);
+    if (this.image.length > 1) {
+      this.image.removeAt(this.image.length - 1);
     }
   }
 
-  get images(): FormArray {
-    return this.productForm.get('images') as FormArray;
+  get image(): FormArray {
+    return this.productForm.get('image') as FormArray;
   }
 
   updateProduct() {
