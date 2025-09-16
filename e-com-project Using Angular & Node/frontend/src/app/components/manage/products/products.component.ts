@@ -1,63 +1,65 @@
-import {Component, inject, NgModule, ViewChild} from '@angular/core';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInput, MatInputModule, MatLabel} from '@angular/material/input';
-import {MatSort, MatSortHeader, MatSortModule} from '@angular/material/sort';
-import {RouterLink} from '@angular/router';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {Category} from '../../../types/category';
-import {ProductService} from '../../../services/product.service';
-import {MatCardModule} from '@angular/material/card';
+import { Component, inject, ViewChild } from '@angular/core';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
+import { NgForOf } from '@angular/common';
+import { ProductService } from '../../../services/product.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-products',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatButtonModule, RouterLink , MatCardModule ],
+  standalone: true,
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatButtonModule,
+    RouterLink,
+    MatCardModule,
+    NgForOf,
+  ],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.scss'
+  styleUrl: './products.component.scss',
 })
 export class ProductsComponent {
-  displayedColumns: string[] = ['id', 'image', 'name','description', 'action'];
-  dataSource: MatTableDataSource<Category>;
+  dataSource = new MatTableDataSource<any>([]);
+  allData: any[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
   productService = inject(ProductService);
 
-  allData:any  =[];
-  constructor() {
-    this.dataSource = new MatTableDataSource([] as any);
-  }
-
-  trackByIndex(index: number, item: any): number {
-    return index;
-  }
-
+  thumbnail: string = '';
+  idForImage: string = '';
 
   ngAfterViewInit() {
-    this.loadProducts()
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.loadProducts();
   }
 
   loadProducts() {
     this.productService.getProducts().subscribe({
       next: (result: any) => {
-        this.allData = result.result;
-        console.log("Result is : " + JSON.stringify(result));
-        this.dataSource.data = result.result || [];
+        this.allData = result.result || [];
+        this.dataSource = new MatTableDataSource<any>(this.allData);
 
-      // console.log("prond"+JSON.stringify(this.allData));
-
+        // connect paginator & sort
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
       error: (err) => {
-        console.error("Error loading products:", err);
-        this.dataSource.data = []; // fallback to empty array
-      }
+        console.error('Error loading products:', err);
+        this.dataSource = new MatTableDataSource<any>([]);
+      },
     });
   }
-
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -68,19 +70,35 @@ export class ProductsComponent {
     }
   }
 
+  get paginatedData() {
+    // ✅ use dataSource.filteredData with paginator
+    if (!this.dataSource.paginator) return this.dataSource.filteredData;
+    const startIndex = this.dataSource.paginator.pageIndex * this.dataSource.paginator.pageSize;
+    return this.dataSource.filteredData.slice(startIndex, startIndex + this.dataSource.paginator.pageSize);
+  }
+
+  trackByIndex(index: number): number {
+    return index;
+  }
+
+  getImgAdd(img: string, id: string) {
+    if (img.length > 0) {
+      this.idForImage = id;
+      this.thumbnail = img;
+    }
+  }
+
   deleteProduct(id: string) {
-    if (confirm("Are you sure you want to delete this brand?")) {
+    if (confirm('Are you sure you want to delete this product?')) {
       this.productService.deleteProduct(id).subscribe({
         next: () => {
-          // alert("Product deleted successfully.");
-          // this.fetchData();
-          // this.ngOnInit()
-          this.loadProducts()
+          this.loadProducts();
         },
         error: (err) => {
-          console.error("Error deleting product:", err);
-          alert("Something went wrong while deleting.");
-        }
+          console.error('Error deleting product:', err);
+          alert('Something went wrong while deleting.');
+        },
       });
-    }}
+    }
+  }
 }

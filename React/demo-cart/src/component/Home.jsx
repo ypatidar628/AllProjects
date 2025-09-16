@@ -100,7 +100,7 @@ const Home = () => {
                 <img
                   src={mainImage.id == product.id ? mainImage.img : product.thumbnail}
                   alt={product.title}
-                  className="h-48 w-40 object-cover self-center rounded-md mb-4"
+                  className="h-48 w-40 object-cover self-center rounded-md mb-4 thumb"
                 />
               )}
 
