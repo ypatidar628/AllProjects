@@ -35,7 +35,7 @@
             <img *ngFor="let img of item.image; trackBy: trackByIndex"
                  [src]="img"
                  alt="{{item.name}}"
-                 class="h-14 w-14 object-cover rounded cursor-pointer border hover:border-blue-500 flex-shrink-0"
+                 class="h-14 w-14 object-contain rounded cursor-pointer border hover:border-blue-500 flex-shrink-0"
                  (click)="getImgAdd(img, item._id)" />
           </div>
 

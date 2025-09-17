@@ -6,4 +6,6 @@ export interface Product {
   discount?: number;
   image: string[];
   categoryId: string;
+  isFeatured : boolean;
+  isNew : boolean;
 }
