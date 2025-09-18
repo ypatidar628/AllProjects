@@ -1,0 +1,132 @@
+.hero-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  padding: 2rem;
+  color: white;
+}
+
+.set-bg1 {
+  background-image: url('https://images.unsplash.com/photo-1602810313321-0c226af35169');
+}
+
+.set-bg2 {
+  background-image: url('https://images.unsplash.com/photo-1556905055-8f358a7a47b2');
+}
+
+.hero-slide::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(59, 93, 80, 0.8));
+  z-index: 1;
+}
+
+.hero-text {
+  position: relative;
+  z-index: 2;
+  max-width: 650px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  /* backdrop-filter: blur(10px); */
+  text-align: center;
+}
+
+.hero-text h6 {
+  font-size: 16px;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  color: #f9b929;
+  text-transform: uppercase;
+}
+
+.hero-text h2 {
+  font-size: 42px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.hero-text p {
+  font-size: 16px;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.primary-btn {
+  display: inline-block;
+  background-color: #f9b929;
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+  background-color: #e3a418;
+  transform: scale(1.05);
+}
+
+.hero-social {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.hero-social a {
+  color: #fff;
+  font-size: 22px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.hero-social a:hover {
+  color: #f9b929;
+  transform: scale(1.2);
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 768px) {
+  .hero-text {
+    padding: 25px;
+  }
+
+  .hero-text h2 {
+    font-size: 28px;
+  }
+
+  .hero-text p {
+    font-size: 14px;
+  }
+
+  .primary-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text {
+    padding: 20px;
+  }
+
+  .hero-text h2 {
+    font-size: 22px;
+  }
+
+  .hero-social a {
+    font-size: 18px;
+  }
+}

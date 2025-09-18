@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <form action="/registerUser" method="POST">
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" required>
+    <br><br>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+    <br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+    <br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+    <br><br>
+            <label for="contact">Contact:</label>
+            <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" required>
+    <br><br>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select><br><br>
+<input type="submit" value="register">    
+        </form>
+        <span>If You have already register ? <a href="/login">Click here !</a></span>
+    </center>
+</body>
+</html>

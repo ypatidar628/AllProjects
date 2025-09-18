@@ -1,0 +1,11 @@
+database name 
+user id and pass
+which database 
+:Create database  myNode
+:create table user(id,name , email, pass,contact)
+
+create connection poop
+
+create connection folder : inside folder create dbconfig.js file and write below code 
+
+npm i --save mysql

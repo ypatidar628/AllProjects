@@ -1,0 +1,156 @@
+.log-container2 {
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #B9F8CF;
+}
+
+.register-container2 {
+    background-color: #3b5d50;
+    padding: 20px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    bottom: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.5rem;
+
+}
+
+.register-title2 {
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+.form-group2 {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.label2 {
+    font-weight: bold;
+    font-size: 1.4rem !important;
+    color: #ffffff;
+    margin-bottom: 3px;
+    display: block;
+}
+
+.input2 {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #e1e5ee;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #f8faff;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.input2:focus,
+.select2:focus {
+    outline: none;
+    border-color: #1e7259;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(30, 103, 114, 0.5);
+}
+
+.error2 {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 5px;
+    display: none;
+}
+
+/* password see button */
+.password-container {
+    margin-top: 20px;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input {
+    width: 100%;
+    padding-right: 60px;
+    /* Ensure space for the button */
+}
+
+.toggle-password-btn {
+    position: absolute;
+    right: 8px;
+    top: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    color: #666;
+}
+
+/* =============================   */
+.button2 {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #1e7259, #237d56);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(25, 116, 90, 0.5);
+    margin-top: 20px;
+}
+
+.button2:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(25, 116, 90, 0.7);
+}
+
+.register-container2 .register2 {
+    color: #ffffff;
+    text-decoration: underline;
+    font-size: 1.5rem;
+    margin-top: 10px;
+    display: inline-block;
+    transition: 0.4s ease;
+
+}
+
+.register-container2 .register2:hover {
+    color: #000;
+}
+
+.row {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    left: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .register-container2 {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .login-title2 {
+        font-size: 2rem;
+    }
+
+    .button2 {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,117 @@
+/* Container */
+.user-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  overflow-x: auto; /* Enables scroll on small devices */
+}
+
+/* Header */
+.user-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-header h2 {
+  font-size: 1.8rem;
+  color: #3b5d50;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Table */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px; /* Ensures columns don’t squish on small screens */
+  font-size: 15px;
+}
+
+.user-table th,
+.user-table td {
+  padding: 14px 12px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.user-table th {
+  background: #3b5d50;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+}
+
+.user-table tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.user-table tbody tr:hover {
+  background: #f1f7f5;
+  transition: background 0.3s ease;
+}
+
+/* Delete Button */
+.delete-btn {
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: #dc3545;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+  background: #b02a37;
+  transform: scale(1.05);
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+  .user-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .user-table {
+    font-size: 13px;
+    min-width: 100%; /* Fit screen size */
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 10px;
+  }
+
+  .delete-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-container {
+    padding: 10px;
+  }
+
+  .user-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .delete-btn {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+}
