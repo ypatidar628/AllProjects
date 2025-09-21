@@ -23,7 +23,7 @@ const UserController1 = () => {
         userData.token
       );
       if (resp.data.status === true) {
-        // console.log("All users fetched successfully:", resp.data.data.users);
+        console.log("All users fetched successfully:", resp.data.data.users);
         toast.success("All users fetched successfully!");
         setAllUsers(resp.data.data.users);
       }

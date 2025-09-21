@@ -47,26 +47,27 @@ export var saveProduct = async(req ,res,next)=>{
   }
 }
 
-export var viewAllproduct = async (req,res,next)=>{
-    try{
-      var productList = await productSchemaModel.find();
-      var len = productList.length;
-      if(len !== 0)
-      {
-        return res.status(200).json(new APIResponse(true,{product:productList}, "product Data Found"));
-      }
-      else
-      {
-      return res.status(404).json(new APIResponse(false,{product:productList},"product Data Not Found"));
-      }
+export const viewAllProduct = async (req, res) => {
+  try {
+    const productList = await productSchemaModel.find();
+
+    if (productList && productList.length > 0) {
+      return res
+          .status(200)
+          .json(new APIResponse(true, { product: productList }, "Product Data Found"));
     }
-    catch(err){
-      console.log("View All Product Exception is : "+err);
-      if(err) {
-        return res.status(500).json(new APIResponse(false, err, "Internal Server Error"));
-      }
-    }
+
+    return res
+        .status(404)
+        .json(new APIResponse(false, { product: [] }, "Product Data Not Found"));
+  } catch (err) {
+    console.error("View All Product Exception:", err.message || err);
+
+    return res
+        .status(500)
+        .json(new APIResponse(false, err , "Internal Server Error"));
   }
+};
 
 export var searchProduct = async(req,res )=>{
     var {product_name} = req.body;
@@ -88,30 +89,32 @@ export var searchProduct = async(req,res )=>{
   }
 }
 
-export var updateProduct = async(req,res )=>{
-  // var { oldproductName, newproductName } = req.body;
-  const request_details = req.body;
-    var oldProductName = request_details.oldProductName;
-    var newProductName = request_details.newProductName;
-try{
-  var productList = await productSchemaModel.updateOne(
-    {product_name : oldProductName},
-    {$set:{product_name : newProductName}});
-  // var len = productList.length;
-  if(productList.matchedCount > 0)
-  {
-    return res.status(200).json(new APIResponse(true,{product:productList}, "product Data Updated"));
+export const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;  // ✅ get product id from URL param
+    const updateData = req.body; // ✅ all fields from request body
+
+    const result = await productSchemaModel.updateOne(
+        { _id: id },
+        { $set: updateData }
+    );
+
+    if (result.matchedCount > 0) {
+      return res
+          .status(200)
+          .json(new APIResponse(true, { product: result }, "Product Updated Successfully"));
+    } else {
+      return res
+          .status(404)
+          .json(new APIResponse(false, {}, "Product Not Found"));
+    }
+  } catch (err) {
+    console.error("Update Product Exception:", err.message || err);
+    return res
+        .status(500)
+        .json(new APIResponse(false, {}, "Internal Server Error"));
   }
-  else
-  {
-  return res.status(404).json(new APIResponse(false,{},"product Not Found"));      
-  }
-}
-catch(err){
-  console.log("Update product Exception is : "+err);
-  return res.status(500).json(new APIResponse(false, {}, "Internal Server Error"));
-}
-}
+};
 
 export var deleteProduct = async(req,res) =>{
     var {product_name} = req.body;

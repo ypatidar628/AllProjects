@@ -9,6 +9,8 @@ const BrandController = () => {
   const userData = useSelector((state) => state.userData.value);
   const [view, setView] = useState("none");
   const [brands, setbrands] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+  const [editBrandId, setEditBrandId] = useState(null);
 
   console.log("token " + userData.token);
 
@@ -93,25 +95,42 @@ const BrandController = () => {
     fetchbrands(); // refresh list
   };
 
-  //   const handleEdit = (index) => {
-  //     const p = brands[index];
-  //     nameRef.current.value = p.brand_name;
-  //     brandRef.current.value = p.brand_brand_name;
-  //     detailsRef.current.value = p.brand_details;
-  //     brandRef.current.value = p.brand_brand;
-  //     imageRef.current.value = p.brand_image;
-  //     priceRef.current.value = p.brand_price;
+const handleEdit = async (e) => {
+  e.preventDefault();
 
-  //     setbrands(brands.filter((_, i) => i !== index));
-  //     setView("form");
-  //   };
+  try {
+    const resp = await WebService.putAPICallWithToken(
+      `${WebAPI.updateBrand(editBrandId)}`, 
+      userData.token,
+      { newBrandName: nameRef.current.value }
+    );
+
+    console.log("Brand Updated:", resp);
+
+    if (resp.data.status) {
+      toast.success("Brand updated successfully!");
+      fetchbrands();
+      setView("none");
+    } else {
+      toast.error("Failed to update brand!");
+    }
+  } catch (err) {
+    console.error("Error updating brand:", err);
+    toast.error("Something went wrong while updating.");
+  }
+};
+
 
   return (
     <div className="container">
-      <h1 className="heading bg-[#3B5D50]">Welcome To brand Controller</h1>
+      <h1 className="heading">Welcome To brand Controller</h1>
 
       <div className="button-row">
-        <button className="btn-success" onClick={() => setView("form")}>
+        <button className="btn-success" onClick={() => 
+          {
+          setView("form")
+          setIsEdit(false);
+        }}>
           Add brand
         </button>
         <button className="btn-danger" onClick={() => setView("table")}>
@@ -120,20 +139,21 @@ const BrandController = () => {
       </div>
 
       {view === "form" && (
-        <form onSubmit={handleSubmit} className="form-container">
-          <h2 className="form-title">Add / Edit brand</h2>
+        <form onSubmit={isEdit ? handleEdit : handleSubmit} className="form-container">
+          <h2 className="form-title">{isEdit ? "Edit Brand" : "Add Brand"}</h2>
 
           <input
             type="text"
             placeholder="brand Name"
-            className="form-input"
+            className="form-input capitalize"
             ref={nameRef}
+            defaultValue={isEdit ? brands.find(b => b._id === editBrandId)?.brand_name || '' : undefined}
             required
           />
 
           <div className="form-buttons">
             <button type="submit" className="btn-primary">
-              Submit
+              {isEdit ? "Update" : "Submit"}
             </button>
             <button
               type="button"
@@ -168,7 +188,11 @@ const BrandController = () => {
                     <td>
                       <button
                         className="bg-gray-300 hover:bg-gray-4    00 rounded-lg p-2 w-18"
-                        onClick={() => handleEdit(index)}
+                        onClick={() => {
+                          setView("form");
+                          setIsEdit(true);
+                          setEditBrandId(brand._id);
+                        }}
                       >
                         Edit
                       </button>

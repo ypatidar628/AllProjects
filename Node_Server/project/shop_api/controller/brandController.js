@@ -1,9 +1,10 @@
 import '../connection/dbConfig.js';
 import brandSchemaModel from '../model/brandModel.js'
 import APIResponse from '../response/APIResponse.js';
+import categorySchemaModel from "../model/categoryModel.js";
 
 
-export let savebrand = async (req, res) => {
+export let saveBrand = async (req, res) => {
 
     // Data Get from Request Object 
     let brandDetails = req.body;
@@ -34,7 +35,7 @@ export let savebrand = async (req, res) => {
 
 }
 
-export let viewAllbrand = async (req, res, next) => {
+export let viewAllBrand = async (req, res, next) => {
     // let userbrand = req.body;
 
     try {
@@ -55,7 +56,7 @@ export let viewAllbrand = async (req, res, next) => {
     }
 }
 
-export let searchbrand = async (req, res, next) => {
+export let serachBrand = async (req, res, next) => {
     let { brand_name } = req.body;
 
     try {
@@ -75,7 +76,7 @@ export let searchbrand = async (req, res, next) => {
     }
 }
 
-export let deletebrand = async(req,res) =>{
+export let deleteBrand = async(req,res) =>{
     let {brand_name} = req.body;
     try{
         let brandList = await brandSchemaModel.deleteOne({brand_name});
@@ -95,29 +96,29 @@ export let deletebrand = async(req,res) =>{
     }
 }
 
-export let updatebrand = async(req,res )=>{
-    // let { oldbrandName, newbrandName } = req.body;
+export let updateBrand = async(req,res )=>{
+    const { id } = req.params; // get id from params
+    const { newBrandName } = req.body; // get new name from body
 
-    const request_details = req.body;
-    let oldbrandName = request_details.oldbrandName;
-    let newbrandName = request_details.newbrandName;
+    try {
+        const matchId = await brandSchemaModel.findById(id);
 
-    try{
-        let brandList = await brandSchemaModel.updateOne(
-            {brand_name : oldbrandName},
-            {$set:{brand_name : newbrandName}});
-        let len = brandList.length;
-        if(len != 0)
-        {
-            return res.status(200).json(new APIResponse(true,{brand:brandList}, "brand Data Updated"));
+        if (!matchId) {
+            return res
+                .status(404)
+                .json({ status: false, message: "Brand not found" });
         }
-        else
-        {
-            return res.status(404).json(new APIResponse(false,{},"brand Not Found"));
-        }
-    }
-    catch(err){
-        console.log("Update brand Exception is : "+err);
-        return res.status(500).json(new APIResponse(false, {}, "Internal Server Error"));
+
+        const updated = await brandSchemaModel.findByIdAndUpdate(
+            id,
+            { brand_name: newBrandName },
+            { new: true }
+        );
+
+        return res.json({ status: true, data: updated, message: "Brand updated successfully" });
+
+    } catch (err) {
+        console.error("Update Brand Exception:", err);
+        return res.status(500).json({ status: false, message: "Internal Server Error" });
     }
 }

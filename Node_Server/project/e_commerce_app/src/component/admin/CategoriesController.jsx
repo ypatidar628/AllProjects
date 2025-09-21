@@ -59,7 +59,7 @@ const CategoryController = () => {
 
     try {
       const resp = await WebService.putAPICallWithToken(
-        `${WebAPI.updateCategory}/${editCategoryId}`, // append id here
+        `${WebAPI.updateCategory(editCategoryId)}`, // append id here
         userData.token,
         { newCategoryName: nameRef.current.value }
       );
@@ -125,7 +125,7 @@ const CategoryController = () => {
 
   return (
     <div className="container">
-      <h1 className="heading bg-[#3B5D50]">Welcome To category Controller</h1>
+      <h1 className="heading">Welcome To category Controller</h1>
 
       <div className="button-row">
         <button
@@ -153,8 +153,9 @@ const CategoryController = () => {
           <input
             type="text"
             placeholder="Category Name"
-            className="form-input"
+            className="form-input capitalize"
             ref={nameRef}
+            defaultValue={isEdit ? categorys.find(c => c._id === editCategoryId)?.category_name || '' : undefined}
             required
           />
 

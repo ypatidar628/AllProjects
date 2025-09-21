@@ -11,6 +11,7 @@ export default {
   saveProduct: `${BASE_URL}/product/saveProduct`,
   viewAllProduct: `${BASE_URL}/product/viewAllProduct`,
   deleteProduct: `${BASE_URL}/product/deleteProduct`,
+  updateProduct: (id) => `${BASE_URL}/product/updateProduct/${id}`, // <-- function for id
 
   // ================= CATEGORY API =================
   saveCategory: `${BASE_URL}/category/saveCategory`,
@@ -22,4 +23,5 @@ export default {
   saveBrand: `${BASE_URL}/brand/saveBrand`,
   viewAllBrand: `${BASE_URL}/brand/viewAllBrand`,
   deleteBrand: `${BASE_URL}/brand/deleteBrand`,
+  updateBrand: (id) => `${BASE_URL}/brand/updateBrand/${id}`, // <-- function for id
 };

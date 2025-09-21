@@ -11,6 +11,8 @@ const ProductController = () => {
   const [products, setProducts] = useState([]);
   const [categorys, setcategorys] = useState([]);
   const [brands, setbrands] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+  const [editProductId, setEditProductId] = useState(null);
 
   console.log("token " + userData.token);
 
@@ -70,6 +72,41 @@ const ProductController = () => {
     setView("none");
     fetchProducts();
   };
+
+  // Handle Product Edit
+  const handleEdit = async (e) => {
+    e.preventDefault(e);
+
+    try{
+      const resp = await WebService.putAPICallWithToken(
+        `${WebAPI.updateProduct(editProductId)}`, // append id here
+        userData.token,
+        {
+          product_name: nameRef.current.value,
+          categoryId: categoryRef.current.value,
+          product_details: detailsRef.current.value,
+          brandId: brandRef.current.value,
+          product_image: imageRef.current.value,
+          product_price: priceRef.current.value,
+        }
+      );
+      console.log("Product Updated:", resp.data);
+
+      if(resp.data.status){
+        toast.success("Product updated successfully!");
+        fetchProducts();
+        setView("none");
+        setIsEdit(false);
+        setEditProductId(null);
+      } else {
+        toast.error("Failed to update product!");
+      }
+    }
+    catch(error){
+      console.error("Error updating product:", error);
+    }
+  }
+
 
   //Fetch Products
   const fetchProducts = async () => {
@@ -150,25 +187,17 @@ const ProductController = () => {
     fetchProducts(); // refresh list
   };
 
-  //   const handleEdit = (index) => {
-  //     const p = products[index];
-  //     nameRef.current.value = p.product_name;
-  //     categoryRef.current.value = p.product_category_name;
-  //     detailsRef.current.value = p.product_details;
-  //     brandRef.current.value = p.product_brand;
-  //     imageRef.current.value = p.product_image;
-  //     priceRef.current.value = p.product_price;
-
-  //     setProducts(products.filter((_, i) => i !== index));
-  //     setView("form");
-  //   };
 
   return (
     <div className="container">
-      <h1 className="heading bg-[#3B5D50]">Welcome To Product Controller</h1>
+      <h1 className="heading">Welcome To Product Controller</h1>
 
       <div className="button-row">
-        <button className="btn-success" onClick={() => setView("form")}>
+        <button className="btn-success" onClick={() =>{
+          setIsEdit(false);
+           setView("form")
+        }
+        }>
           Add Product
         </button>
         <button className="btn-danger" onClick={() => setView("table")}>
@@ -177,14 +206,15 @@ const ProductController = () => {
       </div>
 
       {view === "form" && (
-        <form onSubmit={handleSubmit} className="form-container">
-          <h2 className="form-title">Add / Edit Product</h2>
+        <form onSubmit={isEdit ? handleEdit : handleSubmit} className="form-container">
+          <h2 className="form-title">{isEdit ? "Edit Product" : "Add Product"}</h2>
 
           <input
             type="text"
             placeholder="Product Name"
-            className="form-input"
+            className="form-input capitalize"
             ref={nameRef}
+            defaultValue={isEdit ? products.find(p => p._id === editProductId)?.product_name || '' : undefined}
             required
           />
           {/* <input type="text" placeholder="Category Id" className="form-input" ref={categoryRef} required /> */}
@@ -193,36 +223,39 @@ const ProductController = () => {
             name="categoryId"
             required
             ref={categoryRef}
-            className="form-input"
+            defaultValue={isEdit ? products.find(p => p._id === editProductId)?.categoryId || '' : undefined}
+            className="form-input "
           >
             {categorys.map((cat) => (
               <option key={cat._id} value={cat._id}>
-                {cat.category_name}
+                {cat.category_name.charAt(0).toUpperCase()+cat.category_name.slice(1)}
               </option>
             ))}
           </select>
 
           <label>Brand:</label>
-          <select name="brandId" required ref={brandRef} className="form-input">
+          <select name="brandId" required ref={brandRef} className="form-input " defaultValue={isEdit ? products.find(p => p._id === editProductId)?.brandId || '' : undefined}>
             {brands.map((brand) => (
               <option key={brand._id} value={brand._id}>
-                {brand.brand_name}
+                {brand.brand_name.charAt(0).toUpperCase()+brand.brand_name.slice(1)}
               </option>
             ))}
           </select>
 
           <textarea
             placeholder="Product Details"
-            className="form-textarea"
+            className="form-textarea capitalize "
             ref={detailsRef}
+            defaultValue={isEdit ? products.find(p => p._id === editProductId)?.product_details || '' : undefined}
             required
           />
           {/* <input type="text" placeholder="Product Brand" className="form-input" ref={brandRef} required /> */}
           <input
             type="text"
             placeholder="Image URL"
-            className="form-input"
+            className="form-input "
             ref={imageRef}
+            defaultValue={isEdit ? products.find(p => p._id === editProductId)?.product_image || '' : undefined}
             required
           />
           <input
@@ -230,12 +263,13 @@ const ProductController = () => {
             placeholder="Product Price"
             className="form-input"
             ref={priceRef}
+            defaultValue={isEdit ? products.find(p => p._id === editProductId)?.product_price || '' : undefined}
             required
           />
 
           <div className="form-buttons">
             <button type="submit" className="btn-primary">
-              Submit
+              {isEdit ? "Update" : "Submit"}
             </button>
             <button
               type="button"
@@ -298,7 +332,11 @@ const ProductController = () => {
                       <td>
                         <button
                           className="bg-gray-300 hover:bg-gray-400 rounded-lg px-3 py-1 text-sm"
-                          onClick={() => handleEdit(index)}
+                          onClick={() => {
+                            setView("form");
+                            setIsEdit(true);
+                            setEditProductId(product._id);
+                          }}
                         >
                           Edit
                         </button>

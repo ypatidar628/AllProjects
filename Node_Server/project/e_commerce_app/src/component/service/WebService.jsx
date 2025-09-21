@@ -23,10 +23,14 @@ class WebService {
   }
 
   putAPICallWithToken(url, token, data) {
-    return axios.put(url, data, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-  }
+  return axios.put(url, data, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
+
+
+
 }
 
 export default new WebService();

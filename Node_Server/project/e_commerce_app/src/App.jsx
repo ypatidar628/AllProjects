@@ -14,6 +14,7 @@ import ProductCantroller from './component/admin/ProductController'
 import Products from './component/user/Products'
 import CategoryController from './component/admin/CategoriesController'
 import BrandController from './component/admin/BrandController'
+import CartPage from './component/user/CartPage'
 
 function App() {
   return<div>
@@ -30,6 +31,8 @@ function App() {
       <Route path='/admin/product' element={<ProductCantroller/>}></Route>
       <Route path='/admin/category' element={<CategoryController/>}></Route>
       <Route path='/admin/brand' element={<BrandController/>}></Route>
+      <Route path='/cart' element={<CartPage/>}></Route>
+
     </Routes>
     <Footer/>
     </div>

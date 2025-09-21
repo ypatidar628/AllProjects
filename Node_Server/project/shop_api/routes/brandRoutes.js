@@ -4,10 +4,10 @@ import jwtAuth from '../auth_token/jwtAuth.js';
 
 const route = express.Router();
 
-route.post("/savebrand",jwtAuth.tokenAuthentic,brandController.savebrand)
-route.get("/viewAllbrand",jwtAuth.tokenAuthentic,brandController.viewAllbrand);
-route.post("/searchbrand",jwtAuth.tokenAuthentic,brandController.searchbrand);
-route.delete("/deletebrand",jwtAuth.tokenAuthentic,brandController.deletebrand);
-route.put("/updatebrand",jwtAuth.generateToken,brandController.updatebrand);
+route.post("/saveBrand",jwtAuth.tokenAuthentic,brandController.saveBrand)
+route.get("/viewAllBrand",jwtAuth.tokenAuthentic,brandController.viewAllBrand);
+route.post("/serachBrand",jwtAuth.tokenAuthentic,brandController.serachBrand);
+route.delete("/deleteBrand",jwtAuth.tokenAuthentic,brandController.deleteBrand);
+route.put("/updateBrand/:id",jwtAuth.tokenAuthentic,brandController.updateBrand);
 
 export default route ;

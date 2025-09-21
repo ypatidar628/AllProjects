@@ -61,6 +61,7 @@ function Navbar() {
                                 <>
                                     <li><Link to="/profile">Profile</Link></li>
                                     <li><Link to="/product">Product</Link></li>
+                                    <li><Link to="/cart">Cart</Link></li>
                                 </>
 
                             )}

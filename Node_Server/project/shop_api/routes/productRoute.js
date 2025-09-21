@@ -5,9 +5,9 @@ import jwtAuth from '../auth_token/jwtAuth.js';
 const route = express.Router();
 
 route.post("/saveProduct",jwtAuth.tokenAuthentic,productController.saveProduct)
-route.get("/viewAllProduct",jwtAuth.tokenAuthentic,productController.viewAllproduct);
+route.get("/viewAllProduct",jwtAuth.tokenAuthentic,productController.viewAllProduct);
 route.delete("/deleteProduct",jwtAuth.tokenAuthentic,productController.deleteProduct);
-route.put("/updateProduct",jwtAuth.tokenAuthentic,productController.updateProduct);
+route.put("/updateProduct/:id",jwtAuth.tokenAuthentic,productController.updateProduct);
 route.post("/searchProduct",jwtAuth.tokenAuthentic,productController.searchProduct);
 
 
