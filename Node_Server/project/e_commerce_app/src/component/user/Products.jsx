@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import WebService from "../service/WebService";
 import WebAPI from "../service/WebAPI";
 import { Flip, toast, ToastContainer } from "react-toastify";
+import CartService from "../service/CartService";
 
 function Products() {
   const userData = useSelector((state) => state.userData.value);
@@ -12,10 +13,12 @@ function Products() {
 
   const [products, setProducts] = useState([]);
   const [brands, setbrands] = useState([]);
+  const [categorys , setCategorys] = useState([]);
 
   useEffect(() => {
     fetchProducts();
     fetchbrands();
+    fetchcategorys();
   }, []);
 
   //Fetch Products from backend and display here
@@ -25,7 +28,7 @@ function Products() {
         WebAPI.viewAllProduct,
         userData.token
       );
-      console.log("Products fetched", resp.data);
+      // console.log("Products fetched", resp.data);
       if (resp.data.status === true) {
         setProducts(resp.data);
         toast.success("brands fetched successfully!");
@@ -43,7 +46,7 @@ function Products() {
         WebAPI.viewAllBrand,
         userData.token
       );
-      console.log("brands fetched successfully:", resp.data.data.brand);
+      // console.log("brands fetched successfully:", resp.data.data.brand);
       if (resp.data.status === true) {
         setbrands(resp.data.data.brand);
         toast.success("brands fetched successfully!");
@@ -52,6 +55,55 @@ function Products() {
       console.error("Error fetching brands:", error);
     }
   };
+
+  
+    //View All Category
+    const fetchcategorys = async () => {
+      try {
+        var resp = await WebService.getAPICall(
+          WebAPI.viewAllCategory,
+          userData.token
+        );
+        if (resp.data.status === true) {
+          setCategorys(resp.data.data.category);
+          toast.success("categorys fetched successfully!");
+        }
+      } catch (error) {
+        console.error("Error fetching categorys:", error);
+      }
+    };
+
+  //Add to cart function
+  const onAddToCart = async (p) => {
+    // console.log("Product to add to cart:", p);
+      // console.log("Category to add to cart:", c);
+      
+    const categorySend = categorys.find((cat) => cat._id == p.categoryId ? cat._id : "Uncategorized");
+
+    try{
+      const userId = await userData.user._id;
+
+      const data = {
+            userId : userId,
+            productId : p._id,
+            product_name : p.product_name,
+            category_name : categorySend._id == p.categoryId ? categorySend.category_name : "Uncategorized",
+            product_price : p.product_price,
+            product_image : p.product_image,
+            quantity: 1
+    };
+    console.log("sending data",data);
+    
+      // console.log("User ID:", userId);  
+
+      const resp = await CartService.addToCart(userData.token, data);
+      console.log("Add to Cart Response:", resp.data);
+      
+    }
+    catch(error){
+      console.error("Error adding to cart:", error);
+    }
+  }
 
   return (
     <div className="main-div">
@@ -129,12 +181,9 @@ function Products() {
 
               {/* Details */}
               <div className="p-4 flex flex-col flex-grow">
-                <h3 className="text-lg font-semibold text-gray-900 mb-1 truncate">
+                <h3 className="text-lg font-semibold text-gray-900 mb-1 truncate capitalize">
                   {p.product_name}
                 </h3>
-                <p className="text-sm text-gray-500 mb-3 line-clamp-2">
-                  {p.product_details}
-                </p>
 
                 <div className="text-xs text-gray-400 space-y-1 mb-4">
                   {brands.map((brand) => {
@@ -146,12 +195,14 @@ function Products() {
                       );
                     }
                   })}
+
                 </div>
                 {/* Price + Button */}
                 <div className="mt-auto flex items-center justify-between">
                   <span className="text-lg font-bold text-green-700">
                     ₹{p.product_price}
                   </span>
+                 
                   <button
                     onClick={() => onAddToCart(p)}
                     className="px-4 py-2 bg-[#4F6E62]  rounded-lg text-sm shadow-md hover:bg-[#578d78] transition"

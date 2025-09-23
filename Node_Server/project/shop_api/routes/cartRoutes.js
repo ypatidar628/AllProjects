@@ -6,10 +6,10 @@ import jwtAuth from '../auth_token/jwtAuth.js';
 
 const router = express.Router();
 
-router.post("/add", cartController.addCart);
-router.get("/",  cartController.getCart);
-router.put("/update", jwtAuth.tokenAuthentic, cartController.updateCart);
-router.delete("/remove/:productId", jwtAuth.tokenAuthentic, cartController.removeCartItem);
-router.delete("/clear", jwtAuth.tokenAuthentic, cartController.removeCart);
+router.post("/add",jwtAuth.tokenAuthentic,cartController.addCart);
+router.get("/get/:userId",jwtAuth.tokenAuthentic,cartController.getCart);
+router.put("/update/:id", jwtAuth.tokenAuthentic, cartController.updateCart);
+router.delete("/remove/:productId" , jwtAuth.tokenAuthentic , cartController.removeCartItem);
+router.delete("/clear/:userId", jwtAuth.tokenAuthentic, cartController.removeCart);
 
 export default router;

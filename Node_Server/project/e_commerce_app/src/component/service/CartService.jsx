@@ -4,34 +4,35 @@ import axios from "axios";
 const API_URL = "http://localhost:8989/cart";
 
 const CartService = {
-  addToCart: (token, productId, quantity = 1) =>
+  addToCart: (token, productId) =>
     axios.post(
       `${API_URL}/add`,
-      { productId, quantity },
+      productId,
       { headers: { Authorization: `Bearer ${token}` } }
     ),
 
-  getCart: (token) =>
-    axios.get(`${API_URL}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }),
+  getCart: (userId , token) => axios.get(`${API_URL}/get/${userId}`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  ),
 
-  updateCartItem: (token, productId, quantity) =>
+  updateCartItem: ( id , token, quantity) =>
     axios.put(
-      `${API_URL}/update`,
-      { productId, quantity },
+      `${API_URL}/update/${id}`,
+      { quantity },
       { headers: { Authorization: `Bearer ${token}` } }
     ),
 
-  removeCartItem: (token, productId) =>
+  removeCartItem: ( productId ,token) =>
     axios.delete(`${API_URL}/remove/${productId}`, {
       headers: { Authorization: `Bearer ${token}` },
     }),
+clearCart: (userId, token) =>
+  axios.delete(`${API_URL}/clear/${userId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+    // not { userId: { userId: 2 } }
+  }),
 
-  clearCart: (token) =>
-    axios.delete(`${API_URL}/clear`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }),
+
 };
 
 export default CartService;

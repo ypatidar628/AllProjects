@@ -61,7 +61,7 @@ function Navbar() {
                                 <>
                                     <li><Link to="/profile">Profile</Link></li>
                                     <li><Link to="/product">Product</Link></li>
-                                    <li><Link to="/cart">Cart</Link></li>
+                                    <li><Link to="/cart">Cart <FontAwesomeIcon icon={faBagShopping} className="icon" /></Link></li>
                                 </>
 
                             )}
@@ -70,7 +70,6 @@ function Navbar() {
                             </li>
                             <li><Link to="#"><FontAwesomeIcon icon={faMagnifyingGlass} className="icon" /></Link></li>
                             <li><Link to="#"><FontAwesomeIcon icon={faHeart} className="icon" /></Link></li>
-                            <li><Link to="#"><FontAwesomeIcon icon={faBagShopping} className="icon" /></Link></li>
                         </ul>
                     </nav>
                 ) : (
