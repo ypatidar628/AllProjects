@@ -9,6 +9,7 @@ import productRoute from './routes/productRoute.js'
 import cors from "cors"
 import brandRoutes from "./routes/brandRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
+import orderRoute from "./routes/orderRoute.js";
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
@@ -31,6 +32,7 @@ app.use("/product",productRoute);
 app.use("/category",categoryRoute);
 app.use("/brand",brandRoutes);
 app.use("/cart",cartRoutes)
+app.use("/order",orderRoute)
 
 app.listen(8989,()=>{
   console.log("Server Invoked : ")

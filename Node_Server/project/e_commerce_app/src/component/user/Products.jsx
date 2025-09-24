@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../css/Product.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import WebService from "../service/WebService";
 import WebAPI from "../service/WebAPI";
@@ -9,11 +9,12 @@ import CartService from "../service/CartService";
 
 function Products() {
   const userData = useSelector((state) => state.userData.value);
-  console.log("userData in product page", userData.token);
+  console.log("userData in product page", userData);
 
   const [products, setProducts] = useState([]);
   const [brands, setbrands] = useState([]);
   const [categorys , setCategorys] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
@@ -82,9 +83,13 @@ function Products() {
 
     try{
       const userId = await userData.user._id;
+      const userName = await userData.user.name;
+      const userEmail = await userData.user.email;
 
       const data = {
             userId : userId,
+            userName : userName,
+            userEmail : userEmail,
             productId : p._id,
             product_name : p.product_name,
             category_name : categorySend._id == p.categoryId ? categorySend.category_name : "Uncategorized",
@@ -105,6 +110,10 @@ function Products() {
     }
   }
 
+  const navigateTologin = () =>{
+    navigate('/login');
+  }
+
   return (
     <div className="main-div">
       <div className="sidebar">
@@ -112,7 +121,7 @@ function Products() {
         <div className="filter-search-container">
           {/* Filter Dropdown */}
           <div className="filter-dropdown">
-            <label htmlFor="product-filter" style={{ color: "white" }}>
+            <label htmlFor="product-filter" >
               Filter Products:
             </label>
             <select id="product-filter" className="filter-select">
@@ -124,7 +133,7 @@ function Products() {
           </div>
           {/* Search Bar */}
           <div className="search-bar">
-            <label htmlFor="product-search" style={{ color: "white" }}>
+            <label htmlFor="product-search" >
               Search:
             </label>
             <div className="search-input-container">
@@ -204,7 +213,7 @@ function Products() {
                   </span>
                  
                   <button
-                    onClick={() => onAddToCart(p)}
+                    onClick={() => userData.isLoginStatus ===true ? onAddToCart(p) :navigateTologin()}
                     className="px-4 py-2 bg-[#4F6E62]  rounded-lg text-sm shadow-md hover:bg-[#578d78] transition"
                   >
                     <span className="text-white">🛒 Add to Cart</span>

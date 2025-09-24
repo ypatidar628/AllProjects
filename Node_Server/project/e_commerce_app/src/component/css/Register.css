@@ -1,32 +1,30 @@
 .log-container2 {
     width: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    background-color: #B9F8CF;
+    display: flex;
+    justify-content: center;  /* changed from left → center for small screens */
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-size: cover;
+    background-position: center;
+    /* background-image: url('../img/about/loginRegisterBg2.jpg'); */
 }
 
 .register-container2 {
-    background-color: #3b5d50;
     padding: 20px;
     border-radius: 20px;
     width: 90%;
     max-width: 400px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    text-align: center;
     position: relative;
     bottom: 30px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 1.5rem;
-
+    font-size: 1.2rem; /* lowered for better fit on small devices */
+    /* background-color: rgba(255, 255, 255, 0.9); added for readability */
 }
 
 .register-title2 {
-    color: #ffffff;
     font-weight: 600;
-    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
 }
 
 .form-group2 {
@@ -36,21 +34,21 @@
 
 .label2 {
     font-weight: bold;
-    font-size: 1.4rem !important;
-    color: #ffffff;
-    margin-bottom: 3px;
+    font-size: 1.2rem !important;
+    color: rgb(89, 88, 88);
+    margin-bottom: 5px;
     display: block;
 }
 
 .input2 {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 2px solid #e1e5ee;
     border-radius: 5px;
     font-size: 1rem;
     background-color: #f8faff;
     transition: all 0.3s ease;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .input2:focus,
@@ -68,7 +66,7 @@
     display: none;
 }
 
-/* password see button */
+/* Password toggle */
 .password-container {
     margin-top: 20px;
 }
@@ -81,14 +79,14 @@
 
 .password-input {
     width: 100%;
-    padding-right: 60px;
-    /* Ensure space for the button */
+    padding-right: 60px; /* Space for button */
 }
 
 .toggle-password-btn {
     position: absolute;
     right: 8px;
-    top: 16px;
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
@@ -96,19 +94,19 @@
     color: #666;
 }
 
-/* =============================   */
+/* Button */
 .button2 {
     width: 100%;
     padding: 15px;
-    background: linear-gradient(135deg, #1e7259, #237d56);
     color: white;
     border: none;
     border-radius: 10px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
+    background: linear-gradient(135deg, #1e7259, #237d56);
     box-shadow: 0 4px 15px rgba(25, 116, 90, 0.5);
     margin-top: 20px;
 }
@@ -119,38 +117,69 @@
 }
 
 .register-container2 .register2 {
-    color: #ffffff;
+    color: #1e7259;
     text-decoration: underline;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin-top: 10px;
     display: inline-block;
     transition: 0.4s ease;
-
 }
 
 .register-container2 .register2:hover {
     color: #000;
 }
 
+/* Row Fix */
 .row {
     width: 100%;
     margin: 0 auto;
     position: relative;
-    left: 16px;
+    left: 0; /* removed offset for mobile */
 }
 
-/* Responsive Design */
+/* ================= Responsive Design ================= */
+
+/* Tablets */
 @media (max-width: 768px) {
     .register-container2 {
-        width: 100%;
-        padding: 20px;
+        width: 95%;
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    .label2 {
+        font-size: 1rem !important;
     }
 
     .login-title2 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 
     .button2 {
+        font-size: 1rem;
+        padding: 12px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .register-container2 {
+        width: 100%;
+        font-size: 0.95rem;
+        border-radius: 12px;
+        bottom: 0;
+    }
+
+    .label2 {
+        font-size: 0.95rem !important;
+    }
+
+    .button2 {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    .register-container2 .register2 {
         font-size: 1rem;
     }
 }

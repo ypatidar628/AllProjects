@@ -1,0 +1,162 @@
+import Order from "../model/orderSchema.js";
+import Cart from "../model/cartSchema.js";
+import userSchemaModel from "../model/userModel.js"; // important! use cart for items
+
+// ✅ Create Order (from user's cart)
+export const createOrder = async (req, res) => {
+    try {
+        const { userId } = req.body;
+        console.log(req.body);
+        // Get all cart items for this user
+        const cartItems = await Cart.find({ userId });
+        // console.log("Cart items : ",JSON.stringify(cartItems));
+        if (!cartItems || cartItems.length === 0) {
+            return res.status(400).json({ status: false, message: "Cart is empty" });
+        }
+
+        // Calculate total amount
+        const totalAmount = cartItems.reduce(
+            (sum, item) => sum + item.product_price * item.quantity,
+            0
+        );
+
+        const respOfUser = await userSchemaModel.findOne({_id : userId})
+        console.log("respOfUser ", respOfUser._id)
+        let userName  = respOfUser.name;
+        let userEmail = respOfUser.email;
+
+        console.log(userName , " ; " , userEmail );
+        // Create new order
+        const order = await Order.create({
+            userId,
+            userName,
+            userEmail,
+            items: cartItems.map((item) => ({
+                productId: item.productId,
+                product_name: item.product_name,
+                quantity: item.quantity,
+                product_price: item.product_price,
+            })),
+            totalAmount,
+        });
+
+        // Clear cart after placing order
+        await Cart.deleteMany({ userId });
+
+        return res.json({
+            status: true,
+            message: "Order placed successfully",
+            order,
+        });
+    } catch (err) {
+        console.error("Create Order Exception:", err);
+        res.status(500).json({ status: false, message: "Internal Server Error" });
+    }
+};
+
+// ✅ Get All Orders for a User
+export const getUserOrders = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        // console.log("user" , userId);
+
+        const orders = await Order.find({ userId });
+        console.log("Orders : ",JSON.stringify(orders));
+
+        if (!orders.length) {
+            return res.json({ status: true, message: "No orders found", data: [] });
+        }
+
+        res.json({ status: true, data: orders });
+    } catch (err) {
+        console.error("Get User Orders Exception:", err);
+        res.status(500).json({ status: false, message: "Internal Server Error" });
+    }
+};
+
+// ✅ Get Single Order by ID
+export const getOrderById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log("req.params ; " , req.params);
+
+        const order = await Order.findById(id);
+
+        if (!order) {
+            return res
+                .status(404)
+                .json({ status: false, message: "Order not found" });
+        }
+
+        res.json({ status: true, data: order });
+    } catch (err) {
+        console.error("Get Order By ID Exception:", err);
+        res.status(500).json({ status: false, message: "Internal Server Error" });
+    }
+};
+
+// ✅ Admin: Get All Orders
+export const getAllOrders = async (req, res) => {
+    try {
+        const orders = await Order.find()
+            .sort({ createdAt: -1 });
+
+        res.json({ status: true, data: orders });
+    } catch (err) {
+        console.error("Get All Orders Exception:", err);
+        res.status(500).json({ status: false, message: "Internal Server Error" });
+    }
+};
+
+// ✅ Admin: Update Order Status
+export const updateOrderStatus = async (req, res) => {
+    try {
+        const { id } = req.params; // order id
+        const { status } = req.body;
+
+        const validStatuses = ["Pending", "Shipped", "Delivered", "Cancelled"];
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({ status: false, message: "Invalid status" });
+        }
+
+        const updatedOrder = await Order.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        );
+
+        if (!updatedOrder) {
+            return res
+                .status(404)
+                .json({ status: false, message: "Order not found" });
+        }
+
+        res.json({
+            status: true,
+            message: "Order status updated",
+            data: updatedOrder,
+        });
+    } catch (err) {
+        console.error("Update Order Exception:", err);
+        res.status(500).json({ status: false, message: "Internal Server Error" });
+    }
+};
+
+// ✅ Admin: Delete Order
+export const deleteOrder = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const deletedOrder = await Order.findByIdAndDelete(id);
+        if (!deletedOrder) {
+            return res
+                .status(404)
+                .json({ status: false, message: "Order not found" });
+        }
+
+        res.json({ status: true, message: "Order deleted successfully" });
+    } catch (err) {
+        console.error("Delete Order Exception:", err);
+        res.status(500).json({ status: false, message: "Internal Server Error" });
+    }
+};

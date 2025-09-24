@@ -1,10 +1,15 @@
 /* Navbar.css */
 .header1 {
-    background-color: #3b5d50;
-    color: white;
+    /* background-color: #90C5DF; */
+     background-color: rgba(4, 124, 183, 0.442); /*#A8C9DA */
+
+  backdrop-filter: blur(12p/x);             /* medium blur */
+  -webkit-backdrop-filter: blur(12px);      /* Safari support */
+    color: black;
     padding: 10px 20px;
     height: 80px;
     position: relative;
+    border: solid 1px none;
     z-index: 999;
 }
 
@@ -42,7 +47,7 @@ font-weight: 600;
 .header__menu1 ul li a,
 .header__menul ul li a {
     font-size: 18px;
-    color: white;
+    color: darkslategray;
     text-decoration: none;
     font-weight: 600;
     position: relative;
@@ -101,7 +106,7 @@ font-weight: 600;
         top: 80px;
         left: 0;
         width: 100%;
-        background-color: #3b5d50;
+        background-color: #90c5dfc3;
         padding: 20px;
         border-radius: 0 0 10px 10px;
         animation: slideDown 0.4s ease-out forwards;
@@ -141,7 +146,7 @@ font-weight: 600;
         top: 80px;
         left: 0;
         width: 100%;
-        background-color: #3b5d50;
+        background-color: #90C5DF;
         padding: 20px;
         border-radius: 0 0 10px 10px;
         animation: slideDown 0.4s ease-out forwards;

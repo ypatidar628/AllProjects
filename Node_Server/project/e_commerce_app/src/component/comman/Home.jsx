@@ -6,6 +6,7 @@ import { faFacebook, faTwitter as faXTwitter, faPinterest, faInstagram } from '@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import '../css/Home.css'; // Link to the CSS file
+import Products from '../user/Products';
 
 function Home() {
     const slide1Ref = useRef();
@@ -67,6 +68,7 @@ function Home() {
                     </div>
                 </SplideSlide>
             </Splide>
+                        {/* <Products/> */}
         </div>
     );
 }

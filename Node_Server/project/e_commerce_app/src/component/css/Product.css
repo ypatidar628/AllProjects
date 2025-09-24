@@ -10,9 +10,9 @@
  width: 250px;
   /* max-width: 30%; */
   min-height: 90vh;
-  background: #3b5d50;
+  background: #90c5dfc3;
   padding: 20px;
-  color: #fff;
+  color: #000000;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .sidebar ul li a {
-  color: #fff;
+  color: #000000;
   text-decoration: none;
   display: block;
 }
@@ -124,9 +124,9 @@ scale: 1.03;
 
 .sidebar {
  width: 100%;  
-  background: #3b5d50;
+  background: #90c5dfc3;
   padding: 20px;
-  color: #fff;
+  color: #000;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   display: flex;
   flex-direction: column;
@@ -174,7 +174,7 @@ min-height: auto;
 }
 
 .sidebar ul li a {
-  color: #fff;
+  color: #000000;
   text-decoration: none;
   display: block;
 

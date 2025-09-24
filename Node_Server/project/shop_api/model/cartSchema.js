@@ -3,6 +3,8 @@ import mongooseUniqueValidator from "mongoose-unique-validator";
 
 const cartSchema = new mongoose.Schema({
   userId: { type:Number, required: true },
+  userName: { type:String, required: true },
+  userEmail: { type:String, required: true },
   productId: {  type:Number, required: true },
   quantity: { type: Number, default: 1 },
   category_name: { type: String, required: true },

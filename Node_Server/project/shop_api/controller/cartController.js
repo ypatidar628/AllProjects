@@ -5,7 +5,7 @@ import Cart from "../model/cartSchema.js";
 
 export const addCart = async (req, res) => {
     try {
-        const { userId, productId, product_name, category_name, product_price, product_image, quantity } = req.body;
+        const { userId, userName , userEmail, productId, product_name, category_name, product_price, product_image, quantity } = req.body;
         console.log("req body : ", req.body);
 
         if (!userId || !productId || !product_name || !category_name || !product_price) {
@@ -25,6 +25,8 @@ export const addCart = async (req, res) => {
 else {
             cartItem = await Cart.create({
                 userId,
+                userName,
+                userEmail,
                 productId,
                 product_name,
                 category_name,
@@ -32,6 +34,8 @@ else {
                 product_image,
                 quantity: quantity || 1
             });
+
+            console.log("req body : ", cartItem);
         return res.json({ status: true, data: cartItem, message: "Cart item added successfully" });
         }
     } catch (err) {

@@ -49,6 +49,9 @@ const CartPage = () => {
   const handleQuantityChange = async (productId, quantity) => {
     console.log(productId, ":", quantity);
 
+    if(quantity === 0) {
+      handleRemove(productId);
+    }
     try {
       if (quantity < 1) return;
       const resp = await CartService.updateCartItem(productId, userData.token, quantity);
