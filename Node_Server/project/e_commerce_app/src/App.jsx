@@ -15,6 +15,7 @@ import Products from './component/user/Products'
 import CategoryController from './component/admin/CategoriesController'
 import BrandController from './component/admin/BrandController'
 import CartPage from './component/user/CartPage'
+import ViewOrder from './component/user/ViewOrder'
 
 function App() {
   return<div>
@@ -32,6 +33,7 @@ function App() {
       <Route path='/admin/category' element={<CategoryController/>}></Route>
       <Route path='/admin/brand' element={<BrandController/>}></Route>
       <Route path='/cart' element={<CartPage/>}></Route>
+      <Route path='/viewOrder' element={<ViewOrder/>}></Route>
 
     </Routes>
     <Footer/>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CartService from "../service/CartService";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import OrderService from "../service/OrderService";
 
 const CartPage = () => {
   const userData = useSelector((state) => state.userData.value);
@@ -100,19 +101,40 @@ const handleClear = async () => {
   }
 };
 
+const handleOrder = async () => {
+try{
+  if (!cart || cart.length === 0) {
+    toast.error("Your cart is empty.");
+  };
+  // Proceed with order placement logic here
+  console.log("Placing order for user:", userData.token);
+  
+
+  const order = await OrderService.placeOrder( userData.user._id , userData.token);
+  console.log("Order Response:", order);
+  toast.success("Order placed successfully!");
+  fetchCart();  
+}
+catch(err){
+  console.error("Order Error:", err);
+  toast.error("Failed to place order");
+}
+
+}
+
 
   if (!cart || cart.length === 0) {
     return <p className="text-center mt-10">🛒 Your cart is empty.</p>;
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-[95%] mx-auto p-6">
       <h2 className="text-3xl font-bold  flex justify-center ">
         <span className="text-[#3B5D50] mb-12">🛒 Your Cart</span>
       </h2>
 
       {/* Grid for cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         {cart.map((item) => (
         
         <div
@@ -162,7 +184,7 @@ const handleClear = async () => {
 
               {/* Remove Button */}
               <button
-                className="text-red-500 hover:underline self-start"
+                className="text-black p-2 rounded-lg hover:underline self-start bg-red-500"
                 onClick={() => handleRemove(item.productId)}
               >
                 Remove
@@ -187,6 +209,13 @@ const handleClear = async () => {
           onClick={() => handleClear()}
         >
           Clear Cart
+        </button>
+
+        <button
+          className="bg-orange-400 text-white px-6 py-2 rounded-lg shadow hover:bg-orange-500"
+          onClick={() => handleOrder()}
+        >
+          Buy Now
         </button>
       </div>
     </div>

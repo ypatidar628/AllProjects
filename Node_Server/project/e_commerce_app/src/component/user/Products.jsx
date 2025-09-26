@@ -6,6 +6,7 @@ import WebService from "../service/WebService";
 import WebAPI from "../service/WebAPI";
 import { Flip, toast, ToastContainer } from "react-toastify";
 import CartService from "../service/CartService";
+import OrderService from "../service/OrderService";
 
 function Products() {
   const userData = useSelector((state) => state.userData.value);
@@ -14,6 +15,7 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [brands, setbrands] = useState([]);
   const [categorys , setCategorys] = useState([]);
+  const [cartStatus , setCartStatus] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,6 +67,8 @@ function Products() {
           WebAPI.viewAllCategory,
           userData.token
         );
+        console.log("categorys fetched successfully:", resp.data);
+        
         if (resp.data.status === true) {
           setCategorys(resp.data.data.category);
           toast.success("categorys fetched successfully!");
@@ -103,12 +107,35 @@ function Products() {
 
       const resp = await CartService.addToCart(userData.token, data);
       console.log("Add to Cart Response:", resp.data);
+      if(resp.data.status === true){
+         const order = await OrderService.placeOrder( userData.user._id , userData.token);
+  console.log("Order Response:", order);
+      }
       
     }
     catch(error){
       console.error("Error adding to cart:", error);
     }
   }
+
+  console.log("cartStatus",cartStatus);
+  
+  //Buy Single Product
+//   const buyNow = async (p) => {
+// try{
+ 
+//   console.log("Placing order for user:", userData.token);
+  
+
+//   const order = await OrderService.placeOrder( userData.user._id , userData.token);
+//   console.log("Order Response:", order);
+// }
+// catch(err){
+//   console.error("Order Error:", err);
+//   toast.error("Failed to place order");
+// }
+
+// }
 
   const navigateTologin = () =>{
     navigate('/login');
@@ -205,12 +232,12 @@ function Products() {
                     }
                   })}
 
+                  <span className="text-lg font-bold text-green-700">
+                    Price : ₹{p.product_price}
+                  </span>
                 </div>
                 {/* Price + Button */}
                 <div className="mt-auto flex items-center justify-between">
-                  <span className="text-lg font-bold text-green-700">
-                    ₹{p.product_price}
-                  </span>
                  
                   <button
                     onClick={() => userData.isLoginStatus ===true ? onAddToCart(p) :navigateTologin()}
@@ -218,6 +245,19 @@ function Products() {
                   >
                     <span className="text-white">🛒 Add to Cart</span>
                   </button>
+                  <button
+  onClick={() => {
+    if (userData.isLoginStatus) {
+      onAddToCart(p);
+    } else {
+      navigateTologin();
+    }
+  }}
+  className="px-4 py-2 bg-[#e88a17] rounded-lg text-sm shadow-md hover:bg-[#e07e06] transition"
+>
+  Buy Now
+</button>
+
                 </div>
               </div>
             </div>

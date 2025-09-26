@@ -73,7 +73,8 @@ function Register() {
         className="w-full max-w-xl bg-transparent backdrop-blur-md shadow-lg rounded-2xl p-8 -mt-40 ml-90 "
       >
         <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-6">
-          Register Here <FontAwesomeIcon icon={faRightToBracket} />
+          Register Here <FontAwesomeIcon icon={faRightToBracket}
+           className="text-green-600 text-3xl sm:text-4xl ml-1" />
         </h2>
 
         <form onSubmit={(event) => saveUser(event)} className="space-y-5">

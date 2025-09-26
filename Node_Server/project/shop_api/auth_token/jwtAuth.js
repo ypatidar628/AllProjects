@@ -26,7 +26,7 @@ class JWT_Auth {
                     return res.status(401).json({"status":false , "message":"Token Invalid"})
                 }
                 else{
-                    console.log("JWT Token Data : "+tokenData);
+                    console.log("JWT Token Data : "+JSON.stringify(tokenData));
                     req.user = tokenData.userId
                     return req.user;
                 }
