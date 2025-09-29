@@ -20,8 +20,17 @@ getOrderById: (id,orderId , token) =>
  axios.get(`${API_URL}/${id}`, {
   params: { orderId },   // → ?orderId=123
   headers: { Authorization: `Bearer ${token}` },
-})
+}),
 
+cancelOrder: ( id , token) =>
+ axios.delete(`${API_URL}/cancelOrder/${id}`,
+ { headers: { Authorization: `Bearer ${token}` } }
+ ),
+
+ cancelOrderById: ( id , orderId , token) =>
+ axios.delete(`${API_URL}/cancelOrderById/${id}?orderId=${orderId}`,
+ { headers: { Authorization: `Bearer ${token}` } }
+ ),
 
 }
 

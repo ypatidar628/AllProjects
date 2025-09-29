@@ -114,6 +114,68 @@ export const getOrderById = async (req, res) => {
     }
 };
 
+export const cancelOrder = async (req, res) => {
+    try {
+        const {id} = req.params;
+
+        const deletedOrder = await Order.findByIdAndDelete(id);
+        if (!deletedOrder) {
+            return res
+                .status(404)
+                .json({status: false, message: "Order not found"});
+        }
+
+        res.json({status: true, message: "Order deleted successfully"});
+    } catch (err) {
+        console.error("Delete Order Exception:", err);
+        res.status(500).json({status: false, message: "Internal Server Error"});
+    }
+}
+
+export const cancelOrderById = async (req, res) => {
+    try {
+        const { id } = req.params; // order id
+        const { orderId } = req.query; // item id inside order.items
+
+        console.log("Order ID (param):", id);
+        console.log("Item ID (query):", orderId);
+
+        // Find the order first
+        const order = await Order.findById(id);
+        if (!order) {
+            return res
+                .status(404)
+                .json({ status: false, message: "Order not found" });
+        }
+
+        // If only one item → delete the whole order
+        if (order.items.length === 1) {
+            await Order.findByIdAndDelete(id);
+            return res.json({
+                status: true,
+                message: "Order deleted because it had only 1 item",
+            });
+        }
+
+        // Otherwise, just remove the single item
+        const updatedOrder = await Order.findByIdAndUpdate(
+            id,
+            { $pull: { items: { _id: orderId } } },
+            { new: true }
+        );
+
+        return res.json({
+            status: true,
+            message: "Item removed from order",
+            data: updatedOrder,
+        });
+    } catch (err) {
+        console.error("Cancel Order Item Exception:", err);
+        res
+            .status(500)
+            .json({ status: false, message: "Internal Server Error" });
+    }
+};
 
 // ✅ Admin: Get All Orders
 export const getAllOrders = async (req, res) => {

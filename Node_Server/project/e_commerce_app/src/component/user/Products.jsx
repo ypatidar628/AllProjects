@@ -10,12 +10,12 @@ import OrderService from "../service/OrderService";
 
 function Products() {
   const userData = useSelector((state) => state.userData.value);
-  console.log("userData in product page", userData);
+  console.log("userData in product page", userData.token);
 
   const [products, setProducts] = useState([]);
   const [brands, setbrands] = useState([]);
-  const [categorys , setCategorys] = useState([]);
-  const [cartStatus , setCartStatus] = useState(false);
+  const [categorys, setCategorys] = useState([]);
+  const [cartStatus, setCartStatus] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,92 +52,91 @@ function Products() {
       // console.log("brands fetched successfully:", resp.data.data.brand);
       if (resp.data.status === true) {
         setbrands(resp.data.data.brand);
-        toast.success("brands fetched successfully!");
+        // toast.success("brands fetched successfully!");
       }
     } catch (error) {
       console.error("Error fetching brands:", error);
     }
   };
 
-  
-    //View All Category
-    const fetchcategorys = async () => {
-      try {
-        var resp = await WebService.getAPICall(
-          WebAPI.viewAllCategory,
-          userData.token
-        );
-        console.log("categorys fetched successfully:", resp.data);
-        
-        if (resp.data.status === true) {
-          setCategorys(resp.data.data.category);
-          toast.success("categorys fetched successfully!");
-        }
-      } catch (error) {
-        console.error("Error fetching categorys:", error);
+
+  //View All Category
+  const fetchcategorys = async () => {
+    try {
+      var resp = await WebService.getAPICall(
+        WebAPI.viewAllCategory,
+        userData.token
+      );
+      console.log("categorys fetched successfully:", resp.data);
+
+      if (resp.data.status === true) {
+        setCategorys(resp.data.data.category);
+        // toast.success("categorys fetched successfully!");
       }
-    };
+    } catch (error) {
+      console.error("Error fetching categorys:", error);
+    }
+  };
 
   //Add to cart function
   const onAddToCart = async (p) => {
-    // console.log("Product to add to cart:", p);
-      // console.log("Category to add to cart:", c);
-      
-    const categorySend = categorys.find((cat) => cat._id == p.categoryId ? cat._id : "Uncategorized");
-
-    try{
-      const userId = await userData.user._id;
-      const userName = await userData.user.name;
-      const userEmail = await userData.user.email;
-
+    try {
       const data = {
-            userId : userId,
-            userName : userName,
-            userEmail : userEmail,
-            productId : p._id,
-            product_name : p.product_name,
-            category_name : categorySend._id == p.categoryId ? categorySend.category_name : "Uncategorized",
-            product_price : p.product_price,
-            product_image : p.product_image,
-            quantity: 1
-    };
-    console.log("sending data",data);
-    
-      // console.log("User ID:", userId);  
+        userId: userData.user._id,
+        userName: userData.user.name,
+        userEmail: userData.user.email,
+        productId: p._id,
+        product_name: p.product_name,
+        category_name: categorys.find(cat => cat._id == p.categoryId)?.category_name || "Uncategorized",
+        product_price: p.product_price,
+        product_image: p.product_image,
+        quantity: 1
+      };
 
       const resp = await CartService.addToCart(userData.token, data);
-      console.log("Add to Cart Response:", resp.data);
-      if(resp.data.status === true){
-         const order = await OrderService.placeOrder( userData.user._id , userData.token);
-  console.log("Order Response:", order);
+
+      if (resp.data.status === true) {
+        toast.success("✅ Item added to cart!");
       }
-      
-    }
-    catch(error){
+    } catch (error) {
       console.error("Error adding to cart:", error);
     }
-  }
+  };
 
-  console.log("cartStatus",cartStatus);
-  
-  //Buy Single Product
-//   const buyNow = async (p) => {
-// try{
- 
-//   console.log("Placing order for user:", userData.token);
-  
 
-//   const order = await OrderService.placeOrder( userData.user._id , userData.token);
-//   console.log("Order Response:", order);
-// }
-// catch(err){
-//   console.error("Order Error:", err);
-//   toast.error("Failed to place order");
-// }
+  console.log("cartStatus", cartStatus);
 
-// }
+  const buyNow = async (p) => {
+    try {
+      // First add to cart
+      const data = {
+        userId: userData.user._id,
+        userName: userData.user.name,
+        userEmail: userData.user.email,
+        productId: p._id,
+        product_name: p.product_name,
+        category_name: categorys.find(cat => cat._id == p.categoryId)?.category_name || "Uncategorized",
+        product_price: p.product_price,
+        product_image: p.product_image,
+        quantity: 1
+      };
 
-  const navigateTologin = () =>{
+      const addCartResp = await CartService.addToCart(userData.token, data);
+
+      if (addCartResp.data.status === true) {
+        // Then place order
+        const orderResp = await OrderService.placeOrder(userData.user._id, userData.token);
+        if (orderResp.data.status === true) {
+          toast.success("✅ Order placed successfully!");
+        }
+      }
+    } catch (error) {
+      console.error("Error in Buy Now:", error);
+    }
+  };
+
+
+  const navigateTologin = () => {
     navigate('/login');
   }
 
@@ -238,26 +237,20 @@ function Products() {
                 </div>
                 {/* Price + Button */}
                 <div className="mt-auto flex items-center justify-between">
-                 
-                  <button
-                    onClick={() => userData.isLoginStatus ===true ? onAddToCart(p) :navigateTologin()}
-                    className="px-4 py-2 bg-[#4F6E62]  rounded-lg text-sm shadow-md hover:bg-[#578d78] transition"
-                  >
-                    <span className="text-white">🛒 Add to Cart</span>
-                  </button>
-                  <button
-  onClick={() => {
-    if (userData.isLoginStatus) {
-      onAddToCart(p);
-    } else {
-      navigateTologin();
-    }
-  }}
-  className="px-4 py-2 bg-[#e88a17] rounded-lg text-sm shadow-md hover:bg-[#e07e06] transition"
->
-  Buy Now
-</button>
 
+                  <button
+                    className="px-4 py-2 bg-[#e88a17] rounded-lg text-sm shadow-md hover:bg-[#e07e06] transition"
+                    onClick={() => userData.isLoginStatus ? buyNow(p) : navigateTologin()}
+                  >
+                    Buy Now
+                  </button>
+
+                  <button
+                    className="px-4 py-2 bg-[#64a3c2] rounded-lg text-sm text-white shadow-md hover:bg-[#90C5DF] transition"
+                    onClick={() => userData.isLoginStatus ? onAddToCart(p) : navigateTologin()}
+                  >
+                    🛒 Add to Cart
+                  </button>
                 </div>
               </div>
             </div>

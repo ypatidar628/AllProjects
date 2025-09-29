@@ -30,6 +30,8 @@ const CartPage = () => {
       }
 
       const userId = userData.user._id;
+    console.log("Fetching cart for userId:", userId);
+    
       const res = await CartService.getCart(userId, userData.token);
 
       if (res.data?.status) {

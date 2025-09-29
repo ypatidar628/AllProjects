@@ -11,7 +11,7 @@ const CartService = {
       { headers: { Authorization: `Bearer ${token}` } }
     ),
 
-  getCart: (userId , token) => axios.get(`${API_URL}/get/${userId}`,
+  getCart: (userId , token) => axios.get(`${API_URL}/getCartItem/${userId}`,
     { headers: { Authorization: `Bearer ${token}` } }
   ),
 

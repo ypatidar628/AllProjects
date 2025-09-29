@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import OrderService from "../service/OrderService";
+import { Flip, toast, ToastContainer } from "react-toastify";
+import Swal from "sweetalert2";
 
 const ViewOrder = () => {
   const userData = useSelector((state) => state.userData.value);
@@ -10,11 +12,13 @@ const ViewOrder = () => {
   const [selectedProduct, setSelectedProduct] = useState(null); // For single product modal
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenSingleOrder, setIsOpenSingleOrder] = useState(false);
+  const [idForCancelOrder, setIdForCancelOrder] = useState("");
 
   useEffect(() => {
     fetchOrdersByUser();
   }, []);
 
+  // Fetch orders by user
   const fetchOrdersByUser = async () => {
     try {
       const resp = await OrderService.getOrdersByUser(
@@ -29,34 +33,133 @@ const ViewOrder = () => {
       console.error("Fetch Orders Error:", err);
     }
   };
-
+  
+  // Fetch order by ID
   const fetchOrderById = async (id, orderId) => {
+    setIdForCancelOrder(id);
+
     try {
       const resp = await OrderService.getOrderById(id, orderId, userData.token);
-
+      
+      console.log(JSON.stringify(resp.data));
+      
       if (resp.data?.status) {
         setSelectedProduct(resp.data.data); // set single product
         setIsOpenSingleOrder(true);
+
       }
     } catch (err) {
       console.error("Fetch Order By ID Error:", err);
     }
   };
 
+  //cancel order
+const cancelOrder = async (id) => {
+  try {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you really want to cancel this order?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, cancel it!",
+      cancelButtonText: "No, keep it",
+      timerProgressBar: true, // optional: show progress bar
+    });
+
+    if (result.isConfirmed) {
+      const resp = await OrderService.cancelOrder(id, userData.token);
+      if (resp.data?.status) {
+        fetchOrdersByUser(); // Refresh orders after cancellation
+        Swal.fire({
+          title: "Cancelled!",
+          text: "Your order has been cancelled.",
+          icon: "success",
+          timer: 1000, // success message auto closes in 2s
+          showConfirmButton: false, // no need for user to click OK
+        });
+      }
+    }
+  } catch (err) {
+    console.error("Cancel Order Error:", err);
+    Swal.fire({
+      title: "Error!",
+      text: "Failed to cancel order. Please try again.",
+      icon: "error",
+      timer: 1000,
+      showConfirmButton: false,
+    });
+  }
+};
+
+//Cancel order by id
+ const cancelOrderById = async (orderId) => {
+  try {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you really want to cancel this order?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, cancel it!",
+      cancelButtonText: "No, keep it",
+      timerProgressBar: true,
+    });
+
+    if (result.isConfirmed) {
+      const resp = await OrderService.cancelOrderById(
+        idForCancelOrder,
+        orderId.id,
+        userData.token
+      );
+
+      if (resp.data?.status) {
+        closeSingleOrderModal();
+        fetchOrdersByUser(); // Refresh orders after cancellation
+
+        await Swal.fire({
+          title: "Cancelled!",
+          text: "Your order has been cancelled.",
+          icon: "success",
+          timer: 1000, // success message auto closes in 2s
+          showConfirmButton: false,
+          timerProgressBar: true,
+        });
+      }
+    }
+  } catch (err) {
+    console.error("Cancel Order By ID Error:", err);
+    Swal.fire({
+      title: "Error!",
+      text: "Failed to cancel order item. Please try again.",
+      icon: "error",
+      timer: 1000,
+      showConfirmButton: false,
+      timerProgressBar: true,
+    });
+  }
+};
+
+
+// Modal handlers
   const openModal = (order) => {
+    console.log(order);
+    
     setSelectedOrder(order);
     setIsOpen(true);
   };
 
+  // Close modal handlers
   const closeModal = () => {
     setSelectedOrder(null);
     setIsOpen(false);
   };
 
+  // Close single product modal
   const closeSingleOrderModal = () => {
     setSelectedProduct(null);
     setIsOpenSingleOrder(false);
   };
+
+
 
   const getStatusClasses = (status) => {
     // console.log(
@@ -79,6 +182,9 @@ const ViewOrder = () => {
   }
 };
 
+
+
+
   return (
     <div className="max-w-[95%] mx-auto p-6 w-full">
       <h2 className="text-3xl font-bold text-center mb-10 text-[#3B5D50]">
@@ -90,6 +196,7 @@ const ViewOrder = () => {
       ) : (
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
           {orders.map((order) => (
+            
             <div
               key={order._id}
               className="bg-gradient-to-br from-white to-gray-50 shadow-lg rounded-2xl p-6 border border-gray-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
@@ -162,7 +269,7 @@ const ViewOrder = () => {
                 >
                   🔍 View Details
                 </button>
-                <button className="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium shadow hover:bg-red-600 transition">
+                <button className="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium shadow hover:bg-red-600 transition" onClick={() => cancelOrder(order._id)}>
                   ✖️Cancel Order
                 </button>
               </div>
@@ -237,37 +344,39 @@ const ViewOrder = () => {
       {/* ================== SINGLE PRODUCT MODAL ================== */}
       {isOpenSingleOrder && selectedProduct && (
         <div className="fixed inset-0 bg-[#90c5df84] bg-opacity-50] flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-lg p-6 w-[400px] relative">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-full  relative">
             <button
               onClick={closeSingleOrderModal}
-              className="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-xl font-bold"
+              className="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-xxl font-bold"
             >
               ✖
             </button>
-            <h2 className="text-lg font-bold text-[#3B5D50] mb-4">
+            <h2 className="text-lg font-bold flex justify-center text-[#3B5D50] mb-4">
               Product Details
             </h2>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center mt-20">
               <img
                 src={selectedProduct.product_image}
                 alt={selectedProduct.product_name}
-                className="w-40 h-40 object-cover rounded-lg shadow mb-4"
+                className="w-96 h-96 object-cover rounded-lg shadow mb-4"
               />
               <p className="text-lg font-semibold capitalize">
-                {selectedProduct.product_name}
+                <span className="font-extrabold text-3xl">Product Name :</span> {selectedProduct.product_name}
               </p>
               <p className="text-gray-700 mt-2">
-                Quantity: {selectedProduct.quantity}
+               <span  className="font-extrabold text-3xl"> Quantity: </span>{selectedProduct.quantity}
               </p>
               <p className="text-gray-700">
-                Price: ₹{selectedProduct.product_price}
+               <span  className="font-extrabold text-3xl"> Price: </span>₹{selectedProduct.product_price}
               </p>
               <p className="text-[#3B5D50] font-bold mt-2">
-                Total: ₹
+               <span  className="font-extrabold text-3xl"> Total: </span>₹ 
                 {selectedProduct.product_price * selectedProduct.quantity}
               </p>
-              <div>
-                 <button className="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium shadow hover:bg-red-600 transition">
+              <div className="mt-5 flex justify-between gap-3">
+                 <button onClick={ () => cancelOrderById({
+                  id : selectedProduct._id ,
+                 })} className="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium shadow hover:bg-red-600 transition">
                   ✖️Cancel Order
                 </button>
               </div>
@@ -275,6 +384,20 @@ const ViewOrder = () => {
           </div>
         </div>
       )}
+        <ToastContainer
+          position="bottom-right"
+          autoClose={1000} // Auto close after 3 sec
+          hideProgressBar={false}
+          newestOnTop={true} // Newest toast will show on top
+          closeOnClick={true}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          limit={2}
+          transition={Flip}
+        />
     </div>
   );
 };
