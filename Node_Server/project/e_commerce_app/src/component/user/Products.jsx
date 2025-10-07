@@ -1,84 +1,62 @@
 import React, { useEffect, useState } from "react";
-import "../css/Product.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Flip, toast, ToastContainer } from "react-toastify";
 import WebService from "../service/WebService";
 import WebAPI from "../service/WebAPI";
-import { Flip, toast, ToastContainer } from "react-toastify";
 import CartService from "../service/CartService";
 import OrderService from "../service/OrderService";
 
 function Products() {
   const userData = useSelector((state) => state.userData.value);
-  console.log("userData in product page", userData.token);
-
   const [products, setProducts] = useState([]);
-  const [brands, setbrands] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [categorys, setCategorys] = useState([]);
-  const [cartStatus, setCartStatus] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
-    fetchbrands();
-    fetchcategorys();
+    fetchBrands();
+    fetchCategorys();
   }, []);
 
-  //Fetch Products from backend and display here
+  // Fetch Products
   const fetchProducts = async () => {
     try {
-      const resp = await WebService.getAPICall(
-        WebAPI.viewAllProduct,
-        userData.token
-      );
-      // console.log("Products fetched", resp.data);
+      const resp = await WebService.getAPICall(WebAPI.viewAllProduct, userData.token);
       if (resp.data.status === true) {
         setProducts(resp.data);
-        toast.success("brands fetched successfully!");
       }
     } catch (err) {
       console.error("Error fetching products:", err);
     }
-    // console.log("products", products.data.product);
   };
 
-  //Fetch Brand
-  const fetchbrands = async () => {
+  // Fetch Brands
+  const fetchBrands = async () => {
     try {
-      var resp = await WebService.getAPICall(
-        WebAPI.viewAllBrand,
-        userData.token
-      );
-      // console.log("brands fetched successfully:", resp.data.data.brand);
+      const resp = await WebService.getAPICall(WebAPI.viewAllBrand, userData.token);
       if (resp.data.status === true) {
-        setbrands(resp.data.data.brand);
-        // toast.success("brands fetched successfully!");
+        setBrands(resp.data.data.brand);
       }
-    } catch (error) {
-      console.error("Error fetching brands:", error);
+    } catch (err) {
+      console.error("Error fetching brands:", err);
     }
   };
 
-
-  //View All Category
-  const fetchcategorys = async () => {
+  // Fetch Categories
+  const fetchCategorys = async () => {
     try {
-      var resp = await WebService.getAPICall(
-        WebAPI.viewAllCategory,
-        userData.token
-      );
-      console.log("categorys fetched successfully:", resp.data);
-
+      const resp = await WebService.getAPICall(WebAPI.viewAllCategory, userData.token);
       if (resp.data.status === true) {
         setCategorys(resp.data.data.category);
-        // toast.success("categorys fetched successfully!");
       }
-    } catch (error) {
-      console.error("Error fetching categorys:", error);
+    } catch (err) {
+      console.error("Error fetching categories:", err);
     }
   };
 
-  //Add to cart function
+  // Add to cart
   const onAddToCart = async (p) => {
     try {
       const data = {
@@ -87,14 +65,15 @@ function Products() {
         userEmail: userData.user.email,
         productId: p._id,
         product_name: p.product_name,
-        category_name: categorys.find(cat => cat._id == p.categoryId)?.category_name || "Uncategorized",
+        category_name:
+          categorys.find((cat) => cat._id == p.categoryId)?.category_name ||
+          "Uncategorized",
         product_price: p.product_price,
         product_image: p.product_image,
-        quantity: 1
+        quantity: 1,
       };
 
       const resp = await CartService.addToCart(userData.token, data);
-
       if (resp.data.status === true) {
         toast.success("✅ Item added to cart!");
       }
@@ -103,28 +82,25 @@ function Products() {
     }
   };
 
-
-  console.log("cartStatus", cartStatus);
-
+  // Buy Now
   const buyNow = async (p) => {
     try {
-      // First add to cart
       const data = {
         userId: userData.user._id,
         userName: userData.user.name,
         userEmail: userData.user.email,
         productId: p._id,
         product_name: p.product_name,
-        category_name: categorys.find(cat => cat._id == p.categoryId)?.category_name || "Uncategorized",
+        category_name:
+          categorys.find((cat) => cat._id == p.categoryId)?.category_name ||
+          "Uncategorized",
         product_price: p.product_price,
         product_image: p.product_image,
-        quantity: 1
+        quantity: 1,
       };
 
       const addCartResp = await CartService.addToCart(userData.token, data);
-
       if (addCartResp.data.status === true) {
-        // Then place order
         const orderResp = await OrderService.placeOrder(userData.user._id, userData.token);
         if (orderResp.data.status === true) {
           toast.success("✅ Order placed successfully!");
@@ -135,79 +111,84 @@ function Products() {
     }
   };
 
-
   const navigateTologin = () => {
-    navigate('/login');
-  }
+    navigate("/login");
+  };
 
   return (
-    <div className="main-div">
-      <div className="sidebar">
-        {/* Filter and Search */}
-        <div className="filter-search-container">
+    <div className="flex flex-col w-full min-h-screen bg-white overflow-x-hidden">
+
+      {/* ================= Sidebar (Top Horizontal Bar) ================= */}
+      <div className="w-full bg-[#90c5dfc3] text-black px-5 flex flex-col items-center gap-4 shadow-md">
+
+        {/* Sidebar Header */}
+        <h2 className="text-2xl font-bold border-b border-white/40  text-center tracking-wide">
+          Products
+        </h2>
+
+        {/* Filter + Search */}
+        <div className="w-full flex flex-wrap justify-between items-center gap-4">
+
           {/* Filter Dropdown */}
-          <div className="filter-dropdown">
-            <label htmlFor="product-filter" >
-              Filter Products:
-            </label>
-            <select id="product-filter" className="filter-select">
+          <div className="flex items-center gap-2 mt-2 w-full sm:w-auto">
+            <label htmlFor="product-filter" className="font-semibold text-sm">Filter Products:</label>
+            <select
+              id="product-filter"
+              className="p-2 rounded-md border border-gray-300 focus:outline-none focus:border-[#3b5d50] focus:shadow-sm text-sm"
+            >
               <option value="all">All Products</option>
               <option value="category1">Low to High</option>
               <option value="category2">High to Low</option>
               <option value="category3">New Arrival</option>
             </select>
           </div>
+
           {/* Search Bar */}
-          <div className="search-bar">
-            <label htmlFor="product-search" >
-              Search:
-            </label>
-            <div className="search-input-container">
+          <div className="flex items-center gap-2 mt-2 w-full sm:w-auto">
+            <label htmlFor="product-search" className="font-semibold text-sm">Search:</label>
+            <div className="relative w-full sm:w-48">
               <input
                 type="text"
                 id="product-search"
-                className="search-input"
                 placeholder="Search products..."
+                className="w-full p-2 pl-3 pr-9 border border-gray-300 rounded-md focus:outline-none focus:border-[#3b5d50] focus:shadow-sm text-sm"
               />
-              <button className="search-button">
-                <img src="\src\component\img\icon\search.png" alt="" />
+              <button className="absolute right-1 top-1/2 transform -translate-y-1/2">
+                <img src="\src\component\img\icon\search.png" alt="search" className="w-5 h-5 filter brightness-0" />
               </button>
             </div>
           </div>
+
         </div>
-        <h2>Products</h2>
-        <ul>
-          <li>
-            <Link> Men's </Link>
-          </li>
-          <li>
-            <Link> Women's </Link>
-          </li>
-          <li>
-            <Link> Kid'z </Link>
-          </li>
-          <li>
-            <Link> Beauty </Link>
-          </li>
-          <li>
-            <Link> Accessories </Link>
-          </li>
+
+        {/* Category Menu */}
+        <ul className="flex flex-wrap justify-center gap-4 mt-2">
+          {["Men's", "Women's", "Kid'z", "Beauty", "Accessories"].map((cat, i) => (
+            <li
+              key={i}
+              className="bg-white/15 px-4 py-2 rounded-md text-base font-semibold cursor-pointer hover:bg-white/40 hover:-translate-y-1 transition-all"
+            >
+              <Link>{cat}</Link>
+            </li>
+          ))}
         </ul>
+
       </div>
 
+      {/* ================= Main Content Grid ================= */}
       <div className="container mx-auto p-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.data?.product.map((p) => (
             <div
               key={p._id}
-              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 overflow-hidden flex flex-col"
+              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 flex flex-col overflow-hidden"
             >
               {/* Image */}
               <div className="relative group">
                 <img
                   src={p.product_image}
                   alt={p.product_name}
-                  className="w-full h-full  object-content group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                 />
                 <span className="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">
                   ₹{p.product_price}
@@ -221,23 +202,22 @@ function Products() {
                 </h3>
 
                 <div className="text-xs text-gray-400 space-y-1 mb-4">
-                  {brands.map((brand) => {
-                    if (brand._id == p.brandId) {
-                      return (
+                  {brands.map(
+                    (brand) =>
+                      brand._id == p.brandId && (
                         <p key={brand._id} className="capitalize">
                           Brand: {brand.brand_name}
                         </p>
-                      );
-                    }
-                  })}
+                      )
+                  )}
 
                   <span className="text-lg font-bold text-green-700">
-                    Price : ₹{p.product_price}
+                    Price: ₹{p.product_price}
                   </span>
                 </div>
-                {/* Price + Button */}
-                <div className="mt-auto flex items-center justify-between">
 
+                {/* Buttons */}
+                <div className="mt-auto flex items-center justify-between">
                   <button
                     className="px-4 py-2 bg-[#e88a17] rounded-lg text-sm shadow-md hover:bg-[#e07e06] transition"
                     onClick={() => userData.isLoginStatus ? buyNow(p) : navigateTologin()}
@@ -256,21 +236,22 @@ function Products() {
             </div>
           ))}
         </div>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={1000} // Auto close after 3 sec
-          hideProgressBar={false}
-          newestOnTop={true} // Newest toast will show on top
-          closeOnClick={true}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-          limit={2}
-          transition={Flip}
-        />
       </div>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        limit={2}
+        transition={Flip}
+      />
     </div>
   );
 }

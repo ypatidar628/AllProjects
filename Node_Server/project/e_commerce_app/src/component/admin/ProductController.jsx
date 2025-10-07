@@ -317,7 +317,7 @@ const ProductController = () => {
                         <img
                           src={product.product_image}
                           alt={product.product_name}
-                          className="w-full h-full  object-content group-hover:scale-105 transition-transform duration-300"
+                          className="w-64 h-66 p-4 rounded-2xl  object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </td>
                       <td className="capitalize">{product.product_name}</td>

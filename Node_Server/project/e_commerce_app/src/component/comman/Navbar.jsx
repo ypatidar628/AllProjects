@@ -52,6 +52,7 @@ function Navbar() {
                                     <li><Link to="/admin/product">Products</Link></li>
                                     <li><Link to="/admin/category">Categories</Link></li>
                                     <li><Link to="/admin/brand">Brands</Link></li>
+                                    <li><Link to="/admin/order">Orders</Link></li>
 
                                 </>
                             )}
@@ -67,7 +68,7 @@ function Navbar() {
 
                             )}
                             <li>
-                                <button onClick={logoutHandler} className="logout-button">Logout</button>
+                                <Link onClick={logoutHandler} className="logout-button">Logout</Link>
                             </li>
                             <li><Link to="#"><FontAwesomeIcon icon={faMagnifyingGlass} className="icon" /></Link></li>
                             <li><Link to="#"><FontAwesomeIcon icon={faHeart} className="icon" /></Link></li>
